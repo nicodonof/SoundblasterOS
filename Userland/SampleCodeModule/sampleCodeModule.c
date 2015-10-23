@@ -17,11 +17,9 @@ int main() {
 	//All the following code may be removed 
 	*v = 'X';
 
-	//Test if BSS is properly set up
-	if (var1 == 0 && var2 == 0)
-		return 0xDEADC0DE;
-
-	return 0xDEADBEEF;
+	while(1){
+		*v = 'Y';
+	}
 }
 
 void * memset(void * destiation, int32_t c, uint64_t length) {

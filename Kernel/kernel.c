@@ -2,7 +2,8 @@
 #include <string.h>
 #include <lib.h>
 #include <moduleLoader.h>
-#include <naiveConsole.h>
+#include <types.h>
+#include <video.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -18,6 +19,13 @@ static void * const sampleDataModuleAddress = (void*)0x500000;
 
 typedef int (*EntryPoint)();
 
+DESCR_INT *idt = (DESCR_INT*) 0;
+
+void _EOI();
+void keyboard();
+void keyboard2();
+
+void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access);
 
 void clearBSS(void * bssAddress, uint64_t bssSize)
 {
@@ -37,7 +45,9 @@ void * initializeKernelBinary()
 {
 	char buffer[10];
 
-	ncPrint("[x64BareBones]");
+
+
+/*	ncPrint("[x64BareBones]");
 	ncNewline();
 
 	ncPrint("CPU Vendor:");
@@ -45,23 +55,23 @@ void * initializeKernelBinary()
 	ncNewline();
 
 	ncPrint("[Loading modules]");
-	ncNewline();
+	ncNewline();*/
 	void * moduleAddresses[] = {
 		sampleCodeModuleAddress,
 		sampleDataModuleAddress
 	};
 
 	loadModules(&endOfKernelBinary, moduleAddresses);
-	ncPrint("[Done]");
+	/*ncPrint("[Done]");
 	ncNewline();
 	ncNewline();
 
 	ncPrint("[Initializing kernel's binary]");
-	ncNewline();
+	ncNewline();*/
 
 	clearBSS(&bss, &endOfKernel - &bss);
 
-	ncPrint("  text: 0x");
+	/*ncPrint("  text: 0x");
 	ncPrintHex((uint64_t)&text);
 	ncNewline();
 	ncPrint("  rodata: 0x");
@@ -76,29 +86,52 @@ void * initializeKernelBinary()
 
 	ncPrint("[Done]");
 	ncNewline();
-	ncNewline();
+	ncNewline();*/
 	return getStackBase();
 }
 
 int main()
 {	
-	ncPrint("[Kernel Main]");
+
+	setup_IDT_entry(idt, 0x20, 0x08, &keyboard, 0x8E);
+	setup_IDT_entry(idt, 0x21, 0x08, &keyboard2, 0x8E);
+
+	picMasterMask(0xFC);
+	picSlaveMask(0xFF);
+	_sti();
+
+	vClear();
+	
+	
+
+	/*ncPrint("[Kernel Main]");
 	ncNewline();
 	ncPrint("  Sample code module at 0x");
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
 	ncNewline();
-	ncPrint("  Calling the sample code module returned: ");
-	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
-	ncNewline();
-	ncNewline();
-
-	ncPrint("  Sample data module at 0x");
-	ncPrintHex((uint64_t)sampleDataModuleAddress);
-	ncNewline();
-	ncPrint("  Sample data module contents: ");
-	ncPrint((char*)sampleDataModuleAddress);
-	ncNewline();
-
-	ncPrint("[Finished]");
+	ncPrint("  Calling the sample code module returned: ");*/
+	((EntryPoint)sampleCodeModuleAddress)();
+	//ncPrintHex(();
+	
 	return 0;
+}
+
+
+void keyboardddd(){
+	vPrint("la re puta madre");
+	
+}
+
+void keyboarddddd(){
+	vPrint("a");
+}
+
+void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access) {
+  idt[index].selector = selector;
+  idt[index].offset_l = offset & 0xFFFF;
+  idt[index].offset_m = (offset & 0xFFFF0000) >> 16;
+  idt[index].offset_h = (offset & 0xFFFFFFFF00000000) >> 32;
+  idt[index].access = access;
+  idt[index].cero = 0;
+  idt[index].zero = 0;
 }
