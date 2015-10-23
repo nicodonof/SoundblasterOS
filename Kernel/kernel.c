@@ -25,6 +25,8 @@ void _EOI();
 void keyboardHandler();
 void timerHandler();
 
+static void syscallHandler(int index,int fd, char c, void * desc);
+
 void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access);
 
 void clearBSS(void * bssAddress, uint64_t bssSize)
@@ -43,7 +45,7 @@ void * getStackBase()
 
 void * initializeKernelBinary()
 {
-	char buffer[10];
+	
 
 
 
@@ -95,6 +97,7 @@ int main()
 
 	setup_IDT_entry(idt, 0x20, 0x08, &timerHandler, 0x8E);
 	setup_IDT_entry(idt, 0x21, 0x08, &keyboardHandler, 0x8E);
+//	setup_IDT_entry(idt, 0x80, 0x08, &syscallHandler, 0x8E);
 
 	picMasterMask(0xFC);
 	picSlaveMask(0xFF);

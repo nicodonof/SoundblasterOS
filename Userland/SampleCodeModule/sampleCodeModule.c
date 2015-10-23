@@ -9,6 +9,7 @@ static int var1 = 0;
 static int var2 = 0;
 
 void * memset(void * destiny, int32_t c, uint64_t length);
+void syscaller(int index,int fd ,char c,char * dest);
 
 int main() {
 	//Clean BSS
@@ -17,8 +18,12 @@ int main() {
 	//All the following code may be removed 
 	*v = 'X';
 
+	char aux;
+	//while((aux = getChar()) != '\n'){
+		
+	//}
 	while(1){
-		*v = 'Y';
+
 	}
 }
 
@@ -30,4 +35,15 @@ void * memset(void * destiation, int32_t c, uint64_t length) {
 		dst[length] = chr;
 
 	return destiation;
+}
+
+void getChar(){
+	char dest = -1; // para ver si cambia
+	syscaller(1,1,0, dest);
+	if(dest != -1)
+		putChar(dest);
+}
+
+void putChar(char c){
+	syscaller(2,1,c,0);
 }

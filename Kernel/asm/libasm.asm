@@ -1,27 +1,15 @@
-GLOBAL cpuVendor
+GLOBAL outb
+GLOBAL inb
 
-section .text
-	
-cpuVendor:
-	push rbp
-	mov rbp, rsp
-
-	push rbx
-
-	mov rax, 0
-	cpuid
-
-
-	mov [rdi], ebx
-	mov [rdi + 4], edx
-	mov [rdi + 8], ecx
-
-	mov byte [rdi+13], 0
-
+outb:
+	mov rdx, rsi
 	mov rax, rdi
+	out dx, al
+	ret
 
-	pop rbx
-
-	mov rsp, rbp
-	pop rbp
+inb:
+	mov rax, 0
+	mov rdx, rdi
+	in al, dx
+	mov rax, rdi
 	ret
