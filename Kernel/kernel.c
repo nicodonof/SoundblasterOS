@@ -22,8 +22,8 @@ typedef int (*EntryPoint)();
 DESCR_INT *idt = (DESCR_INT*) 0;
 
 void _EOI();
-void keyboard();
-void keyboard2();
+void keyboardHandler();
+void timerHandler();
 
 void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access);
 
@@ -93,8 +93,8 @@ void * initializeKernelBinary()
 int main()
 {	
 
-	setup_IDT_entry(idt, 0x20, 0x08, &keyboard, 0x8E);
-	setup_IDT_entry(idt, 0x21, 0x08, &keyboard2, 0x8E);
+	setup_IDT_entry(idt, 0x20, 0x08, &timerHandler, 0x8E);
+	setup_IDT_entry(idt, 0x21, 0x08, &keyboardHandler, 0x8E);
 
 	picMasterMask(0xFC);
 	picSlaveMask(0xFF);
@@ -117,10 +117,7 @@ int main()
 }
 
 
-void keyboardddd(){
-	vPrint("la re puta madre");
-	
-}
+
 
 void keyboarddddd(){
 	vPrint("a");

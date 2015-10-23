@@ -1,31 +1,33 @@
-GLOBAL keyboard
-GLOBAL keyboard2
+GLOBAL timerHandler
+GLOBAL keyboardHandler
 GLOBAL picMasterMask
 GLOBAL picSlaveMask
 GLOBAL _sti
 GLOBAL _EOI
 
-extern vPrintChar
-extern keyboardddd
+
+extern write_key
 extern keyboarddddd
 
-keyboard:
+timerHandler:
     
     call _EOI
 
-	call keyboarddddd
+	;call keyboarddddd
     
     
 
 	iretq
 
-keyboard2:
+keyboardHandler:
     
-    mov rdi, 40
-    call vPrintChar
     call _EOI
     
-    call keyboardddd
+    mov rax, 0
+    in al,60h
+    
+    mov rdi, rax
+    call write_key
     
     iretq
 
