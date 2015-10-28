@@ -1,4 +1,4 @@
-//char buffer[250];
+char buffer[250];
 int counter = 0;
 
 unsigned static char scancodes[128] =
@@ -43,7 +43,8 @@ unsigned static char scancodes[128] =
 
 void write_key(char scancode){
   if(scancode<128 && scancodes[scancode] != 0 && scancode>0){
-    //buffer[counter++] = scancodes[scancode];
+    vPrintChar(scancodes[scancode]);
+    buffer[counter++] = scancodes[scancode];
   }    
 }
 
