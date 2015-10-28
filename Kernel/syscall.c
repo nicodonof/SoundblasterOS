@@ -17,8 +17,7 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t c, void * desc){
 			desc = getKey();
 			break;
 		case 2: //write
-			vPrintChar('6');
-			vPrintChar(c);
+			vPrintChar((char)&c);
 			break;
 	}
 
