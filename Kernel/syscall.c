@@ -1,25 +1,21 @@
 #include <stdint.h>
 
-uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t c, void * desc){
+uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t c, uint64_t * dest){
 	
-	
-	vPrintDec(index);
-	vPrintChar(' ');
-	vPrintDec(fd);
-	vPrintChar(' ');
-	vPrintDec(c);
-	vPrintChar(' ');
-	vPrintDec(&desc);
-	vNewline();
 	
 	switch(index){
 		case 1:  //read
-			desc = getKey();
+			*dest = getKey();
 			break;
 		case 2: //write
-			vPrintChar((char)*c);
+			vPrintChar((char)c);
 			break;
 	}
 
 	
 } 
+
+
+
+//SUDO MODPROBE PCSPKR
+//SUDO apt-get beep

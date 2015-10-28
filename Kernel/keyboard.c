@@ -1,4 +1,5 @@
 char buffer[250];
+int last = 0;
 int counter = 0;
 
 unsigned static char scancodes[128] =
@@ -49,5 +50,8 @@ void write_key(char scancode){
 }
 
 char getKey(){
-  return ' ';
+  if(counter == last)
+    return -1;
+  last++;
+  return buffer[counter];
 }

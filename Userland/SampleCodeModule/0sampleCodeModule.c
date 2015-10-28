@@ -15,14 +15,17 @@ int main() {
 
 	//All the following code may be removed 
 	
-	putChar('s');
+	//putChar('s');
 
-
-	//char aux;
+	getChar();
+	char aux = 0;
 	/*while(1){
-		//while((aux = getChar()) != '\n'){
+		do{
+	//		aux = getChar();
 		
-		//}
+		} while (aux != '\n');
+
+	//	putChar('E');
 	}*/
 	
 }
@@ -40,11 +43,11 @@ void * memset(void * destiation, int32_t c, uint64_t length) {
 void getChar(){
 	char dest = -1; // para ver si cambia
 	syscaller(1,1,0, &dest);
-	if(dest != -1)
-		putChar(dest);
+	if(dest != -1);
+	//	putChar(dest);
 }
 
 void putChar(char c){
-	syscaller(2,27,&c,&c);
+	syscaller(2,1,c,0);
 }
 
