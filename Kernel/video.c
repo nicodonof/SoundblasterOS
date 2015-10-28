@@ -23,7 +23,13 @@ void vPrint(const char * string)
 void vPrintChar(char character)
 {
 	video[width * row + col] = charColor(character, 0x07);
-	if(col == width-1){
+	if(character == '\n')
+		vNewline();
+	else if (character == '\t')
+		vPrint("    ");
+	else if(character == '\b')
+		;
+	else if(col == width-1){
 		if(row == height-1)
 			vScroller();
 		else

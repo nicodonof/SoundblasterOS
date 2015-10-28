@@ -44,14 +44,15 @@ unsigned static char scancodes[128] =
 
 void write_key(char scancode){
   if(scancode<128 && scancodes[scancode] != 0 && scancode>0){
-    vPrintChar(scancodes[scancode]);
+  
     buffer[counter++] = scancodes[scancode];
   }    
+  if(counter == 250)
+    counter = 0;  
 }
 
 char getKey(){
-  if(counter == last)
+  if(counter == last%250)
     return -1;
-  last++;
-  return buffer[counter];
+  return buffer[(last++%250)];
 }
