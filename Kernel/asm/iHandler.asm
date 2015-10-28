@@ -1,13 +1,16 @@
 GLOBAL timerHandler
 GLOBAL keyboardHandler
+GLOBAL syscallHandlerA
 GLOBAL picMasterMask
 GLOBAL picSlaveMask
 GLOBAL _sti
 GLOBAL _EOI
+GLOBAL _iretq
 
 
 extern write_key
 extern keyboarddddd
+extern syscallHandler
 
 timerHandler:
     
@@ -30,6 +33,13 @@ keyboardHandler:
     call write_key
     
     iretq
+
+syscallHandlerA:
+
+    call syscallHandler
+    
+    iretq
+
 
 picMasterMask:
 	push rbp
@@ -57,3 +67,5 @@ _EOI:
     out 0x20, al
     ret
 
+_iretq:
+    iretq

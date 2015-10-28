@@ -1,7 +1,16 @@
-void syscallHandler(int index,int fd, char c, char * desc){
-	_EOI();
+#include <stdint.h>
+
+uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t c, void * desc){
 	
-	vPrintChar(*desc);
+	
+	vPrintDec(index);
+	vPrintChar(' ');
+	vPrintDec(fd);
+	vPrintChar(' ');
+	vPrintDec(c);
+	vPrintChar(' ');
+	vPrintDec(&desc);
+	vNewline();
 	
 	switch(index){
 		case 1:  //read
@@ -11,6 +20,7 @@ void syscallHandler(int index,int fd, char c, char * desc){
 			vPrintChar('6');
 			vPrintChar(c);
 			break;
-		}
+	}
+
 	
 } 
