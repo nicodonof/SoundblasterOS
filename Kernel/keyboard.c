@@ -1,51 +1,57 @@
+#define LSHIFTR 0xFFFFFFAA
+#define RSHIFTR 0xFFFFFFB6
+#define CAPS 0x3A
+#define LSHIFT 0x2A
+#define RSHIFT 0x36
+
 char buffer[250];
 int last = 0;
 int counter = 0;
+int caps = 0;
+int shift = 0;
 
-unsigned static char scancodes[128] =
-{
+unsigned static char scancodes[2][128] =
+{{
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
-  '9', '0', '-', '=', '\b',	/* Backspace */
-  '\t',			/* Tab */
-  'q', 'w', 'e', 'r',	/* 19 */
-  't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',	/* Enter key */
-    0,			/* 29   - Control */
+  '9', '0', '\'', '¿', '\b', '\t', 'q', 'w', 'e', 'r',/* 19 */
+  't', 'y', 'u', 'i', 'o', 'p', '´', '+', '\n',	 0,	/* 29 */
   'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',	/* 39 */
- '\'', '`',   0,		/* Left shift */
- '\\', 'z', 'x', 'c', 'v', 'b', 'n',			/* 49 */
-  'm', ',', '.', '/',   0,				/* Right shift */
-  '*',
-    0,	/* Alt */
-  ' ',	/* Space bar */
-    0,	/* Caps lock */
-    0,	/* 59 - F1 key ... > */
-    0,   0,   0,   0,   0,   0,   0,   0,
-    0,	/* < ... F10 */
-    0,	/* 69 - Num lock*/
-    0,	/* Scroll Lock */
-    0,	/* Home key */
-    0,	/* Up Arrow */
-    0,	/* Page Up */
-  '-',
-    0,	/* Left Arrow */
-    0,
-    0,	/* Right Arrow */
-  '+',
-    0,	/* 79 - End key*/
-    0,	/* Down Arrow */
-    0,	/* Page Down */
-    0,	/* Insert Key */
-    0,	/* Delete Key */
-    0,   0,   0,    0,	/* F11 Key */
-    0,	/* F12 Key */
-    0,	/* All other keys are undefined */
-};
+  '{', '|',   0, '}', 'z', 'x', 'c', 'v', 'b', 'n',	/* 49 */
+  'm', ',', '.', '-',   0, '*',   0, ' ',   0,   0,	/* 59 */
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	/* 69 */
+    0, '7', '8', '9', '-', '4',	'5', '6', '+', '1', /* 79 */
+  '2', '3', '0', '.',   0,   0, '<',   0, 	0,   0,	/* 89 */
+    0,   0,   0,   0,   0,   0,'\n',   0, '/',   0, /* 99 */
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, /* 109 */
+}, {
+    0,  27, '!', '"', '#', '$', '%', '&', '/', '(', /* 9 */
+  ')', '=', '?', '¡', '\b', '\t', 'Q', 'W', 'E', 'R',/* 19 */
+  'T', 'Y', 'U', 'I', 'O', 'P', '¨', '*', '\n',  0, /* 29 */
+  'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', /* 39 */
+  '[', '°',   0, ']', 'Z', 'X', 'C', 'V', 'B', 'N', /* 49 */
+  'M', ';', ':', '_',   0, '*',   0, ' ',   0,   0, /* 59 */
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, /* 69 */
+    0, '7', '8', '9', '-', '4', '5', '6', '+', '1', /* 79 */
+  '2', '3', '0', '.',   0,   0, '>',   0,   0,   0, /* 89 */
+    0,   0,   0,   0,   0,   0,'\n',   0, '/',   0, /* 99 */
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, /* 109 */
+}};
 
 
 void write_key(char scancode){
-  if(scancode<128 && scancodes[scancode] != 0 && scancode>0){
-  
-    buffer[counter++] = scancodes[scancode];
+  if(scancode == CAPS){
+    caps = !caps;
+  }
+  if(scancode == LSHIFT || scancode == RSHIFT || scancode == RSHIFTR || scancode == LSHIFTR)
+    shift = !shift;
+  if(scancode<128 && scancodes[0][scancode] != 0 && scancode>0){
+    if(caps && scancode < 16 || (scancode > 25 && scancode < 30) || (scancode > 38 && scancode < 44) || (scancode > 50))
+      if(shift)
+        buffer[counter++] = scancodes[1][scancode];
+      else
+        buffer[counter++] = scancodes[0][scancode];
+    else
+      buffer[counter++] = scancodes[!(caps == shift)][scancode];
   }    
   if(counter == 250)
     counter = 0;  
@@ -56,3 +62,5 @@ char getKey(){
     return -1;
   return buffer[(last++%250)];
 }
+
+

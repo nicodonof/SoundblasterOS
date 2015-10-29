@@ -7,13 +7,11 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			*dest = getKey();
 			break;
 		case 2: //write
-			while(counter < buffSize){
-				vPrintChar((char)buff[counter++]);
-			}
+				vPrintN(buff, buffSize);
 			break;
 	}
 
-	
+	return 0;
 } 
 
 

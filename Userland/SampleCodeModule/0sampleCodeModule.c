@@ -20,9 +20,9 @@ int main() {
 	
 	//putChar('s');
 
-	write(1,"aa", 2);
 	char aux = 0;
 	while(1){
+		write(1, "SoundblasterOS> ", 16);
 		do{
 			aux = getChar();
 		} while (aux != '\n');
@@ -41,11 +41,11 @@ void * memset(void * destiation, int32_t c, uint64_t length) {
 }
 
 void read(int fd,char * destination){
-	return syscaller(1,fd,0,0,destination);
+	syscaller(1,fd,0,0,destination);
 }
 
-void write(int fd, uint64_t * buff, int size){
-	return syscaller(2,fd, buff, size, 0);
+void write(int fd, char * buff, int size){
+	syscaller(2,fd, buff, size, 0);
 }
 
 char getChar(){

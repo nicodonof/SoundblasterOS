@@ -20,15 +20,25 @@ void vPrint(const char * string)
 		vPrintChar(string[i]);
 }
 
+void vPrintN(const char * string, int n){
+	int i;
+
+	for (i = 0; string[i] != 0 && i < n; i++)
+		vPrintChar(string[i]);	
+}
+
 void vPrintChar(char character)
 {
-	video[width * row + col] = charColor(character, 0x07);
+	//video[width * row + col] = charColor(character, color);
 	if(character == '\n')
-		vNewline();
+		if(row == height - 1)
+			vScroller();
+		else 
+			vNewline();
 	else if (character == '\t')
 		vPrint("    ");
 	else if(character == '\b')
-		;
+		vDeleteLastChar();
 	else if(col == width-1){
 		if(row == height-1)
 			vScroller();
@@ -40,6 +50,14 @@ void vPrintChar(char character)
 	}
 }
 
+void vDeleteLastChar(){
+	col--;
+	vPrintChar(' ');
+	vPrintChar(' ');
+	col-=2;
+	
+}
+
 uint16_t charColor(char c,char color){
 	uint16_t pakash = (uint16_t) c;
 	return (pakash | (color << 8));
@@ -47,13 +65,12 @@ uint16_t charColor(char c,char color){
 
 void vNewline()
 {
-	do
-	{
+	do{
 		video[width * row +col] = charColor(' ',color);
 		col++;
 	}
 	while(col != width);
-	row++;
+		row++;
 	col = 0;
 }
 
