@@ -24,7 +24,7 @@ DESCR_INT *idt = (DESCR_INT*) 0;
 void _EOI();
 void keyboardHandler();
 void timerHandler();
-uint64_t syscallHandlerA(uint64_t index,uint64_t fd, uint64_t c, uint64_t dest);
+uint64_t syscallHandlerA(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize ,uint64_t dest);
 
 
 void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access);

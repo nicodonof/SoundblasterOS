@@ -4,12 +4,13 @@
 extern char bss;
 extern char endOfBinary;
 
-static char dest = 0;
-
 
 void * memset(void * destiny, int32_t c, uint64_t length);
-uint64_t syscaller(uint64_t index,uint64_t fd ,uint64_t c,uint64_t * dest);
+
+static char dest = -1;
+
 char getChar();
+void putChar(char c);
 
 int main() {
 	//Clean BSS
@@ -19,15 +20,12 @@ int main() {
 	
 	//putChar('s');
 
-	
+	write(1,"aa", 2);
 	char aux = 0;
 	while(1){
 		do{
-			
 			aux = getChar();
-		
 		} while (aux != '\n');
-
 	}
 	
 }
@@ -42,15 +40,22 @@ void * memset(void * destiation, int32_t c, uint64_t length) {
 	return destiation;
 }
 
+void read(int fd,char * destination){
+	return syscaller(1,fd,0,0,destination);
+}
+
+void write(int fd, uint64_t * buff, int size){
+	return syscaller(2,fd, buff, size, 0);
+}
+
 char getChar(){
 	dest = -1; // para ver si cambia
-	syscaller(1,1,0, &dest);
+	read(1,&dest);
 	if(dest != -1)
 		putChar(dest);
 	return dest;
 }
 
 void putChar(char c){
-	syscaller(2,1,c,0);
+	write(1, &c,1);
 }
-
