@@ -60,8 +60,11 @@ void write_key(char scancode){
 char getKey(){
   if(counter == last%250)
     return -1;
-  //if(buffer[(last++&250)] != ' ')
-    return buffer[(last++%250)];
+  //vPrintChar(buffer[(last++%250)]);
+  return buffer[(last++%250)];
 }
 
+char getNotLastKey(){
+  return buffer[counter-2];
+}
 

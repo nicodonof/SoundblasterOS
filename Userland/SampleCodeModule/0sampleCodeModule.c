@@ -3,13 +3,8 @@
 
 extern char bss;
 extern char endOfBinary;
-static char dest = -1;
-
-char buffer[256];
 
 void * memset(void * destiny, int32_t c, uint64_t length);
-char getChar();
-void putChar(char c);
 
 
 int main() {
@@ -18,17 +13,9 @@ int main() {
 
 	//All the following code may be removed 
 
-	printOsName();
+	shell();
 
-	char aux = 0;
-	while(1){	
-		int counterBuffer = 0;
-		write(1, "SoundblasterOS> ", 16);
-		do{
-			aux = getChar();			
-		} while (aux != '\n');
-	}
-	
+	return 0xDEADBEEF;
 }
 
 void * memset(void * destiation, int32_t c, uint64_t length) {
@@ -39,33 +26,4 @@ void * memset(void * destiation, int32_t c, uint64_t length) {
 		dst[length] = chr;
 
 	return destiation;
-}
-
-void read(int fd,char * destination){
-	syscaller(1,fd,0,0,destination);
-}
-
-void write(int fd, char * buff, int size){
-	syscaller(2,fd, buff, size, 0);
-}
-
-char getChar(){
-	dest = -1; // para ver si cambia
-	read(1,&dest);
-	if(dest != -1)
-		putChar(dest);
-	return dest;
-}
-
-void putChar(char c){
-	write(1, &c,1);
-}
-
-void printOsName(){
-	putChar('<');
-//	for (int i = 0; i < 78; ++i){
-//			putChar('-');
-//	}
-	write(1,"================================ SoundblasterOS ================================",78);
-	putChar('>');
 }
