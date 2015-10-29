@@ -18,18 +18,15 @@ int main() {
 
 	//All the following code may be removed 
 
+	printOsName();
+
 	char aux = 0;
 	while(1){	
 		int counterBuffer = 0;
 		write(1, "SoundblasterOS> ", 16);
 		do{
-			aux = getChar();
-			if(aux != -1&& aux != 0){
-				buffer[counterBuffer++] = aux;
-				write(1,aux,1);
-			}				
+			aux = getChar();			
 		} while (aux != '\n');
-		write(1,  buffer, counterBuffer);
 	}
 	
 }
@@ -62,4 +59,13 @@ char getChar(){
 
 void putChar(char c){
 	write(1, &c,1);
+}
+
+void printOsName(){
+	putChar('<');
+//	for (int i = 0; i < 78; ++i){
+//			putChar('-');
+//	}
+	write(1,"================================ SoundblasterOS ================================",78);
+	putChar('>');
 }

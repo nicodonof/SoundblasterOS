@@ -92,7 +92,7 @@ void vNewline()
 
 void vScroller(){
 	int i,j;
-	for(i=1;i<height;i++){
+	for(i=2;i<height;i++){
 		for(j=0;j<width;j++){
 			video[(i-1) *width + j] = video[i* width + j]; 
 		}
