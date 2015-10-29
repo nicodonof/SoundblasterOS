@@ -7,6 +7,9 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			*dest = getKey();
 			break;
 		case 2: //write
+			if(buffSize == 1)
+				vPrintChar(*buff);
+			else
 				vPrintN(buff, buffSize);
 			break;
 	}

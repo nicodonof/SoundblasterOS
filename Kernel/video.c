@@ -2,10 +2,9 @@
 
 static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base);
 
-
+int deleteCounter = 0;
 static char buffer[64] = { '0' };
 static uint16_t * const video = (uint16_t*)0xB8000;
-//static uint8_t * currentVideo = (uint8_t*)0xB8000;
 static int row = 0;
 static int col = 0;
 static const uint32_t width = 80;
@@ -18,6 +17,7 @@ void vPrint(const char * string)
 
 	for (i = 0; string[i] != 0; i++)
 		vPrintChar(string[i]);
+	deleteCounter = 0;
 }
 
 void vPrintN(const char * string, int n){
@@ -25,37 +25,53 @@ void vPrintN(const char * string, int n){
 
 	for (i = 0; string[i] != 0 && i < n; i++)
 		vPrintChar(string[i]);	
+	deleteCounter = 0;
 }
 
 void vPrintChar(char character)
 {
-	//video[width * row + col] = charColor(character, color);
-	if(character == '\n')
+	if(character == '\n'){
 		if(row == height - 1)
 			vScroller();
 		else 
 			vNewline();
-	else if (character == '\t')
+		deleteCounter = 0;
+	}
+	else if (character == '\t'){
 		vPrint("    ");
+		deleteCounter += 4;
+	}
 	else if(character == '\b')
 		vDeleteLastChar();
-	else if(col == width-1){
+	else if(col == width){
 		if(row == height-1)
 			vScroller();
 		else
 			row++;
 		col = 0;
-	} else {
+		video[width * row + col] = charColor(character, color);
 		col++;
+		deleteCounter++;
+	} else {
+		video[width * row + col] = charColor(character, color);
+		col++;
+		deleteCounter++;
 	}
+}
+void vPrintCharInPos(char character, int row2, int col2){
+	video[width * row2 + col2] = charColor(character, color);
 }
 
 void vDeleteLastChar(){
-	col--;
-	vPrintChar(' ');
-	vPrintChar(' ');
-	col-=2;
-	
+	if(deleteCounter == 0)
+		return;
+	if(col == 0){
+		col = width-1;
+		row--;
+	} else
+		col--;
+	vPrintCharInPos(' ',row,col);
+	deleteCounter--;
 }
 
 uint16_t charColor(char c,char color){

@@ -17,8 +17,6 @@ int main() {
 	memset(&bss, 0, &endOfBinary - &bss);
 
 	//All the following code may be removed 
-	
-	//putChar('s');
 
 	char aux = 0;
 	while(1){
