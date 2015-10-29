@@ -54,13 +54,14 @@ void write_key(char scancode){
       buffer[counter++] = scancodes[!(caps == shift)][scancode];
   }    
   if(counter == 250)
-    counter = 0;  
+    counter = 0;
 }
 
 char getKey(){
   if(counter == last%250)
     return -1;
-  return buffer[(last++%250)];
+  //if(buffer[(last++&250)] != ' ')
+    return buffer[(last++%250)];
 }
 
 

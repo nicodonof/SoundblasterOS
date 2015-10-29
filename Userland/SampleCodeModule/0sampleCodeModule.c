@@ -3,14 +3,14 @@
 
 extern char bss;
 extern char endOfBinary;
-
-
-void * memset(void * destiny, int32_t c, uint64_t length);
-
 static char dest = -1;
 
+char buffer[256];
+
+void * memset(void * destiny, int32_t c, uint64_t length);
 char getChar();
 void putChar(char c);
+
 
 int main() {
 	//Clean BSS
@@ -19,11 +19,17 @@ int main() {
 	//All the following code may be removed 
 
 	char aux = 0;
-	while(1){
+	while(1){	
+		int counterBuffer = 0;
 		write(1, "SoundblasterOS> ", 16);
 		do{
 			aux = getChar();
+			if(aux != -1&& aux != 0){
+				buffer[counterBuffer++] = aux;
+				write(1,aux,1);
+			}				
 		} while (aux != '\n');
+		write(1,  buffer, counterBuffer);
 	}
 	
 }
