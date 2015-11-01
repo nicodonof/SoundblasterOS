@@ -13,13 +13,8 @@ extern keyboarddddd
 extern syscallHandler
 
 timerHandler:
-    
     call _EOI
-
 	call keyboarddddd
-    
-    
-
 	iretq
 
 keyboardHandler:
@@ -35,7 +30,6 @@ keyboardHandler:
     iretq
 
 syscallHandlerA:
-
     call syscallHandler
     
     iretq
