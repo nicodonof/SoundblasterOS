@@ -1,5 +1,5 @@
 #include <stdint.h>
-char * getChar();
+char getChar();
 void putChar(char c);
 void write(int fd, char * buff, int size);
 void read(int fd,char * destination);
@@ -7,7 +7,7 @@ uint64_t syscaller(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize
 
 char desto = -1;
 char auxer = 0;
-char * aux = &auxer;
+char * aux;
 
 void shell(){
 
@@ -17,10 +17,10 @@ void shell(){
 	while(1){
 		write(1, "SoundblasterOS> ", 16);
 		do{
-			aux = getChar();
-			if(*aux != 0)
-				write(1,aux,1);
-		} while (*aux != '\n');
+			auxer = getChar();
+			if(auxer != 0)
+				putChar(auxer);
+		} while (auxer != '\n');
 	}
 }
 
@@ -36,17 +36,17 @@ void printOsName(){
 
 
 void read(int fd,char * destination){
-	syscaller(1,fd,0,0,destination);
+	syscaller(1,fd,0,0,(uint64_t*) destination);
 }
 
 void write(int fd, char * buff, int size){
-	syscaller(2,fd, buff, size, 0);
+	syscaller(2,fd, (uint64_t*) buff, size, 0);
 }
 
-char * getChar(){
+char getChar(){
 	char c = 0; // para ver si cambia
-	//read(1,&c);
-	return &c;
+	read(1,&c);
+	return c;
 }
 
 void putChar(char c){

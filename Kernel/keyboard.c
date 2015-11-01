@@ -49,14 +49,14 @@ void write_key(char scancode){
 
   if(scancode>0 && scancode<128){
     if(caps && isNotAlpha(scancode) && scancodes[1][scancode] != 0){
-      buffer[counter++] = scancodes[shift][scancode];
-      vPrintChar(buffer[counter-1]);
+      buffer[counter] = scancodes[shift][scancode];
+      vPrintChar(buffer[counter++]);
       counterTimer = 0;
       boolSelector = 1;
     }
     else if(scancodes[!(caps == shift)][scancode] != 0){
-      buffer[counter++] = scancodes[!(caps == shift)][scancode];
-      vPrintChar(buffer[counter-1]);
+      buffer[counter] = scancodes[!(caps == shift)][scancode];
+      vPrintChar(buffer[counter++]);
       counterTimer = 0;
       boolSelector = 1;
     }
@@ -67,9 +67,12 @@ void write_key(char scancode){
 }
 
 char getKey(){
-  if(counter == last%250)
+  if(counter == last)
     return 0;
-  return buffer[(last++%250)];
+  char c = buffer[last++];
+  if(last == 250)
+    last = 0;
+  return c;
 }
 
 void changeSelector(){

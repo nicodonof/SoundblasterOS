@@ -67,9 +67,9 @@ void vPrintCharInPos(char character, int row2, int col2){
 
 void vPrintSelector(int boolSelector){
 	if(boolSelector)
-		video[width * row + col] = charColor(' ', 0xFF);
+		video[width * row + col] = charColor(' ', 0x70);
 	else
-		video[width * row + col] = charColor(' ', 0);
+		video[width * row + col] = charColor(' ', 0x07);
 }
 
 void vDeleteLastChar(){

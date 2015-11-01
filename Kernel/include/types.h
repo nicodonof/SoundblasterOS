@@ -1,6 +1,6 @@
 #ifndef TYPES_H_
 #define TYPES_H_
-#pragma pack push(1)
+#pragma pack(1)
 typedef unsigned char byte;
 typedef short int word;
 typedef int dword;
@@ -11,5 +11,4 @@ typedef struct {
 	word	offset_m;
 	dword	offset_h, zero; 
 } DESCR_INT;
-#pragma pack pop
 #endif

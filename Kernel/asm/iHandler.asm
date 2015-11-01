@@ -14,24 +14,24 @@ extern syscallHandler
 
 timerHandler:
     
-    call _EOI
+    
 
 	call keyboarddddd
     
-    
+    call _EOI
 
 	iretq
 
 keyboardHandler:
     
-    call _EOI
+    
     
     mov rax, 0
     in al,60h
     
     mov rdi, rax
     call write_key
-    
+    call _EOI
     iretq
 
 syscallHandlerA:
