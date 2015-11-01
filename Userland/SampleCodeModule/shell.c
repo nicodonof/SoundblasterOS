@@ -16,7 +16,7 @@ void shell(){
     while(1){
         write(1, "SoundblasterOS> ", 16);
         int i = 0;
-        char buffer[25];
+        char buffer[75];
         do{
             auxer = 0;
             read(1,&auxer);
@@ -54,8 +54,10 @@ void putChar(char c){
 }
 
 void parser(char * s, int size){
-    if(*s != 'c' && *s != 'q' && *s != 'a')
+    if(*s != 'c' && *s != 'q' && *s != 'a'){
+    	write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         return;
+    }
     
     str0(s);
 	
@@ -63,12 +65,20 @@ void parser(char * s, int size){
         case 'c':
             if(strcmp(s,"clear"))
                 clear();
+            else
+            	write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         break;
         case 'q':
-            strcmp(s,"quit");
+            if(strcmp(s,"quit"))
+                clear();
+            else
+            	write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         break;
         case 'a':
-            strcmp(s,"audio");
+            if(strcmp(s,"audio"))
+                clear();
+            else
+            	write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         break;
     }
 }
