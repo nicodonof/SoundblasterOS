@@ -13,5 +13,5 @@ void vPrintHex(uint64_t value);
 void vPrintBin(uint64_t value);
 void vPrintBase(uint64_t value, uint32_t base);
 void vClear();
-
+void vPrintSelector(int boolSelector);
 #endif

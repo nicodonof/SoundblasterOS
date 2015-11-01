@@ -11,6 +11,7 @@ extern uint8_t data;
 extern uint8_t bss;
 extern uint8_t endOfKernelBinary;
 extern uint8_t endOfKernel;
+extern int countTimer;
 
 static const uint64_t PageSize = 0x1000;
 
@@ -25,7 +26,7 @@ void _EOI();
 void keyboardHandler();
 void timerHandler();
 uint64_t syscallHandlerA(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize ,uint64_t dest);
-
+void changeSelector();
 
 void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access);
 
@@ -87,7 +88,7 @@ int main()
 
 
 void keyboarddddd(){
-	vPrint("a");
+	changeSelector();
 }
 
 void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access) {

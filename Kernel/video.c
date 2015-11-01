@@ -38,7 +38,10 @@ void vPrintChar(char character)
 		deleteCounter = 0;
 	}
 	else if (character == '\t'){
-		vPrint("    ");
+		vPrintChar(' ');// ES ASI PQ SE RESETEA DELETE COUNTER EN EL vPrint
+		vPrintChar(' ');
+		vPrintChar(' ');
+		vPrintChar(' ');
 		deleteCounter += 4;
 	}
 	else if(character == '\b')
@@ -62,9 +65,17 @@ void vPrintCharInPos(char character, int row2, int col2){
 	video[width * row2 + col2] = charColor(character, color);
 }
 
+void vPrintSelector(int boolSelector){
+	if(boolSelector)
+		video[width * row + col] = charColor(' ', 0xFF);
+	else
+		video[width * row + col] = charColor(' ', 0);
+}
+
 void vDeleteLastChar(){
 	if(deleteCounter == 0)
 		return;
+	vPrintCharInPos(' ',row,col); // para deletear el selector
 	if(col == 0){
 		col = width-1;
 		row--;
@@ -92,6 +103,7 @@ void vNewline()
 
 void vScroller(){
 	int i,j;
+	vPrintCharInPos(' ',row,col);// borra el selector
 	for(i=2;i<height;i++){
 		for(j=0;j<width;j++){
 			video[(i-1) *width + j] = video[i* width + j]; 

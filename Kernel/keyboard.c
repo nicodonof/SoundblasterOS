@@ -3,12 +3,15 @@
 #define CAPS 0x3A
 #define LSHIFT 0x2A
 #define RSHIFT 0x36
+#define isNotAlpha(x) (x < 16 || (x > 25 && x < 30) || (x > 38 && x < 44) || (x > 50))
 
 char buffer[250];
 int last = 0;
 int counter = 0;
 int caps = 0;
 int shift = 0;
+int boolSelector = 0;
+int counterTimer = 0;
 
 unsigned static char scancodes[2][128] =
 {{
@@ -39,32 +42,42 @@ unsigned static char scancodes[2][128] =
 
 
 void write_key(char scancode){
-  if(scancode == CAPS){
+  if(scancode == CAPS)
     caps = !caps;
-  }
   if(scancode == LSHIFT || scancode == RSHIFT || scancode == RSHIFTR || scancode == LSHIFTR)
     shift = !shift;
-  if(scancode<128 && scancodes[0][scancode] != 0 && scancode>0){
-    if(caps && scancode < 16 || (scancode > 25 && scancode < 30) || (scancode > 38 && scancode < 44) || (scancode > 50))
-      if(shift)
-        buffer[counter++] = scancodes[1][scancode];
-      else
-        buffer[counter++] = scancodes[0][scancode];
-    else
+
+  if(scancode>0 && scancode<128){
+    if(caps && isNotAlpha(scancode) && scancodes[1][scancode] != 0){
+      buffer[counter++] = scancodes[shift][scancode];
+      vPrintChar(buffer[counter-1]);
+      counterTimer = 0;
+      boolSelector = 1;
+    }
+    else if(scancodes[!(caps == shift)][scancode] != 0){
       buffer[counter++] = scancodes[!(caps == shift)][scancode];
-  }    
+      vPrintChar(buffer[counter-1]);
+      counterTimer = 0;
+      boolSelector = 1;
+    }
+  }
+
   if(counter == 250)
     counter = 0;
 }
 
 char getKey(){
   if(counter == last%250)
-    return -1;
-  //vPrintChar(buffer[(last++%250)]);
+    return 0;
   return buffer[(last++%250)];
 }
 
-char getNotLastKey(){
-  return buffer[counter-2];
+void changeSelector(){
+  if(counterTimer == 18){
+    counterTimer = 0;
+    boolSelector = !boolSelector;
+  }else{
+    counterTimer++;
+  } 
+  vPrintSelector(boolSelector);
 }
-

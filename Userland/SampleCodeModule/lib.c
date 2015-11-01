@@ -1,4 +1,4 @@
-#include <stdint.h>
+/*#include <stdint.h>
 
 static char dest = 0;
 
@@ -23,3 +23,4 @@ char getChar(){
 void putChar(char c){
 	write(1, &c,1);
 }
+*/
