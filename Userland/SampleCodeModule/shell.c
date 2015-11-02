@@ -54,7 +54,7 @@ void putChar(char c){
 }
 
 void parser(char * s, int size){
-    if(*s != 'c' && *s != 'q' && *s != 'a'){
+    if(*s != 'c' && *s != 'q' && *s != 'a' && *s != 'h'){
     	write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         return;
     }
@@ -80,11 +80,18 @@ void parser(char * s, int size){
             else
             	write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         break;
+        case 'h':
+            if(strcmp(s,"help"))
+                clear();
+            else
+                write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
+        break;
     }
 }
 
 void clear(){
-    write(1,"clearcommanndo",strlen("clearcommanndo"));
+    syscaller(3,0,0,0,0);
+    printOsName();
 }
 
 int strcmp(const char * str1, const char * str2){
