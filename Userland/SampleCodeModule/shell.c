@@ -4,7 +4,7 @@ void putChar(char c);
 void write(int fd, char * buff, int size);
 void read(int fd,char * destination);
 uint64_t syscaller(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
-
+void help();
 
 char auxer = 0;
 
@@ -82,7 +82,7 @@ void parser(char * s, int size){
         break;
         case 'h':
             if(strcmp(s,"help"))
-                clear();
+                help();
             else
                 write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         break;
@@ -119,4 +119,16 @@ void str0(char * s){
             *s = 0;
         s++;
     }
+}
+
+void help(){
+    char *clear = "clear    Clears the terminal screen\n";
+    char *quit =  "quit     Quits the OS\n";
+    char *audio = "audio    Performs Magic\n";
+    char *help =  "help     Shows this message.. duh.\n";
+
+    write(1,clear,strlen(clear));
+    write(1,quit,strlen(quit));
+    write(1,audio,strlen(audio));
+    write(1,help,strlen(help));
 }
