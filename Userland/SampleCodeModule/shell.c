@@ -29,7 +29,6 @@ void shell(){
             }
                 
         } while (auxer != '\n');
-        write(1, buffer, strlen(buffer));
         buffer[i-1] = 0;
         parser(buffer);
     }
@@ -61,7 +60,7 @@ void putChar(char c){
 }
 
 void parser(char * s, int size){
-    if(*s != 'c' && *s != 'q' && *s != 'a' && *s != 'h'){
+    if(*s != 'c' && *s != 'q' && *s != 'a' && *s != 'h' && *s != 'b'){
     	write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         return;
     }
@@ -93,7 +92,19 @@ void parser(char * s, int size){
             else
                 write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         break;
+        case 'b':
+            if(strcmp(s,"beep"))
+                beep();
+            else
+                write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
+        break;
     }
+}
+
+void beep(){
+    int auxFreq = 44100;
+    write(1,"BEEP !\n",7);
+    syscaller(4,1,&auxFreq,1,0);//en size va el time en secs(?))
 }
 
 void clear(){
