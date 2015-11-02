@@ -11,7 +11,7 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			break;
 		case 2: //write
 			if(buffSize == 0)
-				vPrintDec(*buff);
+				vPrintDec((char)*buff);
 			if(buffSize == 1)
 				vPrintChar(*buff);
 			else

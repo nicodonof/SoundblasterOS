@@ -20,9 +20,16 @@ void shell(){
         do{
             auxer = 0;
             read(1,&auxer);
-            if(auxer != 0)
-                buffer[i++] = auxer;
+            if(auxer != 0){
+                if(auxer == '\b'){
+                    if(i>0)
+                        i--;
+                } else
+                    buffer[i++] = auxer;
+            }
+                
         } while (auxer != '\n');
+        write(1, buffer, strlen(buffer));
         buffer[i-1] = 0;
         parser(buffer);
     }
