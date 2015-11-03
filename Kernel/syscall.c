@@ -21,7 +21,7 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			vClear();
 			break;
 		case 4:
-			soundMaker();
+			makeSound(fd, buffSize);
 			break;
 	}
 

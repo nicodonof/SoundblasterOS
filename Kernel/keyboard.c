@@ -12,6 +12,7 @@ int caps = 0;
 int shift = 0;
 int boolSelector = 0;
 int counterTimer = 0;
+int keyboardActivated = 1;
 
 unsigned static char scancodes[2][128] =
 {{
@@ -49,14 +50,14 @@ void write_key(char scancode){
 
   if(scancode>0 && scancode<128){
     if(caps && isNotAlpha(scancode) && scancodes[1][scancode] != 0){
-      buffer[counter] = scancodes[shift][scancode];
-      vPrintChar(buffer[counter++]);
+      buffer[counter++] = scancodes[shift][scancode];
+      //vPrintChar(buffer[counter++]);
       counterTimer = 0;
       boolSelector = 1;
     }
     else if(scancodes[!(caps == shift)][scancode] != 0){
-      buffer[counter] = scancodes[!(caps == shift)][scancode];
-      vPrintChar(buffer[counter++]);
+      buffer[counter++] = scancodes[!(caps == shift)][scancode];
+      //vPrintChar(buffer[counter++]);
       counterTimer = 0;
       boolSelector = 1;
     }

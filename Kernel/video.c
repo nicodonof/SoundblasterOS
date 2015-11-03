@@ -28,6 +28,20 @@ void vPrintN(const char * string, int n){
 	deleteCounter = 0;
 }
 
+void vColor(char colour){
+	color = colour;
+}
+
+void vResetColor(){
+	color = 7;
+}
+
+void vPrintCharColor(char c, char co){
+	vColor(co);
+	vPrintChar(c);
+	vResetColor();
+}
+
 void vPrintChar(char character)
 {
 	if(character == '\n'){
@@ -92,6 +106,8 @@ uint16_t charColor(char c,char color){
 
 void vNewline()
 {
+	int color2 = color;
+	vResetColor();
 	do{
 		video[width * row +col] = charColor(' ',color);
 		col++;
@@ -99,6 +115,7 @@ void vNewline()
 	while(col != width);
 		row++;
 	col = 0;
+	color = color2;
 }
 
 void vScroller(){
