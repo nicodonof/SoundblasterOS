@@ -142,14 +142,18 @@ void str0(char * s){
 }
 
 void help(){
-    char *clear = "clear    Clears the terminal screen\n";
-    char *quit =  "quit     Quits the OS\n";
-    char *audio = "audio    Performs Magic\n";
-    char *help =  "help     Shows this message.. duh.\n";
+    char *clear  = "clear    Clears the terminal screen\n";
+    char *quit   = "quit     Quits the OS\n";
+    char *beep   = "beep     Makes a beep sound\n";
+    char *itunes = "itunes   Itunes\n";
+    char *piano  = "piano    Magic at the tip of your fingers\n";
+    char *help   = "help     Shows this message.. duh.\n";
 
     write(1,clear,strlen(clear));
     write(1,quit,strlen(quit));
-    write(1,audio,strlen(audio));
+    write(1,beep,strlen(beep));
+    write(1,itunes,strlen(itunes));
+    write(1,piano,strlen(piano));
     write(1,help,strlen(help));
 }
 
