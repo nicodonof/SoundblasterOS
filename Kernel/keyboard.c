@@ -1,4 +1,6 @@
 #include <stdint.h>
+#include "keyboard.h"
+
 
 #define LSHIFTR 0xFFFFFFAA
 #define RSHIFTR 0xFFFFFFB6
