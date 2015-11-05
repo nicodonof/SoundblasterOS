@@ -50,14 +50,14 @@ void write_key(char scancode){
 
   if(scancode>0 && scancode<128){
     if(caps && isNotAlpha(scancode) && scancodes[1][scancode] != 0){
-      buffer[counter++] = scancodes[shift][scancode];
-      //vPrintChar(buffer[counter++]);
+      buffer[counter] = scancodes[shift][scancode];
+      vPrintChar(buffer[counter++]);
       counterTimer = 0;
       boolSelector = 1;
     }
     else if(scancodes[!(caps == shift)][scancode] != 0){
-      buffer[counter++] = scancodes[!(caps == shift)][scancode];
-      //vPrintChar(buffer[counter++]);
+      buffer[counter] = scancodes[!(caps == shift)][scancode];
+      vPrintChar(buffer[counter++]);
       counterTimer = 0;
       boolSelector = 1;
     }

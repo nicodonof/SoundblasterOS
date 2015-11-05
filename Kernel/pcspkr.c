@@ -1,3 +1,4 @@
+#include <stdint.h>
 typedef enum colors { BLACK, SBLUE, SGREEN, SCYAN, SRED, SPINK, SYELLOW, SWHITE, GREY, BLUE, GREEN, CYAN, RED, PINK, YELLOW, WHITE }; 
 
 
@@ -26,7 +27,66 @@ int freqToColor(int freq){
 	}
 }
 
+//Play sound using built in speaker
+ void play_sound(uint32_t nFrequence) {
+ 	uint32_t Div;
+ 	uint8_t tmp;
+ 
+        //Set the PIT to the desired frequency
+ 	Div = 1193180 / nFrequence;
+ 	outb(0x43, 0xBC);
+ 	outb(0x42, (uint8_t) (Div) );
+ 	outb(0x42, (uint8_t) (Div >> 8));
+ 
+        //And play the sound using the PC speaker
+ 	tmp = inb(0x61);
+  	if (tmp != (tmp | 3)) {
+ 		outb(0x61, tmp | 3);
+ 	}
+ }
+ 
+
+ //make it shutup
+ /*void nosound() {
+ 	uint8_t tmp = inb(0x61) & 0xFC;
+ 
+ 	outb(0x61, tmp);
+ }*/
+
+
+
+
+void speaker_on()
+{
+	outb(0x61,inb(0x61) | 3);
+}
+
+void speaker_off()
+{
+	outb(0x61,inb(0x61) & 3);
+}
+
+void speaker_setFrequency(uint8_t frequency)
+{
+	uint8_t divisor;
+	divisor = 1193180L/frequency;
+	outb(0x43,0xBC);
+	outb(0x42,divisor&0xFF);
+	outb(0x42,divisor >> 8);
+}
+
+void speaker_beep(uint8_t frequency, int seconds)
+{
+	speaker_setFrequency(frequency);
+	speaker_on();
+	//sleep(seconds);
+	//speaker_off();
+}
+
 void makeSound(int freq, int time){
 	vPrintCharColor(14, freqToColor(freq));
 	vPrintChar(' ');
+	speaker_beep(200, 5);
+	//play_sound(1000);
+	//sounder();
 }

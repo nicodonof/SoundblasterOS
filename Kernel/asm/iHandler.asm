@@ -13,31 +13,28 @@ extern keyboarddddd
 extern syscallHandler
 
 timerHandler:
-    
-    
-
 	call keyboarddddd
-    
     call _EOI
-
 	iretq
 
 keyboardHandler:
-    
-    
-    
+    push rax
+
     mov rax, 0
     in al,60h
-    
     mov rdi, rax
+
     call write_key
+
+    pop rax
+    
     call _EOI
+    
+
     iretq
 
 syscallHandlerA:
-
     call syscallHandler
-    
     iretq
 
 
@@ -62,10 +59,9 @@ _sti:
 	ret
 
 _EOI:
+    push rax
     mov rax, 0
     mov al, 0x20
     out 0x20, al
+    pop rax
     ret
-
-_iretq:
-    iretq

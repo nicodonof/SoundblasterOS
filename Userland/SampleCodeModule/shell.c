@@ -8,8 +8,9 @@ void help();
 
 char auxer = 0;
 
-void shell(){
 
+void shell(){
+    
     printOsName();
     
     
@@ -18,8 +19,9 @@ void shell(){
         int i = 0;
         char buffer[75];
         do{
-            auxer = 0;
-            read(1,&auxer);
+            //auxer = 0;
+            auxer = getChar();
+           //read(1,&auxer);
             if(auxer != 0){
                 if(auxer == '\b'){
                     if(i>0)
@@ -42,7 +44,7 @@ void printOsName(){
 }
 
 
-void read(int fd,char * destination){
+/*void read(int fd,char * destination){
     syscaller(1,fd,0,0,(uint64_t*) destination);
 }
 
@@ -50,7 +52,7 @@ void write(int fd, char * buff, int size){
     syscaller(2,fd, (uint64_t*) buff, size, 0);
 }
 
-char getChar(){
+/*char getChar(){
     char c = 0; // para ver si cambia
     read(1,&c);
     return c;
@@ -58,7 +60,7 @@ char getChar(){
 
 void putChar(char c){
     write(1, &c,1);
-}
+}*/
 
 void parser(char * s, int size){
     if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p'){
