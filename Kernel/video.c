@@ -10,6 +10,8 @@ static int col = 0;
 static const uint32_t width = 80;
 static const uint32_t height = 25 ;
 uint8_t color = 7;
+int pianoMode = 0;
+int timerTick = 0;
 
 void vPrint(const char * string)
 {
@@ -78,8 +80,15 @@ void vPrintChar(char character)
 void vPrintCharInPos(char character, int row2, int col2){
 	video[width * row2 + col2] = charColor(character, color);
 }
+void vPrintCharColorInPos(char character, char co, int row2, int col2){
+	vColor(co);
+	video[width * row2 + col2] = charColor(character, color);
+	vResetColor();
+}
 
 void vPrintSelector(int boolSelector){
+	if(pianoMode)
+		return;
 	if(boolSelector)
 		video[width * row + col] = charColor(' ', 0x70);
 	else
@@ -129,6 +138,28 @@ void vScroller(){
 	col = 0;
 	vNewline();
 	row--;
+}
+
+
+int pianoModer(){
+	if(timerTick++ == 9 || pianoMode){
+		//vPrint("sda");
+		timerTick = 0;
+		vAntiScroller();
+	}
+}
+
+void vAntiScroller(){
+	int i,j;
+
+	for(i=0;i<height-2;i++){
+		for(j=0;j<width;j++){
+			video[(height-i) *width + j] = video[(height-i-1)* width + j]; 
+		}
+	}
+	for(j=0;j<width;j++){
+		video[2 *width + j] = ' '; 
+	}
 }
 
 void vPrintDec(uint64_t value)

@@ -17,16 +17,11 @@ float notefreqs[7][13] = {
 
 int note[7] = { 26163, 29366, 32963, 34923, 39200, 44000, 49388 };
 
-int freqToColor(int freq){
+int freqToColorAndPos(int freq){
 	for (int i = 0; i < 7; ++i){
-		/*vPrintDec(note[i]);
-		vPrint(" = ");
-		vPrintDec(freq);
-		vPrintChar('\n');*/
-		if(note[i] == freq){
+		if((0x1234dd / (note[i] / 100)) == freq){
 			return i+1;
 		} 
-		
 	}
 }
 
@@ -34,8 +29,8 @@ int freqToColor(int freq){
  
 
 void makeSound(int freq, int time){
-	vPrintCharColor(14, freqToColor(freq));
-	vPrintChar(' ');
+	int aux = freqToColorAndPos(freq);
+	vPrintCharColorInPos(14, aux,2 ,aux * 9);
 	//speaker_beep(200, 5);
 	sounderC(freq);
 	//while(1){

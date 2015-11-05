@@ -1,3 +1,4 @@
+int pianoModer();
 
 int seconds = 0;
 int timer = 0;
@@ -5,10 +6,9 @@ int timer = 0;
 void keyboarddddd(){
 	if(!(timer++%18)){
 		seconds++;
-//		vPrintDec(seconds);
 	}
-//	vPrintDec(seconds);
 	changeSelector();
+	pianoModer();
 	return;
 }
 
