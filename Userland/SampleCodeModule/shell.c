@@ -200,8 +200,6 @@ void playSong(){
         int taux = getSeconds();
         while(taux + 1 > getSeconds());
         syscaller(8,0,0,0,0);
-        int taux = getSeconds();
-        while()
-
+        
     }
 }
