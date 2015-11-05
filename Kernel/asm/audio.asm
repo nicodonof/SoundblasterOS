@@ -1,7 +1,7 @@
 GLOBAL sounder
 
 sounder:
-        ;push rax	
+        push rax	
 	mov    al, 182 	        ; Prepare the speaker for the
         out     43h, al         ;  note.
         mov     ax, 4560        ; Frequency number (in decimal)
@@ -13,5 +13,7 @@ sounder:
                                 ;  port 61h).
         or      al, 00000011b   ; Set bits 1 and 0.
         out     61h, al         ; Send new value.
-        ;pop rax 
+        
+ 
+        pop rax 
         ret

@@ -76,6 +76,7 @@ int main()
 	picSlaveMask(0xFF);
 	_sti();
 
+	
 	vClear();
 	
 	
@@ -88,9 +89,7 @@ int main()
 
 
 
-void keyboarddddd(){
-	changeSelector();
-}
+
 
 void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access) {
   idt[index].selector = selector;
