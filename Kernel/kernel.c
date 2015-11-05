@@ -27,6 +27,7 @@ void keyboardHandler();
 void timerHandler();
 uint64_t syscallHandlerA(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize ,uint64_t dest);
 void changeSelector();
+void sounderC(int freq);
 
 void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access);
 
@@ -76,9 +77,12 @@ int main()
 	picSlaveMask(0xFF);
 	_sti();
 
+
+	sounderC(5560);
+	sleep(1);
+	stopSounderC();
 	
 	vClear();
-	
 	
 	
 	((EntryPoint)sampleCodeModuleAddress)();

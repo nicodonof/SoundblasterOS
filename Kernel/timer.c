@@ -5,12 +5,28 @@ int timer = 0;
 void keyboarddddd(){
 	if(!(timer++%18)){
 		seconds++;
-		vPrintDec(seconds);
+//		vPrintDec(seconds);
 	}
+//	vPrintDec(seconds);
 	changeSelector();
+	return;
+}
+
+int getSeconds(){
+	return seconds;
 }
 
 void sleep(int time){
 	int aux = seconds;
-	while(aux+time>seconds);
+	int i = 0;
+	while(aux+time>seconds){
+		if(!(i%1000000)){
+	/*		vPrintDec(aux+time);
+			vPrint(":");
+			vPrintDec(seconds);
+			vPrintChar(' ');*/
+		}
+		i++;
+	}
+	return;
 }

@@ -19,9 +19,11 @@ extern syscallHandler
     push rdx
     push rdi
     push rsi
+    push rbp
 %endmacro
 
 %macro popa 0
+    pop rbp
     pop rsi
     pop rdi
     pop rdx
@@ -47,10 +49,11 @@ keyboardHandler:
     mov rax, 0
     in al,60h
     mov rdi, rax
-
-    call write_key
     
     call _EOI
+    call write_key
+    
+        
     
     popa
     iretq

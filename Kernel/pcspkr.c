@@ -2,6 +2,8 @@
 typedef enum colors { BLACK, SBLUE, SGREEN, SCYAN, SRED, SPINK, SYELLOW, SWHITE, GREY, BLUE, GREEN, CYAN, RED, PINK, YELLOW, WHITE }; 
 
 extern void sounder();
+extern void stop_sounder();
+void sleepT(int);
 
 float notefreqs[7][13] = {
 	{0.0,	16.35,	17.32,	18.35,	19.45,	20.60,	21.83,	23.12,	24.50,	25.96,	27.50,	29.14,	30.87},
@@ -28,29 +30,41 @@ int freqToColor(int freq){
 	}
 }
 
-//Play sound using built in speaker
- void play_sound(uint32_t nFrequence) {
- 	uint32_t Div;
- 	uint8_t tmp;
- 
-        //Set the PIT to the desired frequency
- 	Div = nFrequence;
- 	outb(0x43, 0xBC);
- 	outb(0x42, (uint8_t) (Div) );
- 	outb(0x42, (uint8_t) (Div >> 8));
- 
-        //And play the sound using the PC speaker
- 	tmp = inb(0x61);
-  	if (tmp != (tmp | 3)) {
- 		outb(0x61, tmp | 3);
- 	}
- }
+
  
 
 void makeSound(int freq, int time){
 	vPrintCharColor(14, freqToColor(freq));
 	vPrintChar(' ');
 	//speaker_beep(200, 5);
-	sounder();
-	//sounder();
+	sounderC(freq);
+	//while(1){
+	//	vPrintDec(getSeconds());
+	//}
+	/*int aux = getSeconds();
+	while(aux+2>getSeconds()){
+		vPrintDec(aux+2);
+		vPrintChar(':');
+		vPrintDec(getSeconds());
+		vPrintChar(' ');
+	}*/
+	/*sleep(2);
+	stopSounderC();*/
 }
+
+void sounderC(uint16_t freq){
+	outb(0xB6, 0x43);
+	outb((uint8_t)freq, 0x42);
+	outb((uint8_t) (freq>>8), 0x42);
+
+	uint8_t aux = inb(0x61);
+	aux = aux | 3;
+	outb(aux, 0x61);
+}
+
+void stopSounderC(){
+	uint8_t aux = inb(0x61);
+	aux = aux | 252;
+	outb(aux, 0x61);
+}
+

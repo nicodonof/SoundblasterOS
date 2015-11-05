@@ -201,8 +201,7 @@ void piano(){
     clear();
     write(1,"Welcome to the Piano !\n",23);
     do{
-        auxer = 0;
-        read(1,&auxer);
+        auxer = getChar();
         if(auxer != 0 && isValidNote(auxer)){
             syscaller(4,keyToNotefreq(auxer),0,1,0);
         }

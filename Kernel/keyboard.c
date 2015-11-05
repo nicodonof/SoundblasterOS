@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #define LSHIFTR 0xFFFFFFAA
 #define RSHIFTR 0xFFFFFFB6
 #define CAPS 0x3A
@@ -41,13 +43,15 @@ unsigned static char scancodes[2][128] =
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0, /* 109 */
 }};
 
+int release[7] = {0xFFFFFFA0, 0xFFFFFFA1, 0xFFFFFFA2, 0xFFFFFFA3, 0xFFFFFFA4, 0xFFFFFFA5, 0xFFFFFFA6};
+
 
 void write_key(char scancode){
+  vPrintHex(scancode);
   if(scancode == CAPS)
     caps = !caps;
   if(scancode == LSHIFT || scancode == RSHIFT || scancode == RSHIFTR || scancode == LSHIFTR)
     shift = !shift;
-
   if(scancode>0 && scancode<128){
     if(caps && isNotAlpha(scancode) && scancodes[1][scancode] != 0){
       buffer[counter++] = scancodes[shift][scancode];
@@ -64,6 +68,8 @@ void write_key(char scancode){
       boolSelector = 1;
     }
   }
+  if(!keyboardActivated && (0xFFFFFFA0 <= scancode) && (scancode <= 0xFFFFFFA6))
+    stopSounderC();
 
   if(counter == 250)
     counter = 0;
