@@ -1,6 +1,7 @@
 #include <stdint.h>
 typedef enum colors { BLACK, SBLUE, SGREEN, SCYAN, SRED, SPINK, SYELLOW, SWHITE, GREY, BLUE, GREEN, CYAN, RED, PINK, YELLOW, WHITE }; 
 
+extern void sounder();
 
 float notefreqs[7][13] = {
 	{0.0,	16.35,	17.32,	18.35,	19.45,	20.60,	21.83,	23.12,	24.50,	25.96,	27.50,	29.14,	30.87},
@@ -33,7 +34,7 @@ int freqToColor(int freq){
  	uint8_t tmp;
  
         //Set the PIT to the desired frequency
- 	Div = 1193180 / nFrequence;
+ 	Div = nFrequence;
  	outb(0x43, 0xBC);
  	outb(0x42, (uint8_t) (Div) );
  	outb(0x42, (uint8_t) (Div >> 8));
@@ -50,6 +51,6 @@ void makeSound(int freq, int time){
 	vPrintCharColor(14, freqToColor(freq));
 	vPrintChar(' ');
 	//speaker_beep(200, 5);
-	play_sound(1);
+	//sounder();
 	//sounder();
 }

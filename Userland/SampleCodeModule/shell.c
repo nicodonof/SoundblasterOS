@@ -72,34 +72,40 @@ void parser(char * s, int size){
 	
     switch(*s){
         case 'c':
-            if(strcmp(s,"clear"))
+            if(strcmp(s,"clear")){
                 clear();
                 return;
+            }
         break;
         case 'q':
-            if(strcmp(s,"quit"))
+            if(strcmp(s,"quit")){
                 clear();
                 return;
+            }
         break;
         case 'a':
-            if(strcmp(s,"itunes"))
+            if(strcmp(s,"itunes")){
                 clear();
                 return;
+            }
         break;
         case 'h':
-            if(strcmp(s,"help"))
+            if(strcmp(s,"help")){
                 help();
                 return;
+            }
         break;
         case 'b':
-            if(strcmp(s,"beep"))
+            if(strcmp(s,"beep")){
                 beep();
                 return;
+            }
         break;
         case 'p':
-            if(strcmp(s,"piano"))
+            if(strcmp(s,"piano")){
                 piano();
                 return;
+            }
         break;
     }
     write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
