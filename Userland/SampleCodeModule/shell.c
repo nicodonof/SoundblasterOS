@@ -193,15 +193,19 @@ int getSeconds(){
 void playSong(){
     char song[30] = {'g','g','h','j','j','h','g','f','d','d','f','g','g','f','f',
                      'g','g','h','j','j','h','g','f','d','d','f','g','f','d','d'};
+    char time[30] = {   4,4,4,4,4,4,4,4,4,4,4,4,8,2,8,
+                        4,4,4,4,4,4,4,4,4,4,4,4,8,2,8 };
+    char pause[30] = {  4,4,4,4,4,4,4,4,4,4,4,4,4,4,8,
+                        4,4,4,4,4,4,4,4,4,4,4,4,4,4,8 };
     int i = 0;
     while(1){
         for (i=0;i<30;i++){
             syscaller(7,keyToNotefreq(song[i]),0,1,0);
             int taux = getSeconds();
-            while(taux + 4 > getSeconds());
+            while(taux + time[i] > getSeconds());
             syscaller(8,0,0,0,0);
             taux = getSeconds();
-            while(taux + 4 > getSeconds());
+            while(taux + pause[i] > getSeconds());
 
         }
     }

@@ -78,9 +78,7 @@ int main()
 	_sti();
 
 
-	sounderC(5560);
-	sleep(1);
-	stopSounderC();
+	
 	
 	vClear();
 	
