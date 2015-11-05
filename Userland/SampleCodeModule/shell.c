@@ -189,7 +189,7 @@ int note[7] = { 26163, 29366, 32963, 34923, 39200, 44000, 49388};
 int keyToNotefreq(char key){
     int keyToNoteTable[26] = {0,0,0,26163 /* D (DO)*/,0,note[1] /* F (RE)*/,note[2] /* G (MI)*/, note[3] /* H (FA)*/,1,
                               note[4] /* J (SOL)*/,note[5] /* K (LA)*/, note[6] /* L (SI)*/,0,0,1,1,0,1,0,1,1,0,0,0,1,0};
-    return keyToNoteTable[key - 'a'];
+    return (0x1234dd / (keyToNoteTable[key - 'a'] / 100));
 }
 
 int isValidNote(char key){
