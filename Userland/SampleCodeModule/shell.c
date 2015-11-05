@@ -1,7 +1,7 @@
 #include "shell.h"
 
 char auxer = 0;
-
+int time = 0;
 
 void shell(){
     
@@ -175,6 +175,7 @@ void piano(){
     syscaller(5,1,0,0,0);
     clear();
     write(1,"Welcome to the Piano !\n",23);
+    playSong();
     do{
         auxer = getChar();
         if(auxer != 0 && isValidNote(auxer)){
@@ -183,4 +184,24 @@ void piano(){
     } while (auxer != '\n');
     syscaller(5,0,0,0,0);
     clear();    
+}
+
+int getSeconds(){
+    time=0;
+    syscaller(6,0,0,0,&time);
+    return time;
+}
+
+void playSong(){
+    char song[15] = {'g','g','h','j','j','h','g','f','d','d','f','g','g','f','f'};
+    int i = 0;
+    for (i=0;i<15;i++){
+        syscaller(7,keyToNotefreq(song[i]),0,1,0);
+        int taux = getSeconds();
+        while(taux + 1 > getSeconds());
+        syscaller(8,0,0,0,0);
+        int taux = getSeconds();
+        while()
+
+    }
 }

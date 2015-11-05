@@ -62,7 +62,7 @@ void sounderC(uint16_t freq){
 	outb(aux, 0x61);
 }
 
-void stopSounderC(){
+void stopSounderC(int time){
 	uint8_t aux = inb(0x61);
 	aux = aux | 252;
 	outb(aux, 0x61);

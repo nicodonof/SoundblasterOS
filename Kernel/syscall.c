@@ -18,21 +18,28 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			else
 				vPrintN(buff, buffSize);
 			break;
-		case 3:
+		case 3: //clear
 			vClear();
 			break;
-		case 4:
+		case 4: //piano
 			makeSound(fd, buffSize);
 			break;
-		case 5:
+		case 5: //bool key
 			keyboardActivated = !fd;
 			break;
+		case 6: //getseconds
+			*dest = getSeconds();
+			break;
+		case 7: //playtime
+			makeSound(fd,buffSize);
+			break;
+		case 8: //stopsound
+			stopSounderC();
+			break;
+
+
+
 	}
 
 	return 0;
 } 
-
-
-
-//SUDO MODPROBE PCSPKR
-//SUDO apt-get beep

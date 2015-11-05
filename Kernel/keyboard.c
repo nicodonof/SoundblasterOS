@@ -49,7 +49,6 @@ int release[7] = {0xFFFFFFA0, 0xFFFFFFA1, 0xFFFFFFA2, 0xFFFFFFA3, 0xFFFFFFA4, 0x
 
 
 void write_key(char scancode){
-  vPrintHex(scancode);
   if(scancode == CAPS)
     caps = !caps;
   if(scancode == LSHIFT || scancode == RSHIFT || scancode == RSHIFTR || scancode == LSHIFTR)
