@@ -12,19 +12,16 @@ void shell(){
         write(1, "SoundblasterOS> ", 16);
         int i = 0;
         char buffer[75];
+        auxer = 0;
         do{
-            //auxer = 0;
             auxer = getChar();
-            //read(1,&auxer);
             if(auxer != 0){
                 if(auxer == '\b'){
                     if(i>0)
                         i--;
                 } else
                     buffer[i++] = auxer;
-                //write(1,&auxer,1);
-            }
-                
+            }         
         } while (auxer != '\n');
         buffer[i-1] = 0;
         parser(buffer,1);
@@ -84,6 +81,7 @@ void parser(char * s, int size){
         break;
     }
     write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
+    return ;
 }
 
 void beep(){
@@ -163,18 +161,18 @@ int note[7] = { 26163, 29366, 32963, 34923, 39200, 44000, 49388};
 
 int keyToNotefreq(char key){
     int keyToNoteTable[26] = {0,0,0,26163 /* D (DO)*/,0,note[1] /* F (RE)*/,note[2] /* G (MI)*/, note[3] /* H (FA)*/,1,
-                              note[4] /* J (SOL)*/,note[5] /* K (LA)*/, note[6] /* L (SI)*/,0,0,1,1,0,1,0,1,1,0,0,0,1,0};
+                              note[4] /* J (SOL)*/,note[5] /* K (LA)*/, note[6] /* L (SI)*/,0,0,1,1, 0,1,0,1,1,0,0,0,1,0};
     return (0x1234dd / (keyToNoteTable[key - 'a'] / 100));
 }
 
 int isValidNote(char key){
-    return (key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' ||key == 'l');
+    return (key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l');
 }
 
 void piano(){
     syscaller(5,1,0,0,0);
     clear();
-    write(1,"Welcome to the Piano !\n",23);
+    write(1,"Welcome to the Piano ! To exit press the enter key.\n",52);
     playSong();
     do{
         auxer = getChar();
@@ -193,17 +191,18 @@ int getSeconds(){
 }
 
 void playSong(){
-    char song[15] = {'g','g','h','j','j','h','g','f','d','d','f','g','g','f','f'};
+    char song[30] = {'g','g','h','j','j','h','g','f','d','d','f','g','g','f','f',
+                     'g','g','h','j','j','h','g','f','d','d','f','g','f','d','d'};
     int i = 0;
     while(1){
-    for (i=0;i<15;i++){
-        syscaller(7,keyToNotefreq(song[i]),0,1,0);
-        int taux = getSeconds();
-        while(taux + 1 > getSeconds());
-        syscaller(8,0,0,0,0);
-        taux = getSeconds();
-        while(taux + 0 > getSeconds());
+        for (i=0;i<30;i++){
+            syscaller(7,keyToNotefreq(song[i]),0,1,0);
+            int taux = getSeconds();
+            while(taux + 4 > getSeconds());
+            syscaller(8,0,0,0,0);
+            taux = getSeconds();
+            while(taux + 4 > getSeconds());
 
-    }
+        }
     }
 }

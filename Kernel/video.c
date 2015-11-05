@@ -140,11 +140,9 @@ void vScroller(){
 	row--;
 }
 
-
+extern timer;
 int pianoModer(){
-	if(timerTick++ == 9 || pianoMode){
-		//vPrint("sda");
-		timerTick = 0;
+	if(pianoMode){
 		vAntiScroller();
 	}
 }

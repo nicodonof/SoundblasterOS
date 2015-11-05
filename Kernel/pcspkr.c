@@ -23,6 +23,7 @@ int freqToColorAndPos(int freq){
 			return i+1;
 		} 
 	}
+	return 1;
 }
 
 

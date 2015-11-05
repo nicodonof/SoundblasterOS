@@ -23,14 +23,6 @@ int getTimer(){
 void sleep(int time){
 	int aux = seconds;
 	int i = 0;
-	while(aux+time>seconds){
-		if(!(i%1000000)){
-	/*		vPrintDec(aux+time);
-			vPrint(":");
-			vPrintDec(seconds);
-			vPrintChar(' ');*/
-		}
-		i++;
-	}
+	while(aux+time>seconds);
 	return;
 }
