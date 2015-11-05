@@ -195,11 +195,15 @@ int getSeconds(){
 void playSong(){
     char song[15] = {'g','g','h','j','j','h','g','f','d','d','f','g','g','f','f'};
     int i = 0;
+    while(1){
     for (i=0;i<15;i++){
         syscaller(7,keyToNotefreq(song[i]),0,1,0);
         int taux = getSeconds();
         while(taux + 1 > getSeconds());
         syscaller(8,0,0,0,0);
-        
+        taux = getSeconds();
+        while(taux + 0 > getSeconds());
+
+    }
     }
 }

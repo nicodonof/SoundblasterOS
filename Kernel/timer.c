@@ -16,6 +16,10 @@ int getSeconds(){
 	return seconds;
 }
 
+int getTimer(){
+	return timer;
+}
+
 void sleep(int time){
 	int aux = seconds;
 	int i = 0;

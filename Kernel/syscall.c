@@ -30,7 +30,7 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			pianoMode = fd;
 			break;
 		case 6: //getseconds
-			*dest = getSeconds();
+			*dest = getTimer();
 			break;
 		case 7: //playtime
 			makeSound(fd,buffSize);
