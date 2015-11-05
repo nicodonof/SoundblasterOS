@@ -12,29 +12,53 @@ extern write_key
 extern keyboarddddd
 extern syscallHandler
 
+%macro pusha 0
+    push rax
+    push rbx
+    push rcx
+    push rdx
+    push rdi
+    push rsi
+%endmacro
+
+%macro popa 0
+    pop rsi
+    pop rdi
+    pop rdx
+    pop rcx
+    pop rbx
+    pop rax
+%endmacro
+
 timerHandler:
-	call keyboarddddd
+    
+    pusha
+    
+    call keyboarddddd
+    
     call _EOI
+
+    popa
 	iretq
 
 keyboardHandler:
-    push rax
+    pusha
 
     mov rax, 0
     in al,60h
     mov rdi, rax
 
     call write_key
-
-    pop rax
     
     call _EOI
     
-
+    popa
     iretq
 
 syscallHandlerA:
+    pusha
     call syscallHandler
+    popa
     iretq
 
 
@@ -59,9 +83,9 @@ _sti:
 	ret
 
 _EOI:
-    push rax
+    
     mov rax, 0
     mov al, 0x20
     out 0x20, al
-    pop rax
+    
     ret

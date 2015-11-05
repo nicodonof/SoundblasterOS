@@ -46,47 +46,10 @@ int freqToColor(int freq){
  }
  
 
- //make it shutup
- /*void nosound() {
- 	uint8_t tmp = inb(0x61) & 0xFC;
- 
- 	outb(0x61, tmp);
- }*/
-
-
-
-
-void speaker_on()
-{
-	outb(0x61,inb(0x61) | 3);
-}
-
-void speaker_off()
-{
-	outb(0x61,inb(0x61) & 3);
-}
-
-void speaker_setFrequency(uint8_t frequency)
-{
-	uint8_t divisor;
-	divisor = 1193180L/frequency;
-	outb(0x43,0xBC);
-	outb(0x42,divisor&0xFF);
-	outb(0x42,divisor >> 8);
-}
-
-void speaker_beep(uint8_t frequency, int seconds)
-{
-	speaker_setFrequency(frequency);
-	speaker_on();
-	//sleep(seconds);
-	//speaker_off();
-}
-
 void makeSound(int freq, int time){
 	vPrintCharColor(14, freqToColor(freq));
 	vPrintChar(' ');
-	speaker_beep(200, 5);
-	//play_sound(1000);
+	//speaker_beep(200, 5);
+	play_sound(1);
 	//sounder();
 }

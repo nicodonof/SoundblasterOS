@@ -21,14 +21,14 @@ void shell(){
         do{
             //auxer = 0;
             auxer = getChar();
-           //read(1,&auxer);
+            //read(1,&auxer);
             if(auxer != 0){
                 if(auxer == '\b'){
                     if(i>0)
                         i--;
                 } else
                     buffer[i++] = auxer;
-                write(1,&auxer,1);
+                //write(1,&auxer,1);
             }
                 
         } while (auxer != '\n');
