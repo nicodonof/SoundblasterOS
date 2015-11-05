@@ -51,6 +51,6 @@ void makeSound(int freq, int time){
 	vPrintCharColor(14, freqToColor(freq));
 	vPrintChar(' ');
 	//speaker_beep(200, 5);
-	//sounder();
+	sounder();
 	//sounder();
 }
