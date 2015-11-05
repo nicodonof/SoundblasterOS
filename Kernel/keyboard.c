@@ -1,3 +1,5 @@
+#include "keyboard.h"
+
 #define LSHIFTR 0xFFFFFFAA
 #define RSHIFTR 0xFFFFFFB6
 #define CAPS 0x3A

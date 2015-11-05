@@ -14,7 +14,7 @@ $(MODULE): $(OBJECTS) $(ASMOBJECTS) $(STATICLIBS) $(ENTRYOBJ)
 	$(LD) $(LDFLAGS) -T sampleCodeModule.ld -o ../$(MODULE) $(ENTRYOBJ) $(OBJECTS) $(ASMOBJECTS) $(STATICLIBS)
 
 %.o: %.c
-	$(GCC) $(GCCFLAGS) -c $< -o $@
+	$(GCC) $(GCCFLAGS) -I./include -c $< -o $@
 %.o: %.asm
 	$(ASM) $(ASMFLAGS) $< -o $@
 	
