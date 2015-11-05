@@ -197,6 +197,7 @@ int isValidNote(char key){
 }
 
 void piano(){
+    syscaller(5,1,0,0,0);
     clear();
     write(1,"Welcome to the Piano !\n",23);
     do{
@@ -206,5 +207,6 @@ void piano(){
             syscaller(4,keyToNotefreq(auxer),0,1,0);
         }
     } while (auxer != '\n');
-    clear();
+    syscaller(5,0,0,0,0);
+    clear();    
 }
