@@ -170,16 +170,24 @@ int isValidNote(char key){
 }
 
 void piano(){
-    syscaller(5,1,0,0,0);
     clear();
     write(1,"Welcome to the Piano ! To exit press the enter key.\n",52);
-    playSong();
+    write(1,"1. Piano\n", 9);
+    write(1,"2. Ode To Joy\n", 14);
     do{
         auxer = getChar();
-        if(auxer != 0 && isValidNote(auxer)){
-            syscaller(4,keyToNotefreq(auxer),0,1,0);
-        }
-    } while (auxer != '\n');
+    } while (auxer != '1' && auxer != '2');
+    syscaller(5,1,0,0,0);
+    if(auxer == '2')
+        playSong();
+    else{
+        do{
+            auxer = getChar();
+            if(auxer != 0 && isValidNote(auxer)){
+                syscaller(4,keyToNotefreq(auxer),0,1,0);
+            }
+        } while (auxer != '\n');
+    }
     syscaller(5,0,0,0,0);
     clear();    
 }
@@ -198,24 +206,27 @@ void playSong(){
                  };
     char time[62] = {   4,4,4,4,4,4,4,4,4,4,4,4,8,2,8,
                         4,4,4,4,4,4,4,4,4,4,4,4,8,2,8,
-                        4,4,4,4,4,2,2,4,4,4,2,2,4,4,4,4,8,
-                        4,4,4,4,4,4,4,4,4,4,4,4,8,2,8
+                        4,4,4,4,4,2,2,4,4,4,2,2,4,4,4,4,4,
+                        12,2,4,4,4,4,4,4,4,4,4,4,8,2,8
                 };
     char pause[62] = {  4,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
                         4,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
-                        4,4,4,4,2,2,4,4,4,2,2,4,4,4,4,4,8,
-                        4,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
+                        4,4,4,4,4,2,2,4,4,4,2,2,4,4,4,4,4,
+                        2,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
                 };
     int i = 0;
     while(1){
         for (i=0;i<62;i++){
             syscaller(7,keyToNotefreq(song[i]),0,1,0);
-            int taux = getSeconds();
-            while(taux + time[i] > getSeconds());
+            sleep(time[i]);
             syscaller(8,0,0,0,0);
-            taux = getSeconds();
-            while(taux + pause[i] > getSeconds());
+            sleep(pause[i]);
 
         }
     }
+}
+
+void sleep(int time){
+    int taux = getSeconds();
+    while(taux + time > getSeconds());
 }
