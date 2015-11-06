@@ -63,7 +63,8 @@ void write_key(char scancode){
       boolSelector = 1;
     }
   }
-  if(!keyboardActivated && ((0xFFFFFFA0 <= scancode) && (scancode <= 0xFFFFFFA6)))
+  if(!keyboardActivated && ((0xFFFFFFA0 <= scancode) && (scancode <= 0xFFFFFFA6)) || 
+                            ((0xFFFFFF93 <= scancode) && (scancode <= 0xFFFFFF98) && (scancode != 0xFFFFFF95)))
     stopSounderC();
 
   if(counter == 250)
