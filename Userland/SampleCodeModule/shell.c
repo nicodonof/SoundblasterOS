@@ -202,7 +202,7 @@ int getSeconds(){
     return time;
 }
 
-#define freq(a,b) (0x1234dd/notefreqs[b-'0'-1][a-'A'])
+#define freq(a,b) (0x1234dd/notefreqs[a-'0'-1][b-'A'])
 
 int getRealTime(char c){
     if(c=='0')
@@ -211,30 +211,10 @@ int getRealTime(char c){
 }
 
 void playSong1(){
-    char song[62] = {'g','g','h','j','j','h','g','f','d','d','f','g','g','f','f',
-                     'g','g','h','j','j','h','g','f','d','d','f','g','f','d','d',
-                     'f','f','g','d','f','g','h','g','d','f','g','h','g','f','d', 'f', 'a',
-                     'g','g','h','j','j','h','g','f','d','d','f','g','f','d','d'
-                 };
-    char time[62] = {   4,4,4,4,4,4,4,4,4,4,4,4,8,2,8,
-                        4,4,4,4,4,4,4,4,4,4,4,4,8,2,8,
-                        4,4,4,4,4,2,2,4,4,4,2,2,4,4,4,4,4,
-                        12,2,4,4,4,4,4,4,4,4,4,4,8,2,8
-                };
-    char pause[62] = {  4,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
-                        4,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
-                        4,4,4,4,4,2,2,4,4,4,2,2,4,4,4,4,4,
-                        12,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
-                };
-    
     while(1){
         int i = 0;
         while(memory[i]!=0){
-            int aux = notefreqs[memory[i]-'0'-1][memory[i+1]-'A'];
-            write(1,&aux,0);
-            putChar(memory[i]);
-            putChar(memory[i+1]);
-            syscaller(7,freq(memory[i], memory[i+1]) ,0,1,0);
+            syscaller(7,freq(memory[i+1], memory[i]) ,0,1,0);
             i+=2;
             sleep(getRealTime(memory[i++]));
             syscaller(8,0,0,0,0);
