@@ -99,10 +99,11 @@ void itunes(){
     write(1,"Itunes Revolutionary musicPlayer!\nMusic available (press the number to play):\n",78);
     write(1,"    1. Ode To Joy\n", 18);
     write(1,"    2. Tetris Theme\n", 21);
+    write(1,"    3. Mario Theme\n", 20);
 
     do{
         auxer = getChar();
-    } while (auxer != '1' && auxer != '2');
+    } while (auxer != '1' && auxer != '2' && auxer != '3');
     clear();
     syscaller(5,1,0,0,0);
         playSong(auxer - '1');
@@ -236,8 +237,8 @@ void playSong1(){
 }
 #define ODETOJOY (uint8_t*) 0x500000
 #define TETRIS (uint8_t*) 0x5000F9
-
-static uint8_t * const songsDirections[2] = {ODETOJOY, TETRIS};
+#define MARIO (uint8_t*) 0x5001DA
+static uint8_t * const songsDirections[3] = {ODETOJOY, TETRIS, MARIO};
 
 void playSong(int song){
     while(1){
