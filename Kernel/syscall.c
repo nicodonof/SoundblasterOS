@@ -18,7 +18,7 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			break;
 		case 2: //write
 			if(buffSize == 0)
-				vPrintDec((char)*buff);
+				vPrintDec(*buff);
 			if(buffSize == 1)
 				vPrintChar(*buff);
 			else
@@ -43,7 +43,9 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 		case 8: //stopsound
 			stopSounderC();
 			break;
+		case 9:
 
+			break;
 
 
 	}
