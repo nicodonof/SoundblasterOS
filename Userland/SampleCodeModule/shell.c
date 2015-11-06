@@ -57,9 +57,9 @@ void parser(char * s, int size){
                 return;
             }
         break;
-        case 'a':
+        case 'i':
             if(strcmp(s,"itunes")){
-                clear();
+                itunes();
                 return;
             }
         break;
@@ -90,6 +90,24 @@ void beep(){
     int auxFreq = 44000;// 44100
     write(1,"BEEP !\n",7);
     syscaller(4,auxFreq,0,1/*time*/,0);//en size va el time en secs(?))
+}
+
+
+
+void itunes(){
+    clear();
+    write(1,"Itunes Revolutionary musicPlayer!\nMusic available (press the number to play):\n",78);
+    write(1,"    1. Ode To Joy\n", 18);
+    write(1,"    2. Tetris Theme\n", 21);
+
+    do{
+        auxer = getChar();
+    } while (auxer != '1' && auxer != '2');
+    clear();
+    syscaller(5,1,0,0,0);
+        playSong(auxer - '1');
+    syscaller(5,0,0,0,0);
+    clear(); 
 }
 
 void clear(){
@@ -162,13 +180,13 @@ int notefreqs[7][12] = {
 int note[7] = { 26163, 29366, 32963, 34923, 39200, 44000, 49388};
 
 int keyToNotefreq(char key){
-    int keyToNoteTable[26] = {22000/*A (LA mas grave) */,0,0,26163 /* D (DO)*/,0,note[1] /* F (RE)*/,note[2] /* G (MI)*/, note[3] /* H (FA)*/,41530,
-                              note[4] /* J (SOL)*/,note[5] /* K (LA)*/, note[6] /* L (SI)*/,0,0,1,1, 0,1,24694,1,1,0,0,0,1,0};
+    int keyToNoteTable[26] = {0,0,0,26163 /* D (DO)*/,0,note[1] /* F (RE)*/,note[2] /* G (MI)*/, note[3] /* H (FA)*/,41530,
+                              note[4] /* J (SOL)*/,note[5] /* K (LA)*/, note[6] /* L (SI)*/,0,0,1,1, 0,1,0,1,1,0,0,0,1,0};
     return (0x1234dd / (keyToNoteTable[key - 'a'] / 100));
 }
 
 int isValidNote(char key){
-    return (key == 's' || key == 'i' || key == 'a' || key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l');
+    return (key == 'i' || key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l');
 }
 
 static uint8_t * const memory = (uint8_t*)0x5000F9;
@@ -176,24 +194,13 @@ static uint8_t * const memory = (uint8_t*)0x5000F9;
 void piano(){
     clear();
     write(1,"Welcome to the Piano ! To exit press the enter key.\n",52);
-    write(1,memory,strlen(memory));
-    write(1,"1. Piano\n", 9);
-    write(1,"2. Ode To Joy\n", 14);
+    syscaller(5,1,0,0,0);
     do{
         auxer = getChar();
-    } while (auxer != '1' && auxer != '2');
-    clear();
-    syscaller(5,1,0,0,0);
-    if(auxer == '2')
-        playSong1();
-    else{
-        do{
-            auxer = getChar();
-            if(auxer != 0 && isValidNote(auxer)){
-                syscaller(4,keyToNotefreq(auxer),0,1,0);
-            }
-        } while (auxer != '\n');
-    }
+        if(auxer != 0 && isValidNote(auxer)){
+            syscaller(4,keyToNotefreq(auxer),0,1,0);
+        }
+    } while (auxer != '\n');
     syscaller(5,0,0,0,0);
     clear();    
 }
@@ -227,9 +234,24 @@ void playSong1(){
         }
     }
 }
+#define ODETOJOY (uint8_t*) 0x500000
+#define TETRIS (uint8_t*) 0x5000F9
 
+static uint8_t * const songsDirections[2] = {ODETOJOY, TETRIS};
 
+void playSong(int song){
+    while(1){
+        int i = 0;
+        while(songsDirections[song][i]!=0){
+            syscaller(7,freq(songsDirections[song][i+1], songsDirections[song][i]) ,0,1,0);
+            i+=2;
+            sleep(getRealTime(songsDirections[song][i++]));
+            syscaller(8,0,0,0,0);
+            sleep(getRealTime(songsDirections[song][i++]));
 
+        }
+    }
+}
 
 
 
