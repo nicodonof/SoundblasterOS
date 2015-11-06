@@ -181,13 +181,17 @@ int notefreqs[7][12] = {
 int note[7] = { 26163, 29366, 32963, 34923, 39200, 44000, 49388};
 
 int keyToNotefreq(char key){
-    int keyToNoteTable[26] = {0,0,0,26163 /* D (DO)*/,0,note[1] /* F (RE)*/,note[2] /* G (MI)*/, note[3] /* H (FA)*/,41530,
-                              note[4] /* J (SOL)*/,note[5] /* K (LA)*/, note[6] /* L (SI)*/,0,0,1,1, 0,1,0,1,1,0,0,0,1,0};
-    return (0x1234dd / (keyToNoteTable[key - 'a'] / 100));
+    int keyToNoteTable[26] = {0,0,0,notefreqs[4][0] /* D (DO)*/,0,notefreqs[4][2]/* F (RE)*/,notefreqs[4][4]/* G (MI)*/,
+                              notefreqs[4][5] /* H (FA)*/,notefreqs[4][8],
+                              notefreqs[4][7] /* J (SOL)*/,notefreqs[4][9]/* K (LA)*/, 
+                              notefreqs[4][11] /* L (SI)*/,0,0,notefreqs[4][10],0, 0,notefreqs[4][1],
+                              0,notefreqs[4][3],notefreqs[4][6],0,0,0,0,0};
+    return (0x1234dd / (keyToNoteTable[key - 'a']));
 }
 
 int isValidNote(char key){
-    return (key == 'i' || key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l');
+    return (key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l' 
+            || key == 'r' || key == 't' || key == 'u' ||key == 'i' ||key == 'o');
 }
 
 static uint8_t * const memory = (uint8_t*)0x5000F9;
