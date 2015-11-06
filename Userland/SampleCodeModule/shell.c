@@ -57,9 +57,9 @@ void parser(char * s, int size){
                 return;
             }
         break;
-        case 'a':
+        case 'i':
             if(strcmp(s,"itunes")){
-                clear();
+                itunes();
                 return;
             }
         break;
@@ -90,6 +90,24 @@ void beep(){
     int auxFreq = 44000;// 44100
     write(1,"BEEP !\n",7);
     syscaller(4,auxFreq,0,1/*time*/,0);//en size va el time en secs(?))
+}
+
+
+
+void itunes(){
+    clear();
+    write(1,"Itunes Revolutionary musicPlayer!\nMusic available (press the number to play):\n",78);
+    write(1,"    1. Ode To Joy\n", 18);
+    write(1,"    2. Tetris Theme\n", 21);
+
+    do{
+        auxer = getChar();
+    } while (auxer != '1' && auxer != '2');
+    clear();
+    syscaller(5,1,0,0,0);
+        playSong(auxer - '0');
+    syscaller(5,0,0,0,0);
+    clear(); 
 }
 
 void clear(){
@@ -225,9 +243,24 @@ void playSong1(){
         }
     }
 }
+#define ODETOJOY (uint8_t*) 0x500000
+#define TETRIS (uint8_t*) 0x5000F9
 
+static uint8_t * const songsDirections[2] = {ODETOJOY, TETRIS};
 
+void playSong(int song){
+    while(1){
+        int i = 0;
+        while(memory[i]!=0){
+            syscaller(7,freq(memory[i+1], memory[i]) ,0,1,0);
+            i+=2;
+            sleep(getRealTime(memory[i++]));
+            syscaller(8,0,0,0,0);
+            sleep(getRealTime(memory[i++]));
 
+        }
+    }
+}
 
 
 
