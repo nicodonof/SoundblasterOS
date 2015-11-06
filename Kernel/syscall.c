@@ -1,6 +1,11 @@
 #include <stdint.h>
-extern keyboardActivated;
-extern pianoMode;
+#include "keyboard.h"
+#include "video.h"
+#include "pcspkr.h"
+#include "timer.h"
+
+extern int keyboardActivated;
+extern int pianoMode;
 
 uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 	char aux; //DESPUES SACAR EL SWITCH

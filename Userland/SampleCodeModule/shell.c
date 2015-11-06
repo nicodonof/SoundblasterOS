@@ -1,4 +1,6 @@
 #include "shell.h"
+#include "lib.h"
+#include "int80.h"
 
 char auxer = 0;
 int time = 0;

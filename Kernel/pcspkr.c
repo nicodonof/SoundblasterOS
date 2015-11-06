@@ -1,9 +1,11 @@
-#include <stdint.h>
-typedef enum colors { BLACK, SBLUE, SGREEN, SCYAN, SRED, SPINK, SYELLOW, SWHITE, GREY, BLUE, GREEN, CYAN, RED, PINK, YELLOW, WHITE }; 
-
+#include "pcspkr.h"
+#include "video.h"
+#include "libasm.h"
 extern void sounder();
 extern void stop_sounder();
 void sleepT(int);
+
+typedef enum colors { BLACK, SBLUE, SGREEN, SCYAN, SRED, SPINK, SYELLOW, SWHITE, GREY, BLUE, GREEN, CYAN, RED, PINK, YELLOW, WHITE }; 
 
 float notefreqs[7][13] = {
 	{0.0,	16.35,	17.32,	18.35,	19.45,	20.60,	21.83,	23.12,	24.50,	25.96,	27.50,	29.14,	30.87},
@@ -58,7 +60,7 @@ void sounderC(uint16_t freq){
 	outb(aux, 0x61);
 }
 
-void stopSounderC(int time){
+void stopSounderC(){
 	uint8_t aux = inb(0x61);
 	aux = aux | 252;
 	outb(aux, 0x61);

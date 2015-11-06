@@ -1,5 +1,5 @@
-int pianoModer();
-
+#include "timer.h"
+#include "keyboard.h"
 int seconds = 0;
 int timer = 0;
 
@@ -22,7 +22,6 @@ int getTimer(){
 
 void sleep(int time){
 	int aux = seconds;
-	int i = 0;
 	while(aux+time>seconds);
 	return;
 }

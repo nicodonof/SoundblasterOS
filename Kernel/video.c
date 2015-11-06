@@ -140,8 +140,8 @@ void vScroller(){
 	row--;
 }
 
-extern timer;
-int pianoModer(){
+extern int timer;
+void pianoModer(){
 	if(pianoMode){
 		vAntiScroller();
 	}

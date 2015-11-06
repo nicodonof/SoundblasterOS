@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "int80.h"
 
 static char dest = 0;
 char c = 0;

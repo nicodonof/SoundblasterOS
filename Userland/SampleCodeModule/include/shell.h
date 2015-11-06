@@ -1,8 +1,6 @@
 #ifndef __SOUNDBLASTEROS__SHELL__
 #define __SOUNDBLASTEROS__SHELL__
 
-#include "lib.h"
-
 char getChar();
 void putChar(char c);
 void write(int fd, char * buff, int size);
@@ -18,10 +16,12 @@ void piano();
 
 int keyToNotefreq(char key);
 int isValidNote(char key);
-
+void playSong();
 
 void shell();
 void printOsName();
 void help();
+void sleep(int time);
+int getSeconds();
 
 #endif

@@ -31,6 +31,10 @@ void sounderC(int freq);
 
 void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access);
 
+void picMasterMask(uint8_t num);
+void picSlaveMask(uint8_t num);
+void _sti();
+
 void clearBSS(void * bssAddress, uint64_t bssSize)
 {
 	memset(bssAddress, 0, bssSize);
