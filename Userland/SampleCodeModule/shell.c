@@ -160,13 +160,13 @@ float notefreqs[7][13] = {
 int note[7] = { 26163, 29366, 32963, 34923, 39200, 44000, 49388};
 
 int keyToNotefreq(char key){
-    int keyToNoteTable[26] = {0,0,0,26163 /* D (DO)*/,0,note[1] /* F (RE)*/,note[2] /* G (MI)*/, note[3] /* H (FA)*/,1,
+    int keyToNoteTable[26] = {19600/*A (LA mas grave) */,0,0,26163 /* D (DO)*/,0,note[1] /* F (RE)*/,note[2] /* G (MI)*/, note[3] /* H (FA)*/,1,
                               note[4] /* J (SOL)*/,note[5] /* K (LA)*/, note[6] /* L (SI)*/,0,0,1,1, 0,1,0,1,1,0,0,0,1,0};
     return (0x1234dd / (keyToNoteTable[key - 'a'] / 100));
 }
 
 int isValidNote(char key){
-    return (key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l');
+    return (key == 'a' || key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l');
 }
 
 void piano(){
@@ -191,15 +191,24 @@ int getSeconds(){
 }
 
 void playSong(){
-    char song[30] = {'g','g','h','j','j','h','g','f','d','d','f','g','g','f','f',
-                     'g','g','h','j','j','h','g','f','d','d','f','g','f','d','d'};
-    char time[30] = {   4,4,4,4,4,4,4,4,4,4,4,4,8,2,8,
-                        4,4,4,4,4,4,4,4,4,4,4,4,8,2,8 };
-    char pause[30] = {  4,4,4,4,4,4,4,4,4,4,4,4,4,4,8,
-                        4,4,4,4,4,4,4,4,4,4,4,4,4,4,8 };
+    char song[62] = {'g','g','h','j','j','h','g','f','d','d','f','g','g','f','f',
+                     'g','g','h','j','j','h','g','f','d','d','f','g','f','d','d',
+                     'f','f','g','d','f','g','h','g','d','f','g','h','g','f','d', 'f', 'a',
+                     'g','g','h','j','j','h','g','f','d','d','f','g','f','d','d'
+                 };
+    char time[62] = {   4,4,4,4,4,4,4,4,4,4,4,4,8,2,8,
+                        4,4,4,4,4,4,4,4,4,4,4,4,8,2,8,
+                        4,4,4,4,4,2,2,4,4,4,2,2,4,4,4,4,8,
+                        4,4,4,4,4,4,4,4,4,4,4,4,8,2,8
+                };
+    char pause[62] = {  4,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
+                        4,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
+                        4,4,4,4,2,2,4,4,4,2,2,4,4,4,4,4,8,
+                        4,4,4,4,4,4,4,4,4,4,4,4,4,2,8,
+                };
     int i = 0;
     while(1){
-        for (i=0;i<30;i++){
+        for (i=0;i<62;i++){
             syscaller(7,keyToNotefreq(song[i]),0,1,0);
             int taux = getSeconds();
             while(taux + time[i] > getSeconds());
