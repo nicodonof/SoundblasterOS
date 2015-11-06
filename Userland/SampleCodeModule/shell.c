@@ -189,7 +189,7 @@ int isValidNote(char key){
     return (key == 's' || key == 'i' || key == 'a' || key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l');
 }
 
-static uint8_t * const memory = (uint8_t*)0x500000;
+static uint8_t * const memory = (uint8_t*)0x5000F9;
 
 void piano(){
     clear();
@@ -227,6 +227,8 @@ int getSeconds(){
 int getRealTime(char c){
     if(c=='0')
         return 1;
+    if(c=='5')
+        return 5;
     return (c-'0')*2;
 }
 
@@ -265,6 +267,7 @@ void playSong(int song){
 
 
 void playSong2(){
+    
     /*char song[56] = {E,B4,C,D,C,B4,
                      A4,A4,C,E,D,C,
                      B4,C,D,E,
@@ -277,7 +280,11 @@ void playSong2(){
                      GS,B4,E,C,D,B4,
                      C,E,A,GS
                  };*/
-    char time[56] = {   4,2,2,4,2,2,4,2,2,4,2,2,8,4,4,
+    //char song[56] = {   E,L,A,C,A,L,J,J,A,E,C,A,L,A,C,E,A,J,J,J,L,A,C,F,J,H,F,E,A,E,C,A,L,L,A,C,E,A,J,J,E,A,C,L,A,J,I,L,E,A,C,L,A,E,J,I
+
+    
+                     
+    char time[56] = {   4,2,2,4 ,2,2, 4,2,2, 4,2,2,8,4,4,
                         4,4,4,2,2,2,2,5,2,4,2,2,8,2,4,
                         2,2,4,2,2,4,4,4,4,4,8,8,8,8,8,
                         8,8,4,4,8,8,8,8,4,8,8
