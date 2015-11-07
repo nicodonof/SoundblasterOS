@@ -4,7 +4,8 @@
 extern void sounder();
 extern void stop_sounder();
 void sleepT(int);
-
+int sound = 0;
+int lastFreq = 0;
 typedef enum colors { BLACK, SBLUE, SGREEN, SCYAN, SRED, SPINK, SYELLOW, SWHITE, GREY, BLUE, GREEN, CYAN, RED, PINK, YELLOW, WHITE }; 
 int notefreqs[7][12] = {
     {  16,  17,  18,  19,  20,  21,  23,  24,  26,  27,  29,  30},
@@ -33,7 +34,9 @@ int freqToColorAndPos(int freq){
 void makeSound(int freq, int time){
 	int aux = freqToColorAndPos(freq);
 	vPrintCharColorInPos(14, aux,2 ,aux * 6);
-	sounderC(freq);
+	if(!sound || lastFreq != freq)
+		sounderC(freq);	
+	lastFreq = freq;
 }
 
 void sounderC(uint16_t freq){
@@ -42,13 +45,17 @@ void sounderC(uint16_t freq){
 	outb((uint8_t) (freq>>8), 0x42);
 
 	uint8_t aux = inb(0x61);
-	aux = aux | 3;
-	outb(aux, 0x61);
+	if (aux!= aux | 3){
+		sound = 1;
+		aux = aux | 3;
+		outb(aux, 0x61);
+	}
 }
 
 void stopSounderC(){
 	uint8_t aux = inb(0x61);
 	aux = aux | 252;
 	outb(aux, 0x61);
+	sound = 0;
 }
 
