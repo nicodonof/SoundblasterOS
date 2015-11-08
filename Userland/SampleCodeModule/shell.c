@@ -87,9 +87,11 @@ void parser(char * s, int size){
 }
 
 void beep(){
-    int auxFreq = 44000;// 44100
+    int auxFreq = 0x1234dd / 440;// 44100
     write(1,"BEEP !\n",7);
-    syscaller(4,auxFreq,0,1/*time*/,0);//en size va el time en secs(?))
+        syscaller(4,auxFreq,0,1/*time*/,0);//en size va el time en secs(?))
+    sleep(5);
+    syscaller(8,0,0,0,0);
 }
 
 
