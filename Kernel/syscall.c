@@ -28,7 +28,7 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			vClear();
 			break;
 		case 4: //piano
-			makeSound(fd, buffSize);
+			playPianoKey(fd);
 			break;
 		case 5: //bool key
 			keyboardActivated = !fd;
@@ -42,9 +42,6 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			break;
 		case 8: //stopsound
 			stopSounderC();
-			break;
-		case 9:
-
 			break;
 
 

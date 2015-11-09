@@ -1,7 +1,8 @@
-#include "shell.h"
 #include "lib.h"
+#include "shell.h"
 #include "int80.h"
-
+static uint8_t * const songsDirections[3] = {ODETOJOY, TETRIS, MARIO};
+static uint8_t * const memory = (uint8_t*)0x5000F9;
 char auxer = 0;
 int time = 0;
 
@@ -118,33 +119,6 @@ void clear(){
     printOsName();
 }
 
-int strcmp(const char * str1, const char * str2){
-    int i;
-    for(i=0;str1[i] != 0;i++)
-        if(str1[i] != str2[i])
-            return 0;
-    if(str2[i] != 0)
-        return 0;
-    return 1;
-}
-
-
-
-int strlen(const char * s){
-    int n=0;
-    while(*s++ != 0)
-        n++;
-    return n;
-}
-
-void str0(char * s){
-    while(*s){
-        if(*s == ' ')
-            *s = 0;
-        s++;
-    }
-}
-
 void help(){
     char *clear  = "clear    Clears the terminal screen\n";
     char *quit   = "quit     Quits the OS\n";
@@ -161,42 +135,12 @@ void help(){
     write(1,help,strlen(help));
 }
 
-int notefreqs[7][12] = {
-    {  16,  17,  18,  19,  20,  21,  23,  24,  26,  27,  29,  30},
-    {  32,  34,  36,  38,  41,  43,  46,  49,  52,  55,  58,  61},
-    {  65,  69,  73,  77,  82,  87,  92,  98,  104, 110, 116, 123},
-    {  130, 138, 146, 155, 164, 174, 185, 196, 207, 220, 233, 247},
-    {  261, 277, 293, 311, 329, 349, 369, 392, 415, 440, 466, 493}, // MEDIO
-    {  523, 554, 587, 622, 659, 698, 739, 784, 830, 880, 932, 987},
-    {  1046,1108,1174,1244,1318,1396,1479,1567,1661,1760,1864,1975}
-};
-
-/*
-    DO D
-    RE F
-    MI G
-    FA H
-    SOL I
-    LA J
-    Si K
-*/
-int note[7] = { 26163, 29366, 32963, 34923, 39200, 44000, 49388};
-
-int keyToNotefreq(char key){
-    int keyToNoteTable[26] = {0,0,0,notefreqs[4][0] /* D (DO)*/,0,notefreqs[4][2]/* F (RE)*/,notefreqs[4][4]/* G (MI)*/,
-                              notefreqs[4][5] /* H (FA)*/,notefreqs[4][8],
-                              notefreqs[4][7] /* J (SOL)*/,notefreqs[4][9]/* K (LA)*/, 
-                              notefreqs[4][11] /* L (SI)*/,0,0,notefreqs[4][10],0, 0,notefreqs[4][1],
-                              0,notefreqs[4][3],notefreqs[4][6],0,0,0,0,0};
-    return (0x1234dd / (keyToNoteTable[key - 'a']));
-}
 
 int isValidNote(char key){
     return (key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l' 
             || key == 'r' || key == 't' || key == 'u' ||key == 'i' ||key == 'o');
 }
 
-static uint8_t * const memory = (uint8_t*)0x5000F9;
 
 void piano(){
     clear();
@@ -205,7 +149,7 @@ void piano(){
     do{
         auxer = getChar();
         if(auxer != 0 && isValidNote(auxer)){
-            syscaller(4,keyToNotefreq(auxer),0,1,0);
+            syscaller(4,auxer,0,1,0);
         }
     } while (auxer != '\n');
     syscaller(5,0,0,0,0);
@@ -218,7 +162,7 @@ int getSeconds(){
     return time;
 }
 
-#define freq(a,b) (0x1234dd/notefreqs[a-'0'-1][b-'A'])
+
 
 int getRealTime(char c){
     if(c=='0')
@@ -228,29 +172,12 @@ int getRealTime(char c){
     return (c-'0')*2;
 }
 
-void playSong1(){
-    while(1){
-        int i = 0;
-        while(memory[i]!=0){
-            syscaller(7,freq(memory[i+1], memory[i]) ,0,1,0);
-            i+=2;
-            sleep(getRealTime(memory[i++]));
-            syscaller(8,0,0,0,0);
-            sleep(getRealTime(memory[i++]));
-
-        }
-    }
-}
-#define ODETOJOY (uint8_t*) 0x500000
-#define TETRIS (uint8_t*) 0x5000F9
-#define MARIO (uint8_t*) 0x5001DA
-static uint8_t * const songsDirections[3] = {ODETOJOY, TETRIS, MARIO};
 
 void playSong(int song){
     while(1){
         int i = 0;
         while(songsDirections[song][i]!=0){
-            syscaller(7,freq(songsDirections[song][i+1], songsDirections[song][i]) ,0,1,0);
+            syscaller(7,songsDirections[song][i],0, songsDirections[song][i+1],0);
             i+=2;
             sleep(getRealTime(songsDirections[song][i++]));
             syscaller(8,0,0,0,0);
@@ -260,7 +187,12 @@ void playSong(int song){
     }
 }
 
+void sleep(int time){
+    int taux = getSeconds();
+    while(taux + time > getSeconds());
+}
 
+/*
 
 void playSong2(){
     
@@ -275,7 +207,7 @@ void playSong2(){
                      E,C,D,B4,C,A4,
                      GS,B4,E,C,D,B4,
                      C,E,A,GS
-                 };*/
+                 };
     //char song[56] = {   E,L,A,C,A,L,J,J,A,E,C,A,L,A,C,E,A,J,J,J,L,A,C,F,J,H,F,E,A,E,C,A,L,L,A,C,E,A,J,J,E,A,C,L,A,J,I,L,E,A,C,L,A,E,J,I
 
     
@@ -299,10 +231,6 @@ void playSong2(){
             sleep(pause[i]/2);
         }
     }
-}
+}*/
 
 
-void sleep(int time){
-    int taux = getSeconds();
-    while(taux + time > getSeconds());
-}

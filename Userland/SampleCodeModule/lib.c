@@ -21,3 +21,30 @@ char getChar(){
 void putChar(char c){
     write(1, &c,1);
 }
+
+int strcmp(const char * str1, const char * str2){
+    int i;
+    for(i=0;str1[i] != 0;i++)
+        if(str1[i] != str2[i])
+            return 0;
+    if(str2[i] != 0)
+        return 0;
+    return 1;
+}
+
+
+
+int strlen(const char * s){
+    int n=0;
+    while(*s++ != 0)
+        n++;
+    return n;
+}
+
+void str0(char * s){
+    while(*s){
+        if(*s == ' ')
+            *s = 0;
+        s++;
+    }
+}

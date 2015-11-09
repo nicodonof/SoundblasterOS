@@ -1,6 +1,8 @@
 #ifndef __SOUNDBLASTEROS__SHELL__
 #define __SOUNDBLASTEROS__SHELL__
-
+#define ODETOJOY (uint8_t*) 0x500000
+#define TETRIS (uint8_t*) 0x5000F9
+#define MARIO (uint8_t*) 0x5001DA
 char getChar();
 void putChar(char c);
 void write(int fd, char * buff, int size);
@@ -23,5 +25,4 @@ void printOsName();
 void help();
 void sleep(int time);
 int getSeconds();
-
 #endif

@@ -17,7 +17,17 @@ int notefreqs[7][12] = {
     {  1046,1108,1174,1244,1318,1396,1479,1567,1661,1760,1864,1975}
 };
 
+
 int note[8] = {22000, 26163, 29366, 32963, 34923, 39200, 44000, 49388 };
+
+int keyToNotefreq(char key){
+    int keyToNoteTable[26] = {0,0,0,notefreqs[4][0] /* D (DO)*/,0,notefreqs[4][2]/* F (RE)*/,notefreqs[4][4]/* G (MI)*/,
+                              notefreqs[4][5] /* H (FA)*/,notefreqs[4][8],
+                              notefreqs[4][7] /* J (SOL)*/,notefreqs[4][9]/* K (LA)*/, 
+                              notefreqs[4][11] /* L (SI)*/,0,0,notefreqs[4][10],0, 0,notefreqs[4][1],
+                              0,notefreqs[4][3],notefreqs[4][6],0,0,0,0,0};
+    return (0x1234dd / (keyToNoteTable[key - 'a']));
+}
 
 int freqToColorAndPos(int freq){
 	for (int i = 0; i < 12; ++i){
@@ -29,15 +39,24 @@ int freqToColorAndPos(int freq){
 }
 
 
- 
+void makeSound(int note, int octave){
+	int freq = freqParser(octave,note);
+	int aux = freqToColorAndPos(freq);
+	vPrintCharColorInPos(14, aux,2 ,aux * 6);
+	if(!sound || lastFreq != freq)
+		sounderC(freq);
+	lastFreq = freq;
+}
 
-void makeSound(int freq, int time){
+void playPianoKey(int freq){
+	freq = keyToNotefreq(freq);
 	int aux = freqToColorAndPos(freq);
 	vPrintCharColorInPos(14, aux,2 ,aux * 6);
 	if(!sound || lastFreq != freq)
 		sounderC(freq);	
 	lastFreq = freq;
 }
+
 
 void sounderC(uint16_t freq){
 	outb(0xB6, 0x43);

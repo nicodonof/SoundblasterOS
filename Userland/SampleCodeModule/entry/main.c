@@ -4,13 +4,14 @@ extern char bss;
 extern char endOfBinary;
 
 void * memset(void * destiny, int32_t c, uint64_t length);
+
 void shell();
 
 int main() {
-	//Clean BSS
 	memset(&bss, 0, &endOfBinary - &bss);
 
-	//All the following code may be removed 
+	beepStart();
+
 
 	shell();
 
@@ -25,4 +26,10 @@ void * memset(void * destiation, int32_t c, uint64_t length) {
 		dst[length] = chr;
 
 	return destiation;
+}
+
+void beepStart(){
+	
+
+
 }
