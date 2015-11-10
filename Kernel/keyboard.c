@@ -8,7 +8,6 @@ int last = 0;
 int counter = 0;
 int caps = 0;
 int shift = 0;
-int numlock = 0;
 int boolSelector = 0;
 int counterTimer = 0;
 int keyboardActivated = 1;
@@ -45,8 +44,6 @@ int release[7] = {0xFFFFFFA0, 0xFFFFFFA1, 0xFFFFFFA2, 0xFFFFFFA3, 0xFFFFFFA4, 0x
 
 /*Imprime la siguiente letra si es que hay*/
 void write_key(char scancode){
-  if(scancode == NUMLOCK)
-    numlock = !numlock; 
   if(scancode == CAPS)
     caps = !caps;
   if(scancode == LSHIFT || scancode == RSHIFT || scancode == RSHIFTR || scancode == LSHIFTR)
@@ -55,10 +52,6 @@ void write_key(char scancode){
     if(caps && isNotAlpha(scancode) && scancodes[1][scancode] != 0){
       buffer[counter++] = scancodes[shift][scancode];
       if(keyboardActivated)
-        if(scancode < 83 && scancode > 70){
-          if(numlock)
-            vPrintChar(buffer[counter-1]);
-        } else 
             vPrintChar(buffer[counter-1]);
       counterTimer = 0;
       boolSelector = 1;
@@ -66,10 +59,6 @@ void write_key(char scancode){
     else if(scancodes[!(caps == shift)][scancode] != 0){
       buffer[counter++] = scancodes[!(caps == shift)][scancode];
       if(keyboardActivated)
-        if(scancode < 83 && scancode > 70){
-          if(numlock)
-            vPrintChar(buffer[counter-1]);
-        } else 
             vPrintChar(buffer[counter-1]);
       counterTimer = 0;
       boolSelector = 1;
