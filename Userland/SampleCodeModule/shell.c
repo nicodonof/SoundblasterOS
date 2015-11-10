@@ -199,15 +199,16 @@ int getRealTime(char c){
 
 
 void playSong(int song){
-    while(1){
+    auxer = 0;
+    while(auxer != '\n'){
         int i = 0;
-        while(songsDirections[song][i]!=0){
+        while(songsDirections[song][i]!=0 && auxer != '\n'){
+            auxer = getChar();
             syscaller(7,songsDirections[song][i],0, songsDirections[song][i+1],0);
             i+=2;
             sleep(getRealTime(songsDirections[song][i++]));
             syscaller(8,0,0,0,0);
             sleep(getRealTime(songsDirections[song][i++]));
-
         }
     }
 }
