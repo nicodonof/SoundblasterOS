@@ -77,15 +77,19 @@ void vPrintChar(char character)
 		deleteCounter++;
 	}
 }
+
+
 void vPrintCharInPos(char character, int row2, int col2){
 	video[width * row2 + col2] = charColor(character, color);
 }
+
 void vPrintCharColorInPos(char character, char co, int row2, int col2){
 	vColor(co);
 	video[width * row2 + col2] = charColor(character, color);
 	vResetColor();
 }
 
+/*Selector que no esta hecho con hardware porque no llegmos*/
 void vPrintSelector(int boolSelector){
 	if(pianoMode)
 		return;
@@ -127,6 +131,7 @@ void vNewline()
 	color = color2;
 }
 
+
 void vScroller(){
 	int i,j;
 	vPrintCharInPos(' ',row,col);// borra el selector
@@ -141,12 +146,15 @@ void vScroller(){
 }
 
 extern int timer;
+
+/*Activa la caida de las notas*/
 void pianoModer(){
 	if(pianoMode){
 		vAntiScroller();
 	}
 }
 
+/*Es lo q hace q caigan las letras*/
 void vAntiScroller(){
 	int i,j;
 

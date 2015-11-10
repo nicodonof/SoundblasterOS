@@ -33,8 +33,8 @@ int strcmp(const char * str1, const char * str2){
 }
 
 void print(char * s){
-    while (*s++!=0){
-        putChar(*s);
+    while (*s!=0){
+        putChar(*s++);
     }
 }
 

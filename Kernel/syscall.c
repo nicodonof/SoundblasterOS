@@ -11,7 +11,7 @@ extern int pianoMode;
 void (* syscallFunctions[11])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = {0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC};
 
 uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-	 //DESPUES SACAR EL SWITCH
+
 	
 	(*syscallFunctions[index])(fd, buff, buffSize, dest);
 

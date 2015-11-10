@@ -120,7 +120,7 @@ int getSeconds(){
 }
 
 
-
+/*Parsea el timer del data module y lo pasa al tiempo "real" que usamos para el sonido*/
 int getRealTime(char c){
     if(c=='9')
         return 0;
@@ -131,14 +131,13 @@ int getRealTime(char c){
     return (c-'0')*2;
 }
 
-
+/*funcion que podria estar hecha (deberia) en la parte del timer pero por distintos problemas esta hecho aca */
 void sleep(int time){
     int taux = getSeconds();
     while(taux + time > getSeconds());
 }
 
-//mi sol si sols la sol
-//E511 H511 L511 I510 A511 G511 
+
 
 void printOsLogo(){
     print("    _____                       _ ____  _           _             ____   _____  ");

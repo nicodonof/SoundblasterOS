@@ -19,8 +19,7 @@ int notefreqs[7][12] = {
 };
 
 
-int note[8] = {22000, 26163, 29366, 32963, 34923, 39200, 44000, 49388 };
-
+/*Agarra el char del piano y lo pasa a la frecuencia que se le pasa al timer*/
 int keyToNotefreq(char key){
     int keyToNoteTable[26] = {0,0,0,notefreqs[octave][0] /* D (DO)*/,0,notefreqs[octave][2]/* F (RE)*/,notefreqs[octave][4]/* G (MI)*/,
                               notefreqs[octave][5] /* H (FA)*/,notefreqs[octave][8],
@@ -30,6 +29,7 @@ int keyToNotefreq(char key){
     return (0x1234dd / (keyToNoteTable[key - 'a']));
 }
 
+/*Retorna la posicion donde imprimir los caracteres q se imprimen en el piano*/
 int freqToColorAndPos(int freq){
 	for (int i = 0; i < 12; ++i){
 		if((0x1234dd / (notefreqs[octave][i]) == freq)){
@@ -39,10 +39,12 @@ int freqToColorAndPos(int freq){
 	return 1;
 }
 
+/*Para cambiar de octava en el piano*/
 void changeOctave(char newoct){
 	octave = (int)(newoct - '1');
 }
 
+/*Imprime las corcheas en pantalla para las canciones y llama a la funcion q activa el sonido*/
 void makeSound(int note, int octave){
 	int freq = freqParser(octave,note);
 	int aux = freqToColorAndPos(freq);
@@ -52,6 +54,7 @@ void makeSound(int note, int octave){
 	lastFreq = freq;
 }
 
+/*Imprime las corcheas en pantalla para el piano y llama a la funcion q activa el sonido*/
 void playPianoKey(int freq){
 	freq = keyToNotefreq(freq);
 	int aux = freqToColorAndPos(freq);
@@ -61,7 +64,7 @@ void playPianoKey(int freq){
 	lastFreq = freq;
 }
 
-
+/*Activa el sonido*/
 void sounderC(uint16_t freq){
 	outb(0xB6, 0x43);
 	outb((uint8_t)freq, 0x42);
@@ -75,6 +78,7 @@ void sounderC(uint16_t freq){
 	}
 }
 
+/*Desactiva el sonido*/
 void stopSounderC(){
 	uint8_t aux = inb(0x61);
 	aux = aux | 252;
@@ -82,6 +86,7 @@ void stopSounderC(){
 	sound = 0;
 }
 
+/*Activa una nota pero no imprime nada*/
 void playKeyNote(int freq){
 	freq = keyToNotefreq(freq);
 	if(!sound || lastFreq != freq)

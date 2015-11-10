@@ -43,6 +43,7 @@ unsigned static char scancodes[2][128] =
 
 int release[7] = {0xFFFFFFA0, 0xFFFFFFA1, 0xFFFFFFA2, 0xFFFFFFA3, 0xFFFFFFA4, 0xFFFFFFA5, 0xFFFFFFA6};
 
+/*Imprime la siguiente letra si es que hay*/
 void write_key(char scancode){
   if(scancode == NUMLOCK)
     numlock = !numlock; 
@@ -82,6 +83,7 @@ void write_key(char scancode){
     counter = 0;
 }
 
+/*Retorna la ultima letra escrita*/
 char getKey(){
   if(counter == last)
     return 0;
@@ -91,6 +93,7 @@ char getKey(){
   return c;
 }
 
+/*Cambia el selector*/
 void changeSelector(){
   if(counterTimer == 18){
     counterTimer = 0;

@@ -4,6 +4,7 @@ static uint8_t * const songsDirections[4] = {ODETOJOY, TETRIS, MARIO, SECRET};
 
 extern auxer;
 
+/*Corre alguna de las canciones*/
 void playSong(int song){
     auxer = 0;
     while(auxer != '\n'){
@@ -16,6 +17,7 @@ void playSong(int song){
     }
 }
 
+/*Playeae una nota en tal octava de tanta duracion y de tanto delay entre ella y la siguiente nota.*/
 void playNote(char note, char octave, int length, int delay){
    syscaller(7,note,0, octave,0);
    sleep(length);
