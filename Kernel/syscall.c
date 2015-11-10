@@ -34,7 +34,7 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 			keyboardActivated = !fd;
 			pianoMode = fd;
 			break;
-		case 6: //getseconds
+		case 6: //gettimer
 			*dest = getTimer();
 			break;
 		case 7: //playtime

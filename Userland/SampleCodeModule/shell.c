@@ -5,11 +5,12 @@ static uint8_t * const songsDirections[3] = {ODETOJOY, TETRIS, MARIO};
 static uint8_t * const memory = (uint8_t*)0x5000F9;
 char auxer = 0;
 int time = 0;
+int quitF = 0;
 
 void shell(){
     osInit();
     
-    while(1){
+    while(!quitF){
         write(1, "SoundblasterOS> ", 16);
         int i = 0;
         char buffer[75];
@@ -20,6 +21,8 @@ void shell(){
                 if(auxer == '\b'){
                     if(i>0)
                         i--;
+                    else
+                        beep();
                 } else
                     buffer[i++] = auxer;
             }         
@@ -95,20 +98,22 @@ void parser(char * s, int size){
 }
 
 void beep(){
+    char noteB = 'l';
         //int auxFreq = 0x1234dd / 440;// 44100
         //write(1,"BEEP !\n",7);
         //syscaller(4,auxFreq,0,1/*time*/,0);//en size va el time en secs(?))
-    syscaller(9,'k',0,1,0);
-    sleep(5);
+    syscaller(9,noteB,0,1,0);
+    sleep(2);
     syscaller(8,0,0,0,0);
 }
 
 void boop(){
+    char noteE = 'g';
         //int auxFreq = 0x1234dd / 440;// 44100
         //write(1,"BOOP !\n",7);
         //syscaller(4,auxFreq,0,1/*time*/,0);//en size va el time en secs(?))
-    syscaller(9,'g',0,1,0);
-    sleep(5);
+    syscaller(9,noteE,0,1,0);
+    sleep(2);
     syscaller(8,0,0,0,0);
 }
 
@@ -204,15 +209,18 @@ void playSong(int song){
         int i = 0;
         while(songsDirections[song][i]!=0 && auxer != '\n'){
             auxer = getChar();
-            syscaller(7,songsDirections[song][i],0, songsDirections[song][i+1],0);
-            i+=2;
-            sleep(getRealTime(songsDirections[song][i++]));
-            syscaller(8,0,0,0,0);
-            sleep(getRealTime(songsDirections[song][i++]));
+            playNote(songsDirections[song][i], songsDirections[song][i+1], getRealTime(songsDirections[song][i+2]), getRealTime(songsDirections[song][i+3]));
+            i+=4;
         }
     }
 }
 
+void playNote(char note, char octave, int length, int delay){
+   syscaller(7,note,0, octave,0);
+   sleep(length);
+   syscaller(8,0,0,0,0);
+   sleep(delay);
+}
 void sleep(int time){
     int taux = getSeconds();
     while(taux + time > getSeconds());
@@ -288,7 +296,7 @@ void quit(){
     syscaller(8,0,0,0,0);
 
     //Enter the void
-    while(1);
+    quitF = 1;
 }
 /*
 

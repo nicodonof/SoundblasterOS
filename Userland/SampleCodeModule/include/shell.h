@@ -22,6 +22,7 @@ void itunes();
 int keyToNotefreq(char key);
 int isValidNote(char key);
 void playSong();
+void playNote(char note, char octave, int length, int delay);
 
 void shell();
 void osInit();

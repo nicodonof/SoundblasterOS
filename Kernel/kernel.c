@@ -81,7 +81,7 @@ int main()
 	picSlaveMask(0xFF);
 	_sti();
 
-
+	
 	
 	
 	vClear();

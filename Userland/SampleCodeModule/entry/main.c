@@ -12,7 +12,6 @@ int main() {
 
 	beepStart();
 
-
 	shell();
 
 	return 0xDEADBEEF;

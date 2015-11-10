@@ -7,6 +7,7 @@ loader:
 	mov rsp, rax				; Set up the stack with the returned address
 	
 	call main
+	cli
 hang:
 	hlt							; halt machine should kernel return
 	jmp hang
