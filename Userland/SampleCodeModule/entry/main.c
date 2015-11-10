@@ -10,8 +10,6 @@ void shell();
 int main() {
 	memset(&bss, 0, &endOfBinary - &bss);
 
-	beepStart();
-
 	shell();
 
 	return 0xDEADBEEF;
@@ -25,10 +23,4 @@ void * memset(void * destiation, int32_t c, uint64_t length) {
 		dst[length] = chr;
 
 	return destiation;
-}
-
-void beepStart(){
-	
-
-
 }
