@@ -122,6 +122,8 @@ int getSeconds(){
 
 
 int getRealTime(char c){
+    if(c=='9')
+        return 0;
     if(c=='0')
         return 1;
     if(c=='5')
@@ -136,6 +138,7 @@ void sleep(int time){
 }
 
 //mi sol si sols la sol
+//E511 H511 L511 I510 A511 G511 
 
 void printOsLogo(){
     print("    _____                       _ ____  _           _             ____   _____  ");

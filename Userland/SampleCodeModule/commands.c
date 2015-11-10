@@ -38,7 +38,7 @@ void itunes(){
 
     do{
         auxer = getChar();
-    } while (auxer != '1' && auxer != '2' && auxer != '3');
+    } while (auxer != '1' && auxer != '2' && auxer != '3' && auxer != '4');
     clear();
     syscaller(5,1,0,0,0);
         playSong(auxer - '1');
@@ -77,9 +77,10 @@ void piano(){
     syscaller(5,1,0,0,0);
     do{
         auxer = getChar();
-        if(auxer != 0 && isValidNote(auxer)){
+        if(auxer != 0 && isValidNote(auxer))
             syscaller(4,auxer,0,1,0);
-        }
+        if('1' <= auxer && auxer <= '7')
+            syscaller(10,auxer,0,0,0);
     } while (auxer != '\n');
     syscaller(5,0,0,0,0);
     clear();    

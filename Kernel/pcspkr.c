@@ -6,6 +6,7 @@ extern void stop_sounder();
 void sleepT(int);
 int sound = 0;
 int lastFreq = 0;
+int octave = 4;
 typedef enum colors { BLACK, SBLUE, SGREEN, SCYAN, SRED, SPINK, SYELLOW, SWHITE, GREY, BLUE, GREEN, CYAN, RED, PINK, YELLOW, WHITE }; 
 int notefreqs[7][12] = {
     {  16,  17,  18,  19,  20,  21,  23,  24,  26,  27,  29,  30},
@@ -21,23 +22,26 @@ int notefreqs[7][12] = {
 int note[8] = {22000, 26163, 29366, 32963, 34923, 39200, 44000, 49388 };
 
 int keyToNotefreq(char key){
-    int keyToNoteTable[26] = {0,0,0,notefreqs[4][0] /* D (DO)*/,0,notefreqs[4][2]/* F (RE)*/,notefreqs[4][4]/* G (MI)*/,
-                              notefreqs[4][5] /* H (FA)*/,notefreqs[4][8],
-                              notefreqs[4][7] /* J (SOL)*/,notefreqs[4][9]/* K (LA)*/, 
-                              notefreqs[4][11] /* L (SI)*/,0,0,notefreqs[4][10],0, 0,notefreqs[4][1],
-                              0,notefreqs[4][3],notefreqs[4][6],0,0,0,0,0};
+    int keyToNoteTable[26] = {0,0,0,notefreqs[octave][0] /* D (DO)*/,0,notefreqs[octave][2]/* F (RE)*/,notefreqs[octave][4]/* G (MI)*/,
+                              notefreqs[octave][5] /* H (FA)*/,notefreqs[octave][8],
+                              notefreqs[octave][7] /* J (SOL)*/,notefreqs[octave][9]/* K (LA)*/, 
+                              notefreqs[octave][11] /* L (SI)*/,0,0,notefreqs[octave][10],0, 0,notefreqs[octave][1],
+                              0,notefreqs[octave][3],notefreqs[octave][6],0,0,0,0,0};
     return (0x1234dd / (keyToNoteTable[key - 'a']));
 }
 
 int freqToColorAndPos(int freq){
 	for (int i = 0; i < 12; ++i){
-		if((0x1234dd / (notefreqs[4][i]) == freq)){
+		if((0x1234dd / (notefreqs[octave][i]) == freq)){
 			return i+1;
 		}
 	}
 	return 1;
 }
 
+void changeOctave(char newoct){
+	octave = (int)(newoct - '1');
+}
 
 void makeSound(int note, int octave){
 	int freq = freqParser(octave,note);

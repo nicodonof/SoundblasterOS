@@ -3,7 +3,7 @@
 #define ODETOJOY (uint8_t*) 0x500000
 #define TETRIS (uint8_t*) 0x5000F9
 #define MARIO (uint8_t*) 0x5001DA
-
+#define SECRET (uint8_t*) 0x500303
 
 
 void playSong(int song);

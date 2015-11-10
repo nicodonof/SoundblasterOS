@@ -10,5 +10,6 @@ void sounderC(uint16_t freq);
 void stopSounderC();
 void playPianoKey(int freq);
 void playKeyNote(int freq);
+void changeOctave(char newoct);
 
 #endif

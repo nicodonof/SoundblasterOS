@@ -8,7 +8,7 @@
 extern int keyboardActivated;
 extern int pianoMode;
 
-void (* syscallFunctions[10])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = {0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, playTimeSC, stopsoundSC, playSoundOnlySC};
+void (* syscallFunctions[11])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = {0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC};
 
 uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 	 //DESPUES SACAR EL SWITCH
@@ -62,5 +62,9 @@ void stopsoundSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * des
 
 void playSoundOnlySC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 	playKeyNote(fd);
+}
+
+void changeOctaveSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+	changeOctave(fd);
 }
 
