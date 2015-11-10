@@ -32,6 +32,11 @@ int strcmp(const char * str1, const char * str2){
     return 1;
 }
 
+void print(char * s){
+    while (*s++!=0){
+        putChar(*s);
+    }
+}
 
 
 int strlen(const char * s){
