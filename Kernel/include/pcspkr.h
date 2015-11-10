@@ -8,5 +8,7 @@ int freqToColorAndPos(int freq);
 void makeSound(int freq, int time);
 void sounderC(uint16_t freq);
 void stopSounderC();
+void playPianoKey(int freq);
+void playKeyNote(int freq);
 
 #endif

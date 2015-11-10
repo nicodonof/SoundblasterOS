@@ -43,6 +43,9 @@ uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buf
 		case 8: //stopsound
 			stopSounderC();
 			break;
+		case 9: //playSoundOnly
+			playKeyNote(fd);
+			break;
 
 
 	}

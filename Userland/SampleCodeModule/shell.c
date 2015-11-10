@@ -36,7 +36,7 @@ void printOsName(){
 }
 
 void parser(char * s, int size){
-    if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p'){
+    if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p' && *s != 's'){
     	write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
         return;
     }
@@ -52,7 +52,13 @@ void parser(char * s, int size){
         break;
         case 'q':
             if(strcmp(s,"quit")){
-                clear();
+                quit();
+                return;
+            }
+        break;
+        case 's':
+            if(strcmp(s,"shutdown")){
+                quit();
                 return;
             }
         break;
@@ -89,19 +95,19 @@ void parser(char * s, int size){
 }
 
 void beep(){
-    int auxFreq = 0x1234dd / 440;// 44100
+        //int auxFreq = 0x1234dd / 440;// 44100
         //write(1,"BEEP !\n",7);
         //syscaller(4,auxFreq,0,1/*time*/,0);//en size va el time en secs(?))
-    syscaller(4,'k',0,1,0);
+    syscaller(9,'k',0,1,0);
     sleep(5);
     syscaller(8,0,0,0,0);
 }
 
 void boop(){
-    int auxFreq = 0x1234dd / 440;// 44100
+        //int auxFreq = 0x1234dd / 440;// 44100
         //write(1,"BOOP !\n",7);
         //syscaller(4,auxFreq,0,1/*time*/,0);//en size va el time en secs(?))
-    syscaller(4,'g',0,1,0);
+    syscaller(9,'g',0,1,0);
     sleep(5);
     syscaller(8,0,0,0,0);
 }
@@ -130,17 +136,23 @@ void clear(){
     printOsName();
 }
 
+void clearAll(){
+    syscaller(3,0,0,0,0);
+}
+
 void help(){
-    char *clear  = "clear    Clears the terminal screen\n";
-    char *quit   = "quit     Quits the OS\n";
-    char *beep   = "beep     Makes a beep sound\n";
-    char *boop   = "beep     Makes a boop sound\n";
-    char *itunes = "itunes   Itunes\n";
-    char *piano  = "piano    Magic at the tip of your fingers\n";
-    char *help   = "help     Shows this message.. duh.\n";
+    char *clear    = "clear     Clears the terminal screen\n";
+    char *quit     = "quit      Quits the OS\n";
+    char *shutdown = "shutdown  Quits the OS\n";
+    char *beep     = "beep      Makes a beep sound\n";
+    char *boop     = "boop      Makes a boop sound\n";
+    char *itunes   = "itunes    Itunes\n";
+    char *piano    = "piano     Magic at the tip of your fingers\n";
+    char *help     = "help      Shows this message.. duh.\n";
 
     write(1,clear,strlen(clear));
     write(1,quit,strlen(quit));
+    write(1,shutdown,strlen(shutdown));
     write(1,beep,strlen(beep));
     write(1,boop,strlen(boop));
     write(1,itunes,strlen(itunes));
@@ -205,12 +217,7 @@ void sleep(int time){
     while(taux + time > getSeconds());
 }
 
-void osInit(){
-
-    //VIDEO
-    for(int i = 0; i<9;i++){
-        write(1,"                                                                                  ",80);
-    }
+void printOsLogo(){
     write(1,"     _____                       _ ____  _           _             ____   _____   ",80);
     write(1,"    / ____|                     | |  _ \\| |         | |           / __ \\ / ____|  ",80);
     write(1,"   | (___   ___  _   _ _ __   __| | |_) | | __ _ ___| |_ ___ _ __| |  | | (___    ",80);
@@ -218,22 +225,29 @@ void osInit(){
     write(1,"    ____) | (_) | |_| | | | | (_| | |_) | | (_| \\__ \\ ||  __/ |  | |__| |____) |  ",80);
     write(1,"   |_____/ \\___/ \\__,_|_| |_|\\__,_|____/|_|\\__,_|___/\\__\\___|_|   \\____/|_____/   ",80);
     write(1,"                                                                                  ",80);
+}
 
+void osInit(){
 
-    for(int i = 0; i<9;i++){
+    //VIDEO
+    for(int i = 0; i<9;i++)
         write(1,"                                                                                  ",80);
-    }
 
+    printOsLogo();
 
+    for(int i = 0; i<9;i++)
+        write(1,"                                                                                  ",80);
+    
     //AUDIO
+    syscaller(9,'k',0,1,0);
+    sleep(2);
+    syscaller(8,0,0,0,0);
 
-    syscaller(4,'k',0,1,0);
+    syscaller(9,'g',0,1,0);
     sleep(2);
     syscaller(8,0,0,0,0);
-    syscaller(4,'g',0,1,0);
-    sleep(2);
-    syscaller(8,0,0,0,0);
-    syscaller(4,'l',0,1,0);
+
+    syscaller(9,'l',0,1,0);
     sleep(5);
     syscaller(8,0,0,0,0);
 
@@ -242,6 +256,39 @@ void osInit(){
     clear();
 }
 
+void quit(){
+      //VIDEO
+    clearAll();
+    
+    for(int i = 0; i<6;i++)
+        write(1,"                                                                                  ",80);
+
+    printOsLogo();
+
+    for(int i = 0; i<3;i++)
+        write(1,"                                                                                  ",80);
+
+    write(1,"                       You can turn off the computer now.                         ",80);
+
+    for(int i = 0; i<5;i++)
+        write(1,"                                                                                  ",80);
+
+
+    //AUDIO
+
+    syscaller(9,'l',0,1,0);
+    sleep(2);
+    syscaller(8,0,0,0,0);
+    syscaller(9,'j',0,1,0);
+    sleep(2);
+    syscaller(8,0,0,0,0);
+    syscaller(9,'g',0,1,0);
+    sleep(5);
+    syscaller(8,0,0,0,0);
+
+    //Enter the void
+    while(1);
+}
 /*
 
 void playSong2(){

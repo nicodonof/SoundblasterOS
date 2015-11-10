@@ -78,3 +78,9 @@ void stopSounderC(){
 	sound = 0;
 }
 
+void playKeyNote(int freq){
+	freq = keyToNotefreq(freq);
+	if(!sound || lastFreq != freq)
+		sounderC(freq);	
+	lastFreq = freq;
+}
