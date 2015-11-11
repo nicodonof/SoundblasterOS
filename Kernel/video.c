@@ -10,8 +10,9 @@ static int col = 0;
 static const uint32_t width = 80;
 static const uint32_t height = 25 ;
 uint8_t color = 7;
-int pianoMode = 0;
+int videoMode = 0; // 0 = consoleMode, 1 = pianoMode, 2 = itunesMode;
 int timerTick = 0;
+extern keyboardActivated;
 
 void vPrint(const char * string)
 {
@@ -91,8 +92,9 @@ void vPrintCharColorInPos(char character, char co, int row2, int col2){
 
 /*Selector que no esta hecho con hardware porque no llegmos*/
 void vPrintSelector(int boolSelector){
-	if(pianoMode)
+	if(!keyboardActivated){
 		return;
+	}	
 	if(boolSelector)
 		video[width * row + col] = charColor(' ', 0x70);
 	else
@@ -149,7 +151,7 @@ extern int timer;
 
 /*Activa la caida de las notas*/
 void pianoModer(){
-	if(pianoMode){
+	if(videoMode){
 		vAntiScroller();
 	}
 }

@@ -7,14 +7,12 @@ extern auxer;
 /*Corre alguna de las canciones*/
 void playSong(int song){
     auxer = 0;
-    while(auxer != '\n'){
-        int i = 0;
-        while(songsDirections[song][i]!=0 && auxer != '\n'){
-            auxer = getChar();
-            playNote(songsDirections[song][i], songsDirections[song][i+1], getRealTime(songsDirections[song][i+2]), getRealTime(songsDirections[song][i+3]));
-            i+=4;
-        }
-    }
+    int i = 0;
+    while(songsDirections[song][i]!=0 && auxer != '\n'){
+        auxer = getChar();
+        playNote(songsDirections[song][i], songsDirections[song][i+1], getRealTime(songsDirections[song][i+2]), getRealTime(songsDirections[song][i+3]));
+        i+=4;
+    }    
 }
 
 /*Playeae una nota en tal octava de tanta duracion y de tanto delay entre ella y la siguiente nota.*/

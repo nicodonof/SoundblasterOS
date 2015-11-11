@@ -12,5 +12,5 @@ void playTimeSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest
 void stopsoundSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void playSoundOnlySC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void changeOctaveSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
-
+void clearBufferSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 #endif

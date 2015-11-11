@@ -11,7 +11,7 @@ int shift = 0;
 int boolSelector = 0;
 int counterTimer = 0;
 int keyboardActivated = 1;
-
+extern videoMode;
 
 unsigned static char scancodes[2][128] =
 {{
@@ -64,7 +64,7 @@ void write_key(char scancode){
       boolSelector = 1;
     }
   }
-  if(!keyboardActivated && ((0xFFFFFFA0 <= scancode) && (scancode <= 0xFFFFFFA6)) || 
+  if(videoMode == 1 && ((0xFFFFFFA0 <= scancode) && (scancode <= 0xFFFFFFA6)) || 
                             ((0xFFFFFF93 <= scancode) && (scancode <= 0xFFFFFF98) && (scancode != 0xFFFFFF95)))
     stopSounderC();
 
@@ -91,4 +91,8 @@ void changeSelector(){
     counterTimer++;
   } 
   vPrintSelector(boolSelector);
+}
+
+void clearBuffer(){
+  counter = last = 0;
 }

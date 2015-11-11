@@ -34,12 +34,17 @@ void itunes(){
     print("    1. Ode To Joy\n");
     print("    2. Tetris Theme\n");
     print("    3. Mario Theme\n");
-
+    print("Or press enter to exit.\n");
+    syscaller(5,1,0,0,0);
     do{
         auxer = getChar();
-    } while (auxer != '1' && auxer != '2' && auxer != '3' && auxer != '4');
+    } while (auxer != '1' && auxer != '2' && auxer != '3' && auxer != '4' && auxer != '\n');
     clear();
-    syscaller(5,1,0,0,0);
+    if(auxer == '\n'){
+        syscaller(5,0,0,0,0);
+        return;
+    }
+    syscaller(5,1,0,2,0);
         playSong(auxer - '1');
     syscaller(5,0,0,0,0);
     clear(); 
@@ -75,7 +80,7 @@ void help(){
 void piano(){
     clear();
     print("Welcome to the Piano ! To exit press the enter key.\n");
-    syscaller(5,1,0,0,0);
+    syscaller(5,1,0,1,0);
     do{
         auxer = getChar();
         if(auxer != 0 && isValidNote(auxer))

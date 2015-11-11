@@ -178,5 +178,6 @@ void osInit(){
 
     syscaller(5,0,0,0,0);
     clear();
+    syscaller(11,0,0,0,0);
 }
 

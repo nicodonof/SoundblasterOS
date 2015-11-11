@@ -6,9 +6,9 @@
 #include "syscall.h"
 
 extern int keyboardActivated;
-extern int pianoMode;
+extern int videoMode;
 
-void (* syscallFunctions[11])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = {0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC};
+void (* syscallFunctions[12])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = {0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, clearBufferSC};
 
 uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 
@@ -45,7 +45,7 @@ void pianoSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 
 void boolkeySC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 	keyboardActivated = !fd;
-	pianoMode = fd;
+	videoMode = buffSize;
 }
 
 void getTimerSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
@@ -68,3 +68,6 @@ void changeOctaveSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * 
 	changeOctave(fd);
 }
 
+void clearBufferSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+	clearBuffer();
+}
