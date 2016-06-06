@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-extern void outb(uint8_t info, uint8_t port);
+extern void outb(uint8_t info, uint16_t port);
 extern uint8_t inb(uint8_t port);
 
 #endif

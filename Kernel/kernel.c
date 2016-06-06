@@ -4,6 +4,8 @@
 #include <moduleLoader.h>
 #include <types.h>
 #include <video.h>
+#include <serial.h>
+#include <debugger.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -66,7 +68,10 @@ void * initializeKernelBinary()
 
 	clearBSS(&bss, &endOfKernel - &bss);
 
-	
+	init_serial();
+	send_debug_newline();
+	send_debug_msg("Serial Inicializado\n");
+
 	return getStackBase();
 }
 
@@ -80,8 +85,6 @@ int main()
 	picMasterMask(0xFC);
 	picSlaveMask(0xFF);
 	_sti();
-
-	
 	
 	
 	vClear();
