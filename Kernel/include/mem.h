@@ -1,3 +1,5 @@
-int page_alloc();
+#include <stdint.h>
 
-int page_free();
+uint64_t * pageAlloc();
+
+void pageFree();

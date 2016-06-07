@@ -69,8 +69,8 @@ void * initializeKernelBinary()
 	clearBSS(&bss, &endOfKernel - &bss);
 
 	init_serial();
-	send_debug_newline();
-	send_debug_msg("Serial Inicializado\n");
+	sPrintNl();
+	sPrint("Serial Inicializado\n");
 
 	return getStackBase();
 }
@@ -85,11 +85,10 @@ int main()
 	picMasterMask(0xFC);
 	picSlaveMask(0xFF);
 	_sti();
+	initPageStack();
 	
 	
 	vClear();
-	
-	
 	((EntryPoint)sampleCodeModuleAddress)();
 		
 	return 0;
