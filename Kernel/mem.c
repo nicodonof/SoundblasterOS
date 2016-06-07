@@ -25,58 +25,33 @@ void initPageStack(){
 	for(i = 0; i < totalPages; i++){ 
 		*stackCurrent = startOfPages + i*(pageSize);
 		if(i%12000 == 0){
-			sPrint("i: Pos de la pag: ");
-			sPrintHex(startOfPages + i*(pageSize));
-			sPrint(" - Pos en stack: ");
-			sPrintHex(stackCurrent);
-			sPrint("\n");
+			sPrintf("%d: Pos: %x - Pos Stack: %x \n", i, *stackCurrent, stackCurrent);
 		}
 		stackCurrent--;
 	}
 
-	sPrint("curr:    \t");
-	sPrintHex(stackCurrent);
-	sPrintNl();
 	uint64_t * asd = 0;
 	for(i=0; i<totalPages;i++){
 		asd = pageAlloc();
 		if(i%12000 == 0){
-			sPrintDec(i);
-			sPrint(": ");
-			sPrintHex(asd);
-			sPrintNl();
+			sPrintf("%d: %x\n",i,asd);
 		}
 	}
 
-	sPrintHex(*stackCurrent);
 
 	pageFree((uint64_t *) 0x654);
-	sPrint("currPost:\t");
-	sPrintHex(stackCurrent);
-	sPrint(" ");
-	sPrintHex(*(stackCurrent));
-	sPrintNl();
+	sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
 
 	pageFree();
-	sPrint("currPost:\t");
-	sPrintHex(stackCurrent);
-	sPrint(" ");
-	sPrintHex(*(stackCurrent));
-	sPrintNl();
-
+	
+	sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
+	
 	pageFree();
-	sPrint("currPost:\t");
-	sPrintHex(stackCurrent);
-	sPrint(" ");
-	sPrintHex(*(stackCurrent));
-	sPrintNl();
-
+	
+	sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
+	
 	pageAlloc();
-	sPrint("currPost:\t");
-	sPrintHex(stackCurrent);
-	sPrint(" ");
-	sPrintHex(*(stackCurrent));
-	sPrintNl();
+	
 } 
 
 
