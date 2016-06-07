@@ -4,8 +4,8 @@ SOURCES=$(wildcard *.c)
 all: $(MP)
 
 $(MP): $(SOURCES)
-	# gcc $(SOURCES) -o $(MP)
-	gcc -largp $(SOURCES) -o $(MP)
+	gcc $(SOURCES) -o $(MP)
+	#gcc -largp $(SOURCES) -o $(MP)
 clean:
 	rm -rf $(MP)
 
