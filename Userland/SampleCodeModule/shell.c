@@ -2,14 +2,12 @@
 #include "shell.h"
 #include "int80.h"
 
-
 char auxer = 0;
 int time = 0;
 int quitF = 0;
 
 void shell(){
     osInit();
-    
     while(!quitF){
         write(1, "SoundblasterOS> ", 16);
         int i = 0;

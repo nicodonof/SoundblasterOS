@@ -9,10 +9,29 @@ static int row = 0;
 static int col = 0;
 static const uint32_t width = 80;
 static const uint32_t height = 25 ;
-uint8_t color = 7;
+uint8_t cColor = 7;
 int videoMode = 0; // 0 = consoleMode, 1 = pianoMode, 2 = itunesMode;
 int timerTick = 0;
 extern keyboardActivated;
+
+color red = {255, 0, 0};
+color orange = {255, 140, 0};
+color yellow = {255, 255, 0};
+color limegreen = {50, 205, 0};
+color brightgreen = {0, 255, 0};
+color blue = {0, 0, 255};
+color dodgerblue = {30, 144, 255};
+color indigo = {199, 21, 133};
+color violet = {75, 0, 130};
+color aqua = {0, 200, 200};
+color black = {0, 0, 0};
+color white = {255, 255, 255};
+color brown = {139, 69, 19};
+color cyan = {0, 139, 139};
+color gold = {255, 215, 0};
+color crimson = {220, 20, 60};
+color pink = {255, 205, 180};
+color purple = {153, 50, 204};
 
 void vPrint(const char * string)
 {
@@ -32,11 +51,11 @@ void vPrintN(const char * string, int n){
 }
 
 void vColor(char colour){
-	color = colour;
+	cColor = colour;
 }
 
 void vResetColor(){
-	color = 7;
+	cColor = 7;
 }
 
 void vPrintCharColor(char c, char co){
@@ -69,11 +88,11 @@ void vPrintChar(char character)
 		else
 			row++;
 		col = 0;
-		video[width * row + col] = charColor(character, color);
+		video[width * row + col] = charColor(character, cColor);
 		col++;
 		deleteCounter++;
 	} else {
-		video[width * row + col] = charColor(character, color);
+		video[width * row + col] = charColor(character, cColor);
 		col++;
 		deleteCounter++;
 	}
@@ -81,12 +100,12 @@ void vPrintChar(char character)
 
 
 void vPrintCharInPos(char character, int row2, int col2){
-	video[width * row2 + col2] = charColor(character, color);
+	video[width * row2 + col2] = charColor(character, cColor);
 }
 
 void vPrintCharColorInPos(char character, char co, int row2, int col2){
 	vColor(co);
-	video[width * row2 + col2] = charColor(character, color);
+	video[width * row2 + col2] = charColor(character, cColor);
 	vResetColor();
 }
 
@@ -114,23 +133,23 @@ void vDeleteLastChar(){
 	deleteCounter--;
 }
 
-uint16_t charColor(char c,char color){
+uint16_t charColor(char c,char cColor){
 	uint16_t pakash = (uint16_t) c;
-	return (pakash | (color << 8));
+	return (pakash | (cColor << 8));
 }
 
 void vNewline()
 {
-	int color2 = color;
+	int cColor2 = cColor;
 	vResetColor();
 	do{
-		video[width * row +col] = charColor(' ',color);
+		video[width * row +col] = charColor(' ',cColor);
 		col++;
 	}
 	while(col != width);
 		row++;
 	col = 0;
-	color = color2;
+	cColor = cColor2;
 }
 
 
@@ -196,7 +215,7 @@ void vClear()
 	int i;
 
 	for (i = 0; i < height * width; i++)
-		video[i] = ' ' | (color << 8); 
+		video[i] = ' ' | (cColor << 8); 
 	row = 0;
 	col = 0;
 }
@@ -235,3 +254,52 @@ static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base)
 }
 
 
+int random_seed=1;
+int maxrand(int seed,int max){
+	random_seed = random_seed+seed * 1103515245 +12345;
+	return (unsigned int)(random_seed / 65536) % (max+1); 
+}
+
+void putPixel(int x, int y, color c){
+	uint32_t * mem = (uint32_t*) 0x5080;
+	color colors[] = {red,orange,yellow,limegreen,brightgreen,blue,dodgerblue,indigo,violet,aqua,black,white,brown,cyan,gold,crimson,pink,purple};
+	char * mem2 = *mem;
+	int xRes = *((uint16_t*) 0x5084);
+	int yRes = *((uint16_t*) 0x5086);
+	int bpp = *((uint8_t*) 0x5088);
+	int offset = 0;
+	c = colors[maxrand(x*y, 18)];
+	if(x>=0 && x < xRes && y >=0 && y<yRes){
+		offset = x * yRes + y;
+			if (bpp == 24){
+				offset = offset * 3;
+				mem2[offset] = c.blue;
+				mem2[offset+1] = c.green;
+				mem2[offset+2] = c.red;
+			} else if (bpp == 32) {
+				offset = offset * 4;
+				mem2[offset] = 0x00;
+				mem2[offset+1] = c.red;
+				mem2[offset+2] = c.blue;
+				mem2[offset+3] = c.green;
+			}
+	}
+	
+}
+
+
+void putPixels(){
+	uint16_t * xRes = (uint16_t*) 0x5084;
+	uint16_t * yRes = (uint16_t*) 0x5086;
+	int xr = *xRes;
+	int yr = *yRes;
+	int x = 0;
+	int y = 0;
+	for(x = 0; x < xr; x++){
+		for(y = 0; y < yr; y++){
+				putPixel(x,y,cyan);
+			
+		}
+	}
+	
+}

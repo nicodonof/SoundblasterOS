@@ -2,6 +2,8 @@
 #define __SOUNDBLASTEROS__VIDEO__
 
 #include <stdint.h>
+#include <types.h>
+
 
 void vPrint(const char * string);
 void vPrintN(const char * string, int n);
@@ -27,5 +29,8 @@ void vPrintHex(uint64_t value);
 void vPrintBin(uint64_t value);
 void vPrintBase(uint64_t value, uint32_t base);
 void vClear();
+
+void putPixel(int x, int y, color c);
+void putPixels();
 
 #endif

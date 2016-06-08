@@ -20,6 +20,10 @@ static const uint64_t PageSize = 0x1000;
 static void * const sampleCodeModuleAddress = (void*)0x400000;
 static void * const sampleDataModuleAddress = (void*)0x500000;
 
+
+
+
+
 typedef int (*EntryPoint)();
 
 DESCR_INT *idt = (DESCR_INT*) 0;
@@ -48,7 +52,7 @@ void * getStackBase()
 		(uint64_t)&endOfKernel
 		+ PageSize * 8				//The size of the stack itself, 32KiB
 		- sizeof(uint64_t)			//Begin at the top of the stack
-	);
+		);
 }
 
 void * initializeKernelBinary()
@@ -75,6 +79,11 @@ void * initializeKernelBinary()
 	return getStackBase();
 }
 
+
+
+
+
+
 int main()
 {	
 
@@ -86,11 +95,10 @@ int main()
 	picSlaveMask(0xFF);
 	_sti();
 	initPageStack();
-	
-	
+	putPixels();
 	vClear();
 	((EntryPoint)sampleCodeModuleAddress)();
-		
+
 	return 0;
 }
 
@@ -100,11 +108,11 @@ int main()
 
 
 void setup_IDT_entry (DESCR_INT *idt, int index, word selector, ddword offset, byte access) {
-  idt[index].selector = selector;
-  idt[index].offset_l = offset & 0xFFFF;
-  idt[index].offset_m = (offset & 0xFFFF0000) >> 16;
-  idt[index].offset_h = (offset & 0xFFFFFFFF00000000) >> 32;
-  idt[index].access = access;
-  idt[index].cero = 0;
-  idt[index].zero = 0;
+	idt[index].selector = selector;
+	idt[index].offset_l = offset & 0xFFFF;
+	idt[index].offset_m = (offset & 0xFFFF0000) >> 16;
+	idt[index].offset_h = (offset & 0xFFFFFFFF00000000) >> 32;
+	idt[index].access = access;
+	idt[index].cero = 0;
+	idt[index].zero = 0;
 }

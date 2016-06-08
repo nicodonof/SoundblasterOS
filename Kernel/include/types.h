@@ -11,4 +11,11 @@ typedef struct {
 	word	offset_m;
 	dword	offset_h, zero; 
 } DESCR_INT;
+
+typedef struct{
+	char red;
+	char green;
+	char blue;
+} color;
+
 #endif
