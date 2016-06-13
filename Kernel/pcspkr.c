@@ -1,6 +1,8 @@
 #include "pcspkr.h"
 #include "video.h"
 #include "libasm.h"
+#include <debugger.h>
+
 extern void sounder();
 extern void stop_sounder();
 void sleepT(int);
@@ -26,7 +28,8 @@ int keyToNotefreq(char key){
                               notefreqs[octave][7] /* J (SOL)*/,notefreqs[octave][9]/* K (LA)*/, 
                               notefreqs[octave][11] /* L (SI)*/,0,0,notefreqs[octave][10],0, 0,notefreqs[octave][1],
                               0,notefreqs[octave][3],notefreqs[octave][6],0,0,0,0,0};
-    return (0x1234dd / (keyToNoteTable[key - 'a']));
+    int freq = 0x1234dd / (keyToNoteTable[key - 'a']);                          
+    return (freq > 65536 ? 65536 : freq);
 }
 
 /*Retorna la posicion donde imprimir los caracteres q se imprimen en el piano*/
