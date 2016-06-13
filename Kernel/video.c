@@ -78,7 +78,6 @@ void vPrintChar(char character)
 		vPrintChar(' ');
 		vPrintChar(' ');
 		vPrintChar(' ');
-		deleteCounter += 4;
 	}
 	else if(character == '\b')
 		vDeleteLastChar();

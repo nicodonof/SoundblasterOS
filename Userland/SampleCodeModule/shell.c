@@ -9,7 +9,7 @@ int quitF = 0;
 void shell(){
     osInit();
     while(!quitF){
-        write(1, "SoundblasterOS> ", 16);
+        write(1,"SoundblasterOS> ",16);
         int i = 0;
         char buffer[75];
         auxer = 0;
@@ -31,14 +31,12 @@ void shell(){
 }
 
 void printOsName(){
-    putChar('<');
-    write(1,"================================ SoundblasterOS ================================",78);
-    putChar('>');
+    write(1,"<=============================== SoundblasterOS ===============================>",80);
 }
 
 void parser(char * s, int size){
     if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p' && *s != 's'){
-    	write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
+    	print("No se reconoce el comando. Intente nuevamente.\n");
         return;
     }
     
@@ -91,7 +89,7 @@ void parser(char * s, int size){
             }
         break;
     }
-    write(1,"No se reconoce el comando. Intente nuevamente.\n",47);
+    print("No se reconoce el comando. Intente nuevamente.\n");
     return ;
 }
 
