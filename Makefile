@@ -1,5 +1,3 @@
-include Makefile.variables
-
 
 all:  bootloader kernel userland image
 
