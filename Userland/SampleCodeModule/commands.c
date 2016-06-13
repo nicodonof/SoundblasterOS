@@ -105,7 +105,7 @@ void quit(){
     for(int i = 0; i<3;i++)
         print("                                                                                ");
 
-    print(1,"                      You can turn off the computer now.                        ");
+    print("                      You can turn off the computer now.                        ");
 
     for(int i = 0; i<5;i++)
         print("                                                                                ");
