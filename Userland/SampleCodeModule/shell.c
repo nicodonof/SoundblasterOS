@@ -2,12 +2,14 @@
 #include "shell.h"
 #include "int80.h"
 
+
 char auxer = 0;
 int time = 0;
 int quitF = 0;
 
 void shell(){
     osInit();
+    
     while(!quitF){
         write(1,"SoundblasterOS> ",16);
         int i = 0;
@@ -20,7 +22,7 @@ void shell(){
                     if(i>0)
                         i--;
                     else
-                        beep();
+                        syscaller(4,'g',0,0,0);
                 } else
                     buffer[i++] = auxer;
             }         

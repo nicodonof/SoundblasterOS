@@ -40,7 +40,10 @@ void clearSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 }
 
 void pianoSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-	playPianoKey(fd);
+	if(buffSize)
+		playPianoKey(fd);
+	else
+		playKeyNote(fd);
 }
 
 void boolkeySC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){

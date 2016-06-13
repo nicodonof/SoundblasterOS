@@ -2,6 +2,7 @@
 #include "keyboard.h"
 #include "video.h"
 #include "pcspkr.h"
+#include <debugger.h>
 
 char buffer[250];
 int last = 0;
@@ -64,6 +65,8 @@ void write_key(char scancode){
       boolSelector = 1;
     }
   }
+  if(scancode == 0xFFFFFF8E)
+    stopSounderC();
   if(videoMode == 1 && ((0xFFFFFFA0 <= scancode) && (scancode <= 0xFFFFFFA6)) || 
                             ((0xFFFFFF93 <= scancode) && (scancode <= 0xFFFFFF98) && (scancode != 0xFFFFFF95)))
     stopSounderC();
