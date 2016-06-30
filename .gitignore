@@ -9,3 +9,7 @@
 
 #Object files
 *.o
+
+
+#Cross compiler
+*Makefile*

@@ -4,7 +4,14 @@
 #include <stdint.h>
 #include <types.h>
 
+typedef struct {
+	unsigned int x, y;
+} point;
 
+typedef struct {
+	char c;
+	color co;
+} charco;
 void vPrint(const char * string);
 void vPrintN(const char * string, int n);
 
@@ -31,6 +38,11 @@ void vPrintBase(uint64_t value, uint32_t base);
 void vClear();
 
 void putPixel(int x, int y, color c);
-void putPixels();
+void putPixels(color c);
+void draw_text(char* text, int length, point start, int size, color c);
+void draw_schar(char to, point where, color c);
+void draw_char(char to, point where, int size, color c);
+point toPoint(unsigned int x, unsigned int y);
+void put_pixel(unsigned int x, unsigned int y, color c);
 
 #endif

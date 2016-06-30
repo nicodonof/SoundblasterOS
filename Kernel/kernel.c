@@ -28,11 +28,15 @@ static void * const sampleDataModuleAddress = (void*)0x500000;
 typedef int (*EntryPoint)();
 
 DESCR_INT *idt = (DESCR_INT*) 0;
+<<<<<<< HEAD
 
 void set_paging();
 void write_cr3(uint64_t cr3);
 uint64_t get_cr3();
 
+=======
+void vInit();
+>>>>>>> 0165e039b68e888ea223887f96474e7bddc95b27
 void _EOI();
 void keyboardHandler();
 void timerHandler();
@@ -100,6 +104,7 @@ int main()
 	picSlaveMask(0xFF);
 	_sti();
 	initPageStack();
+
 	sPrintHex(get_cr3());
 
 	//write_cr3((uint64_t) 0x100000);
@@ -107,6 +112,8 @@ int main()
 	sPrintHex(get_cr3());
 
 	putPixels();
+
+	vInit();
 	vClear();
 	((EntryPoint)sampleCodeModuleAddress)();
 
