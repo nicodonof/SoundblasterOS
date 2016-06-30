@@ -1,11 +1,12 @@
 #include <stdint.h>
-#include <string.h>
+//#include <string.h>
 #include <lib.h>
 #include <moduleLoader.h>
 #include <types.h>
 #include <video.h>
 #include <serial.h>
 #include <debugger.h>
+
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -27,6 +28,10 @@ static void * const sampleDataModuleAddress = (void*)0x500000;
 typedef int (*EntryPoint)();
 
 DESCR_INT *idt = (DESCR_INT*) 0;
+
+void set_paging();
+void write_cr3(uint64_t cr3);
+uint64_t get_cr3();
 
 void _EOI();
 void keyboardHandler();
@@ -95,6 +100,12 @@ int main()
 	picSlaveMask(0xFF);
 	_sti();
 	initPageStack();
+	sPrintHex(get_cr3());
+
+	//write_cr3((uint64_t) 0x100000);
+	write_cr3((uint64_t) 0x3500);
+	sPrintHex(get_cr3());
+
 	putPixels();
 	vClear();
 	((EntryPoint)sampleCodeModuleAddress)();

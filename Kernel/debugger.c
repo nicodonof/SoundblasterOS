@@ -2,6 +2,7 @@
 #include <serial.h>
 #include <debugger.h>
 #include <stdarg.h>
+#include <lib.h>
 
 static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base);
 int strlen(const char * s);
@@ -266,12 +267,6 @@ void sPrintf(char* fmt, ...) {
 	va_end(ap);
 }
 
-int strlen(const char * s){
-    int n=0;
-    while(*s++ != 0)
-        n++;
-    return n;
-}
 
 void itoc(int number, char str[]) {
 
