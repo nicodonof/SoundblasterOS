@@ -27,7 +27,7 @@ static void * const sampleDataModuleAddress = (void*)0x500000;
 typedef int (*EntryPoint)();
 
 DESCR_INT *idt = (DESCR_INT*) 0;
-
+void vInit();
 void _EOI();
 void keyboardHandler();
 void timerHandler();
@@ -95,7 +95,12 @@ int main()
 	picSlaveMask(0xFF);
 	_sti();
 	initPageStack();
-	putPixels();
+	vInit();
+	point p;
+	color orange = {255, 140, 0};
+	p.x = 350;
+	p.y = 250;
+	//putPixels();
 	vClear();
 	((EntryPoint)sampleCodeModuleAddress)();
 

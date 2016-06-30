@@ -8,8 +8,8 @@ void keyboarddddd(){
 	if(!(timer++%18)){
 		seconds++;
 	}
-	changeSelector();
 	pianoModer();
+	changeSelector();
 	return;
 }
 
