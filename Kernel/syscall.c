@@ -8,7 +8,9 @@
 extern int keyboardActivated;
 extern int videoMode;
 
-void (* syscallFunctions[12])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = {0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, clearBufferSC};
+void (* syscallFunctions[12])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = 
+{0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, 
+	playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, clearBufferSC};
 
 uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 
@@ -74,3 +76,20 @@ void changeOctaveSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * 
 void clearBufferSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 	clearBuffer();
 }
+
+void create_process(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+
+}
+
+void end_process(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+
+}
+
+void list_process(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+
+}
+
+void next_process(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+	//Ceder el procesador al proceso siguiente (fuertemente recomendada por roro)
+}
+
