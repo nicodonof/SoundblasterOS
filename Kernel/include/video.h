@@ -12,6 +12,26 @@ typedef struct {
 	char c;
 	color co;
 } charco;
+
+static const color red = {255, 0, 0};
+static const color orange = {255, 140, 0};
+static const color yellow = {255, 255, 0};
+static const color limegreen = {50, 205, 0};
+static const color brightgreen = {0, 255, 0};
+static const color blue = {0, 0, 255};
+static const color dodgerblue = {30, 144, 255};
+static const color indigo = {199, 21, 133};
+static const color violet = {75, 0, 130};
+static const color aqua = {0, 200, 200};
+static const color black = {0, 0, 0};
+static const color white = {255, 255, 255};
+static const color brown = {139, 69, 19};
+static const color cyan = {0, 139, 139};
+static const color gold = {255, 215, 0};
+static const color crimson = {220, 20, 60};
+static const color pink = {255, 205, 180};
+static const color purple = {153, 50, 204};
+
 void vPrint(const char * string);
 void vPrintN(const char * string, int n);
 

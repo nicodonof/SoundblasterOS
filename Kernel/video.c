@@ -11,8 +11,8 @@ static int row = 0;
 static int col = 0;
 static const uint32_t width = 80;
 static const uint32_t height = 40 ;
-color background = {50,205,0};
-color letter = {255,0,0};
+color background;
+color letter;
 uint8_t cColor = 7;
 int videoMode = 0; // 0 = consoleMode, 1 = pianoMode, 2 = itunesMode;
 int timerTick = 0;
@@ -27,24 +27,7 @@ char * mem2;
 
 extern keyboardActivated;
 
-color red = {255, 0, 0};
-color orange = {255, 140, 0};
-color yellow = {255, 255, 0};
-color limegreen = {50, 205, 0};
-color brightgreen = {0, 255, 0};
-color blue = {0, 0, 255};
-color dodgerblue = {30, 144, 255};
-color indigo = {199, 21, 133};
-color violet = {75, 0, 130};
-color aqua = {0, 200, 200};
-color black = {0, 0, 0};
-color white = {255, 255, 255};
-color brown = {139, 69, 19};
-color cyan = {0, 139, 139};
-color gold = {255, 215, 0};
-color crimson = {220, 20, 60};
-color pink = {255, 205, 180};
-color purple = {153, 50, 204};
+
 float libDraw_text_character_spacing = 1.2;
 
 void vInit(){
@@ -54,6 +37,8 @@ void vInit(){
 	mem = (uint32_t*) 0x5080;
 	mem2 = *mem;
 	memset(vidMem, 0, sizeof(char)*80*40);
+	background = red;
+	letter = yellow;
 	putPixels(background);
 	sPrintf("xr: %d\n",xRes);
 	sPrintf("yr: %d\n",yRes);
