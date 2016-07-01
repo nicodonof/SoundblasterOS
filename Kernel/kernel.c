@@ -102,15 +102,17 @@ int main()
 	picMasterMask(0xFC);
 	picSlaveMask(0xFF);
 	_sti();
-	//initPageStack();
+	initPageStack();
 	sPrintHex(get_cr3());
 	//initPaging();
 	void * asdj;
 	process * p = createProcess("caca", asdj);
 
 	sPrintf("\npid: %d s:",p->pid);
-	sPrintf("%x\n", p->name);
+	sPrintf("%s\n", p->name);
+
 	
+
 	//write_cr3((uint64_t) 0x800000);
 	//write_cr3((uint64_t) 0x3500);
 	sPrintHex(get_cr3());
