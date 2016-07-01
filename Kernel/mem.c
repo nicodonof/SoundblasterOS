@@ -39,26 +39,26 @@ void initPageStack(){
 	}
 
 	uint64_t * asd = 0;
-	for(i=0; i<totalPages;i++){
+	/*for(i=0; i<totalPages;i++){
 		asd = pageAlloc();
 		if(i%12000 == 0){
 			sPrintf("%d: %x\n",i,asd);
 		}
-	}
+	}*/
+	pageAlloc(); //dummy no time to fix
 
+	// pageFree((uint64_t *) asd);
+	// sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
 
-	pageFree((uint64_t *) 0x654);
-	sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
-
-	pageFree();
+	// pageFree();
 	
-	sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
+	// sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
 	
-	pageFree();
+	// pageFree();
 	
-	sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
+	// sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
 	
-	pageAlloc();
+	
 	
 } 
 

@@ -3,9 +3,9 @@
 
 typedef struct{
 	int pid;
-	char * name;
-	uint64_t stack;
-	uint64_t cr3;
+	char name[24];
+	uint64_t * stack;
+	//uint64_t cr3;
 } process;
 
 process * createProcess(char * name);
