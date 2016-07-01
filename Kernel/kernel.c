@@ -105,7 +105,8 @@ int main()
 	//initPageStack();
 	sPrintHex(get_cr3());
 	//initPaging();
-	process * p = createProcess("caca");
+	void * asdj;
+	process * p = createProcess("caca", asdj);
 
 	sPrintf("\npid: %d s:",p->pid);
 	sPrintf("%x\n", p->name);

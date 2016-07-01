@@ -5,7 +5,7 @@
 int strlen(const char * str);
 void * malloc(int len);
 
-process * createProcess(char * name){
+process * createProcess(char * name, void * funct){
 	process * p = malloc(sizeof(process)); 
 	p->name = malloc(strlen(name)+1);
 	memcpy(p->name, name, strlen(name)+1);

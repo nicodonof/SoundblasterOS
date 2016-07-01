@@ -8,6 +8,6 @@ typedef struct{
 	uint64_t cr3;
 } process;
 
-process * createProcess(char * name);
+process * createProcess(char * name, void * funct);
 
 #endif
