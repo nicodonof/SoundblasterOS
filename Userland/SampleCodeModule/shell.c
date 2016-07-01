@@ -35,7 +35,10 @@ void shell(){
 void printOsName(){
     write(1,"<=============================== SoundblasterOS ===============================>",80);
 }
-
+typedef struct{
+    char name[24];
+    void * instp;
+}packash;
 void parser(char * s, int size){
     if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p' && *s != 's'){
     	print("No se reconoce el comando. Intente nuevamente.\n");
@@ -65,7 +68,12 @@ void parser(char * s, int size){
         break;
         case 'i':
             if(strcmp(s,"itunes")){
-                itunes();
+                packash * auxPack;
+                strcpy(auxPack->name,"itunes",strlen("itunes"));
+                auxPack->instp = itunes;
+                int pid;
+                syscaller(12,0,auxPack,-1,&pid);
+                write(1,&pid,0);
                 return;
             }
         break;

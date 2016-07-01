@@ -24,11 +24,13 @@ void putChar(char c){
 
 int strcmp(const char * str1, const char * str2){
     int i;
-    for(i=0;str1[i] != 0;i++)
+    for(i=0;str1[i] != 0;i++){
         if(str1[i] != str2[i])
             return 0;
+    }
     if(str2[i] != 0)
         return 0;
+
     return 1;
 }
 
@@ -52,4 +54,15 @@ void str0(char * s){
             *s = 0;
         s++;
     }
+}
+
+char * strcpy(char *dest, const char *src, int n){
+   int i;
+
+   for (i = 0; i < n && src[i] != '\0'; i++)
+       dest[i] = src[i];
+   for ( ; i < n; i++)
+       dest[i] = '\0';
+
+   return dest;
 }
