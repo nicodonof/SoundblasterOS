@@ -24,7 +24,6 @@ char vidMem[40][80];
 uint32_t * mem;
 char * mem2;
 
-
 extern keyboardActivated;
 
 
@@ -37,12 +36,14 @@ void vInit(){
 	mem = (uint32_t*) 0x5080;
 	mem2 = *mem;
 	memset(vidMem, 0, sizeof(char)*80*40);
-	background = red;
-	letter = yellow;
+	
+	background = white;
+	letter = black;
 	putPixels(background);
 	sPrintf("xr: %d\n",xRes);
 	sPrintf("yr: %d\n",yRes);
 }
+
 void vPrint(const char * string)
 {
 	int i;
@@ -148,19 +149,16 @@ void vPrintCharInPos(char character, int row2, int col2){
 }
 
 void vPrintCharColorInPos(char character, char co, int row2, int col2){
+	color colors[12] = {red, orange, yellow, limegreen, brightgreen, blue, dodgerblue, indigo, violet, aqua, brown, cyan};//, gold, crimson, pink, purple};
+
 	point p;
 	p.y= yRes/height * row2 + 5; 
 	p.x= xRes/width * col2 - 5;
-	draw_schar(character, p, letter);	
+	draw_schar(character, p, colors[co]);	
 
 	vColor(co);
 	vidMem[row2][col2] = character;
-	for (int i = 0; i < height; ++i)	{
-		for (int j = 0; j < width; ++j)		{
-	//		sPrintf("%c",vidMem[i][j]);
-		}
-	//	sPrintf("\n");
-	}
+	
 	video[width * row2 + col2] = charColor(character, cColor);
 	vResetColor();
 }
@@ -270,6 +268,8 @@ void vAntiScroller(){
 	int i,j;
 	point p;
 	char c;
+	color colors[12] = {red, orange, yellow, limegreen, brightgreen, blue, dodgerblue, indigo, violet, aqua, brown, cyan};//, gold, crimson, pink, purple};
+	
 	for(i=1;i<height-2;i++){
 		for(j=0;j<width;j++){
 			p.y= yRes/height * (height-i-1) + 5; 
@@ -281,7 +281,7 @@ void vAntiScroller(){
 			if(c==15){
 				draw_schar(c, p, background);
 			} else {
-				draw_schar(c, p, letter);
+				draw_schar(c, p, colors[j/6]);
 			}
 		}
 	}
@@ -369,7 +369,7 @@ int maxrand(int seed,int max){
 	return (unsigned int)(random_seed / 65536) % (max+1); 
 }
 
-void putPixel(int x, int y, color c){
+/*void putPixel(int x, int y, color c){
 	
 	int offset = 0;
 	if(x>=0 && x < xRes && y >=0 && y<yRes){
@@ -388,15 +388,38 @@ void putPixel(int x, int y, color c){
 			}
 	}
 	
+}*/
+
+void put_pixel(unsigned int x, unsigned int y, color c)
+{
+	int offset = 0;
+	if (x >= 0 && x < xRes && y >= 0 && y < yRes) // Sanity check
+	{
+		offset = y * xRes + x;
+		if (bpp == 24)
+		{
+			offset = offset * 3;
+			mem2[offset] = c.blue;
+			mem2[offset+1] = c.green;
+			mem2[offset+2] = c.red;
+		}
+		else if (bpp == 32)
+		{
+			offset = offset * 4;
+			mem2[offset] = 0x00;
+			mem2[offset+1] = c.red;
+			mem2[offset+2] = c.blue;
+			mem2[offset+3] = c.green;
+		}
+	}
 }
 
-
-void putPixels(color background){
+void putPixels(color c){
 	int x = 0;
 	int y = 0;
 	for(x = 0; x < xRes; x++){
 		for(y = 0; y < yRes; y++){
-				putPixel(x,y,background);
+				put_pixel(x,y,c);
 			
 		}
 	}
@@ -446,28 +469,5 @@ void draw_char(char to, point where, int size, color c)
 	}
 }
 
-void put_pixel(unsigned int x, unsigned int y, color c)
-{
-	int offset = 0;
-	if (x >= 0 && x < xRes && y >= 0 && y < yRes) // Sanity check
-	{
-		offset = y * xRes + x;
-		if (bpp == 24)
-		{
-			offset = offset * 3;
-			mem2[offset] = c.blue;
-			mem2[offset+1] = c.green;
-			mem2[offset+2] = c.red;
-		}
-		else if (bpp == 32)
-		{
-			offset = offset * 4;
-			mem2[offset] = 0x00;
-			mem2[offset+1] = c.red;
-			mem2[offset+2] = c.blue;
-			mem2[offset+3] = c.green;
-		}
-	}
-}
 
 point toPoint(unsigned int x, unsigned int y){point t={x,y};return t;}
