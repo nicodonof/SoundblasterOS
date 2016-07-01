@@ -1,11 +1,7 @@
-typedef struct {
-	page table[512];
-} table_pages;
+#ifndef PAGING_H
+#define PAGING_H
 
-typedef struct {
-	int a;
-	int b;
-	int c;
-	int d;
-	int e;
-} page;
+
+void initPaging();
+
+#endif

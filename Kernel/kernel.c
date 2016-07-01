@@ -6,6 +6,8 @@
 #include <video.h>
 #include <serial.h>
 #include <debugger.h>
+#include <paging.h>
+#include <process.h>
 
 
 extern uint8_t text;
@@ -100,11 +102,15 @@ int main()
 	picMasterMask(0xFC);
 	picSlaveMask(0xFF);
 	_sti();
-	initPageStack();
-
+	//initPageStack();
 	sPrintHex(get_cr3());
+	//initPaging();
+	process * p = createProcess("caca");
 
-	//write_cr3((uint64_t) 0x100000);
+	sPrintf("\npid: %d s:",p->pid);
+	sPrintf("%x\n", p->name);
+	
+	//write_cr3((uint64_t) 0x800000);
 	//write_cr3((uint64_t) 0x3500);
 	sPrintHex(get_cr3());
 

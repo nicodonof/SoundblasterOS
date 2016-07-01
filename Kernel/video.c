@@ -37,8 +37,8 @@ void vInit(){
 	mem2 = *mem;
 	memset(vidMem, 0, sizeof(char)*80*40);
 	
-	background = white;
-	letter = black;
+	background = dodgerblue;
+	letter = blue;
 	putPixels(background);
 	sPrintf("xr: %d\n",xRes);
 	sPrintf("yr: %d\n",yRes);
