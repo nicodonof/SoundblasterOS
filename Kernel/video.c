@@ -3,7 +3,7 @@
 #include <debugger.h>
 
 static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base);
-
+void debugP(char * s);
 int deleteCounter = 0;
 static char buffer[64] = { '0' };
 static uint16_t * const video = (uint16_t*)0xB8000;
@@ -19,6 +19,7 @@ int timerTick = 0;
 int xRes;
 int yRes;
 int bpp;
+int scrolling = 0;
 char vidMem[40][80];
 uint32_t * mem;
 char * mem2;
@@ -132,8 +133,8 @@ void vPrintChar(char character)
 		vidMem[row][col] = character;
 		video[width * row + col] = charColor(character, cColor);
 		char c = vidMem[row][col];
-		sPrintf("%d ", c);	
-		sPrintf("%c %d %d\n", character, cColor, charColor(character,cColor));
+		//sPrintf("%d ", c);	
+		//sPrintf("%c %d %d\n", character, cColor, charColor(character,cColor));
 		getChhhar();
 		col++;
 		deleteCounter++;
@@ -171,9 +172,9 @@ void vPrintCharColorInPos(char character, char co, int row2, int col2){
 	vidMem[row2][col2] = character;
 	for (int i = 0; i < height; ++i)	{
 		for (int j = 0; j < width; ++j)		{
-			sPrintf("%c",vidMem[i][j]);
+	//		sPrintf("%c",vidMem[i][j]);
 		}
-		sPrintf("\n");
+	//	sPrintf("\n");
 	}
 	video[width * row2 + col2] = charColor(character, cColor);
 	vResetColor();
@@ -225,28 +226,49 @@ void vNewline()
 
 
 void vScroller(){
-	int i,j;
+	int i,j,k;
 	point p;
 	char c;
+	int change;
 	vPrintCharInPos(' ',row,col);// borra el selector
 	for(i=2;i<height;i++){
 		for(j=0;j<width;j++){
-			p.y= yRes/height * i + 5; 
+			change = 0;
+			p.y= yRes/height * (i-1) + 5; 
 			p.x= xRes/width * j - 5;
+			if(vidMem[i][j] != vidMem[i-1][j]){
+		//		sPrintf("i: %d, j:%d\n", i,j);
+				change = 1;
+			}
 			c = vidMem[i][j];
 			vidMem[i-1][j] = c;
-			if(c==15){
+			if(c==15 && change){
 				draw_schar(c, p, background);
-			} else {
+			} else if(change) {
+				draw_schar(15, p, background);
 				draw_schar(c, p, letter);
 			}
 			video[(i-1) *width + j] = video[i* width + j]; 
 
 		}
 	}
+	//sPrintf("i:%d, j:%d, k: %d\n", i,j,k);
 	col = 0;
 	vNewline();
+	
 	row--;
+}
+
+void debugP(char * s){
+	int i,j;
+	sPrintf("%s", s);
+	for(i = 0; i<height;i++){
+		for ( j = 0; j < width; j++)
+		{
+			sPrintf("%c",vidMem[i][j]);
+		}
+		sPrintf("\n");
+	}
 }
 
 extern int timer;
