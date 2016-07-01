@@ -8,15 +8,15 @@ uint64_t * stackStart	= (uint64_t*) (10*0x100000);
 uint64_t * stackEnd		= (uint64_t*) (12*0x100000);
 uint64_t * stackCurrent;
 uint64_t * mallocStart = (uint64_t*) (6*0x100000);
-//uint64_t * currMalloc = mallocStart;
+uint64_t * currMalloc = (uint64_t*) (6*0x100000);
 
 int totalPages;
 
-/*void * malloc(int len){
-	if(currMalloc + len > stackStart)
-		return -1;
-	//currMalloc
-}*/
+//malloc vien billa
+void * malloc(int len){
+	currMalloc += (uint64_t)len;
+	return currMalloc;
+}
 
 void initPageStack(){
 	
