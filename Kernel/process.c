@@ -46,3 +46,7 @@ static uint64_t processShell() {
 	((EntryPoint)sampleCodeModuleAddress)();
 	return 0;
 }
+
+process * getCurrent() {
+	return current;
+}
