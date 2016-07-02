@@ -6,8 +6,12 @@ typedef struct{
 	char name[24];
 	uint64_t * stack;
 	//uint64_t cr3;
+	uint64_t quantum;
 } process;
 
 process * createProcess(char * name, void * funct);
+static uint64_t processShell();
+static uint64_t getNewPid();
+void initProcesses();
 
 #endif

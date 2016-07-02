@@ -121,7 +121,7 @@ int main()
 
 	vInit();
 	vClear();
-	((EntryPoint)sampleCodeModuleAddress)();
+	initProcesses();
 
 	return 0;
 }
