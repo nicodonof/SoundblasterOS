@@ -56,3 +56,12 @@ void processNext() {
 		current = current->next;
 	}	
 }
+
+uint64_t getQuantum(){
+	return current->quantum;
+}
+
+void decQuantum(){
+	if(current->quantum > 0)
+		current->quantum--;
+}

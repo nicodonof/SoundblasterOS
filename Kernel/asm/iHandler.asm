@@ -14,6 +14,8 @@ extern syscallHandler
 extern schedulerToKernel
 extern schedulerToUser
 extern processNext
+extern getQuantum
+extern decQuantum
 
 %macro pusha 0
     push rax
@@ -58,7 +60,7 @@ timerHandler:
 	iretq
 
 _leave_current:
-    call    task_decquantum
+    call    decQuantum
 
 keyboardHandler:
     pusha

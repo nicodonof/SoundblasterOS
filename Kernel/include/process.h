@@ -17,5 +17,7 @@ static uint64_t getNewPid();
 void initProcesses();
 process * getCurrent();
 void processNext();
+uint64_t getQuantum();
+void decQuantum();
 
 #endif
