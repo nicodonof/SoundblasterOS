@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include "process.h"
-extern void * kernel_stack;
+extern void * kernelStack;
 
 void* schedulerToKernel(uint64_t * stackPointer){
 	process *current = processGetCurrent();
@@ -9,7 +9,7 @@ void* schedulerToKernel(uint64_t * stackPointer){
 		current->stack = stackPointer;
 	}
 
-	return kernel_stack;
+	return kernelStack;
 }
 
 
