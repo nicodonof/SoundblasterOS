@@ -5,7 +5,9 @@ GLOBAL get_cr3
 GLOBAL get_cr4
 GLOBAL get_cr0
 GLOBAL set_paging
+GLOBAL forceScheduler
 extern sPrintf
+
 
 outb:					;outb(value, port)
 	mov rdx, rsi

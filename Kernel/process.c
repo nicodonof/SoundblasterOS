@@ -21,6 +21,11 @@ void initProcesses(){
 	current = createProcess("shell",processShell);
 }
 
+static void wrapper(EntryPoint func){
+	func();
+	forceScheduler();
+}
+
 process * createProcess(char * name, void * funct){
 	process * p = malloc(sizeof(process)); 
 	//p->name = malloc(strlen(name)+1);
@@ -42,7 +47,7 @@ static uint64_t getNewPid(){
 	return pid;
 }
 
-static uint64_t processShell() {	
+static uint64_t processShell() {
 	((EntryPoint)sampleCodeModuleAddress)();
 	return 0;
 }
