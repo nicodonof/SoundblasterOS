@@ -11,6 +11,9 @@ GLOBAL _iretq
 extern write_key
 extern keyboarddddd
 extern syscallHandler
+extern schedulerToKernel
+extern schedulerToUser
+extern processNext
 
 %macro pusha 0
     push rax
@@ -33,15 +36,29 @@ extern syscallHandler
 %endmacro
 
 timerHandler:
-    
     pusha
     
-    call keyboarddddd
+    call    keyboarddddd
     
-    call _EOI
+    call    getQuantum
+    cmp     rax, 0
+    jne     _leave_current
+
+    mov     rdi, rsp
+    call    schedulerToKernel
+    mov     rsp, rax
+
+    call    processNext
+
+    call    schedulerToUser
+    mov     rsp, rax
+    call    _EOI
 
     popa
 	iretq
+
+_leave_current:
+    call    task_decquantum
 
 keyboardHandler:
     pusha

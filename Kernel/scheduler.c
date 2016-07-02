@@ -1,9 +1,10 @@
 #include <stdint.h>
 #include "process.h"
+
 extern void * kernelStack;
 
 void* schedulerToKernel(uint64_t * stackPointer){
-	process *current = processGetCurrent();
+	process *current = getCurrent();
 
 	if (current != 0) { //NULL
 		current->stack = stackPointer;
@@ -13,8 +14,8 @@ void* schedulerToKernel(uint64_t * stackPointer){
 }
 
 
-void* schedlerToUser(){
-	process *proc = processGetCurrent();
+void* schedulerToUser(){
+	process *proc = getCurrent();
 	//proc->quantum = QUANTUM;
 	//writeCR3(proc->cr3);
 
