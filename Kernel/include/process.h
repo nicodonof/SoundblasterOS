@@ -8,6 +8,7 @@ typedef struct{
 	struct process *next;
 	//uint64_t cr3;
 	uint64_t quantum;
+	void * instp;
 } process;
 
 process * createProcess(char * name, void * funct);

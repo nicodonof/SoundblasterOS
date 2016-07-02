@@ -24,9 +24,6 @@ static void * const sampleCodeModuleAddress = (void*)0x400000;
 static void * const sampleDataModuleAddress = (void*)0x500000;
 
 
-
-
-
 typedef int (*EntryPoint)();
 
 DESCR_INT *idt = (DESCR_INT*) 0;
@@ -54,13 +51,16 @@ void clearBSS(void * bssAddress, uint64_t bssSize)
 	memset(bssAddress, 0, bssSize);
 }
 
+void * kernelStack;
+
 void * getStackBase()
 {
-	return (void*)(
+	kernelStack = (void*)(
 		(uint64_t)&endOfKernel
 		+ PageSize * 8				//The size of the stack itself, 32KiB
 		- sizeof(uint64_t)			//Begin at the top of the stack
 		);
+	return kernelStack;
 }
 
 void * initializeKernelBinary()
@@ -102,14 +102,19 @@ int main()
 	picMasterMask(0xFC);
 	picSlaveMask(0xFF);
 	_sti();
-	initPageStack();
-	sPrintHex(get_cr3());
-	//initPaging();
-	void * asdj;
-	process * p = createProcess("caca", asdj);
 
-	sPrintf("\npid: %d s:",p->pid);
-	sPrintf("%s\n", p->name);
+	sPrintf("%x\n", kernelStack);
+	initPageStack();
+	
+	sPrintHex(get_cr3());
+	
+	//initPaging();
+
+	void * asdj;
+	//process * p = createProcess("caca", asdj);
+
+	//sPrintf("\npid: %d s:",p->pid);
+	//sPrintf("%s\n", p->name);
 
 	
 
