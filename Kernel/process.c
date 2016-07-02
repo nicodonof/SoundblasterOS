@@ -49,3 +49,9 @@ static uint64_t processShell() {
 process * getCurrent() {
 	return current;
 }
+
+void processNext() {
+	if(current != 0 && current->next != 0){
+		current = current->next;
+	}	
+}
