@@ -7,6 +7,7 @@ typedef struct{
 	uint64_t * stack;
 	//uint64_t cr3;
 	uint64_t quantum;
+	void * instp;
 } process;
 
 process * createProcess(char * name, void * funct);

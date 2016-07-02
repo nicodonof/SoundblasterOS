@@ -1,6 +1,8 @@
+#include <stdint.h>
+#include "process.h"
 extern void * kernel_stack;
 
-void* schedulerToKernel(void stackPointer){
+void* schedulerToKernel(uint64_t * stackPointer){
 	process *current = processGetCurrent();
 
 	if (current != 0) { //NULL
