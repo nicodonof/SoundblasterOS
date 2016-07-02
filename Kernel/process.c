@@ -31,6 +31,7 @@ process * createProcess(char * name, void * funct){
 	p->stack = pageAlloc();
 	sPrintf("st: %x", p->stack);
 	p->quantum = 100;
+	p->funct;
 	return p;
 }
 
@@ -44,4 +45,8 @@ static uint64_t getNewPid(){
 static uint64_t processShell() {	
 	((EntryPoint)sampleCodeModuleAddress)();
 	return 0;
+}
+
+process * getCurrent() {
+	return current;
 }
