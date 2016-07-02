@@ -18,7 +18,7 @@ static process *foreground[4] = {0};
 static uint64_t nextPid = 1;
 
 void initProcesses(){
-	createProcess("shell",processShell);
+	current = createProcess("shell",processShell);
 }
 
 process * createProcess(char * name, void * funct){

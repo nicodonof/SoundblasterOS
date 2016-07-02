@@ -60,7 +60,10 @@ timerHandler:
 	iretq
 
 _leave_current:
-    call    decQuantum
+    call decQuantum
+    call    _EOI
+    popa
+    iretq
 
 keyboardHandler:
     pusha
