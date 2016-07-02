@@ -23,7 +23,7 @@ static const uint64_t PageSize = 0x1000;
 static void * const sampleCodeModuleAddress = (void*)0x400000;
 static void * const sampleDataModuleAddress = (void*)0x500000;
 
-
+void * kernel_stack = 0;
 
 
 
@@ -105,12 +105,7 @@ int main()
 	initPageStack();
 	sPrintHex(get_cr3());
 	//initPaging();
-	void * asdj;
-	process * p = createProcess("caca", asdj);
-
-	sPrintf("\npid: %d s:",p->pid);
-	sPrintf("%s\n", p->name);
-
+	
 	
 
 	//write_cr3((uint64_t) 0x800000);
