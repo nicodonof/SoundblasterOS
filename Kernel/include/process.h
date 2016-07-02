@@ -13,5 +13,6 @@ process * createProcess(char * name, void * funct);
 static uint64_t processShell();
 static uint64_t getNewPid();
 void initProcesses();
+process * getCurrent();
 
 #endif
