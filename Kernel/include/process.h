@@ -5,6 +5,7 @@ typedef struct{
 	int pid;
 	char name[24];
 	uint64_t * stack;
+	struct process *next;
 	//uint64_t cr3;
 	uint64_t quantum;
 	void * instp;
@@ -15,5 +16,6 @@ static uint64_t processShell();
 static uint64_t getNewPid();
 void initProcesses();
 process * getCurrent();
+void processNext();
 
 #endif
