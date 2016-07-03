@@ -116,7 +116,7 @@ void newProcessContext(process * proc,void * func) {
 	context->base = 0x000;
 
 
-	sPrintf("\nrip: %x\n", context->rip);
+//	sPrintf("\nrip: %x\n", context->rip);
 //	writeCR3(saved_cr3);
 	disableOrEnableInterrupts(interr);
 }

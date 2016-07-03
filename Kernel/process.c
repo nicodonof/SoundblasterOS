@@ -11,14 +11,16 @@ static void * const sampleDataModuleAddress = (void*)0x500000;
 typedef int (*EntryPoint)();
 
 static process *current;
-static process *null_process;
-
-static process *foreground[4] = {0};
+static process *nullProcess;
 
 static uint64_t nextPid = 1;
 
 void initProcesses(){
-	current = createProcess("shell",processShell);
+	current = nullProcess;
+	nullProcess->next = createProcess("shell",processShell); 	
+	forceScheduler();
+
+	sPrintf("sali del coso");
 }
 
 static void wrapper(EntryPoint func){
