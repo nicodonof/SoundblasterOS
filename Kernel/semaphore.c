@@ -9,7 +9,7 @@ Semaphore *startSemaphore(unsigned int value){
 	semaphore->value = value;
 	semaphore->firstPID = 0;
 	semaphore->lastPID = 0;
-	return sem;
+	return semaphore;
 }
 
 //Sends a semaphore to its death. Cannot be used after this.
@@ -37,8 +37,8 @@ int wait(Semaphore *semaphore){
 
 	pNode * node = malloc(sizeof(pNode));
 
-	pNode->pid = getpid();   									//TODO: GETPID
-	pNode->next = 0;
+	// node->pid = getpid();   									//TODO: GETPID
+	node->next = 0;
 
 	if(semaphore->firstPID == 0){
 		semaphore->firstPID = node;
@@ -49,7 +49,7 @@ int wait(Semaphore *semaphore){
 		semaphore->lastPID = node;
 	}
 
-	sleep(node->pid);											//TODO: SLEEP PROCESS
+	// sleep(node->pid);											//TODO: SLEEP PROCESS
 	wait(semaphore);
 }
 
@@ -63,9 +63,9 @@ void signal(Semaphore *semaphore){
 			semaphore->value++;
 		return;
 	}
-	pNode *node = semaphore->firstPID;
+	//pNode *node = semaphore->firstPID;
 	// free(node);													//TODO: FREE NODE
 	semaphore->firstPID = semaphore->firstPID->next;
-	if(semaphore-firstPID != 0)
-		wakeUp(semaphore->firstPID);
+	// if(semaphore->firstPID != 0)									//TODO: WAKE UP
+		// wakeUp(semaphore->firstPID);
 }
