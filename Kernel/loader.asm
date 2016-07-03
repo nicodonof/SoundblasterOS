@@ -11,9 +11,9 @@ extern sPrintf
     push rbx
     push rcx
     push rdx
+    push rbp
     push rdi
     push rsi
-    push rbp
     push r8 
     push r9 
     push r10
@@ -37,9 +37,9 @@ extern sPrintf
     pop  r10
     pop  r9 
     pop  r8 
-    pop  rbp
     pop  rsi
     pop  rdi
+    pop  rbp
     pop  rdx
     pop  rcx
     pop  rbx
@@ -55,18 +55,33 @@ loader:
 	call main
 	cli
 
+	push rdi
+    mov rdi, halt
+    call sPrintf
+    pop rdi
+
 hang:
 	hlt							; halt machine should kernel return
 	jmp hang
 
 forceScheduler:
 	;Push de los registros que dps va a levantar el iretq
+
 	pop 		QWORD[ret_addr] 		;Direccion de retorno
 
 	mov 		QWORD[ss_addr],	ss 		;Stack Segment
 	push 		QWORD[ss_addr]
 
 	push  		rsp
+
+	push rdi
+    push rsi
+    mov rdi, string
+    mov rsi, rsp
+    call sPrintf
+    pop rsi
+    pop rdi
+
 	pushf 								;Se pushean los flags
 	mov 		QWORD[cs_addr], cs 		;Code Segment
 	push 		QWORD[cs_addr]
@@ -86,12 +101,37 @@ forceScheduler:
 	call 		schedulerToKernel
 	mov 		rsp, rax
 
+	push rdi
+    push rsi
+    mov rdi, string
+    mov rsi, rsp
+    call sPrintf
+    pop rsi
+    pop rdi
+
 	call 		processNext
+
+	push rdi
+    push rsi
+    mov rdi, string
+    mov rsi, rsp
+    call sPrintf
+    pop rsi
+    pop rdi
 
 	call  		schedulerToUser
 	mov			rsp, rax
 
+	push rdi
+    push rsi
+    mov rdi, string
+    mov rsi, rsp
+    call sPrintf
+    pop rsi
+    pop rdi	
+
 	popa
+
 	iretq
 
 
@@ -104,4 +144,7 @@ cs_addr:
 ss_addr:
 		resq 1
 
-
+section .data
+	string db "rsp: %x",10,0
+	ripppp db "rip: %x",10,0
+	halt db "halt"

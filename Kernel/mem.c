@@ -88,7 +88,7 @@ void newProcessContext(process * proc,void * func) {
   //writeCR3(originalCR3);
 
   /* Write the registers in the stack */
-	context_t* context = 0x3F000000; //(context_t*)proc->stack - sizeof(context_t);
+	context_t* context = (context_t*)proc->stack;// - sizeof(context_t);
 
 	context->gs = 	0x01;
 	context->fs = 	0x02;
@@ -115,7 +115,7 @@ void newProcessContext(process * proc,void * func) {
 	context->ss = 	0x000;
 	context->base = 0x000;
 
-
+	sPrintf("cont: %x\n", context);
 //	sPrintf("\nrip: %x\n", context->rip);
 //	writeCR3(saved_cr3);
 	disableOrEnableInterrupts(interr);

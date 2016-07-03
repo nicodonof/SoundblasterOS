@@ -23,9 +23,9 @@ extern decQuantum
     push rbx
     push rcx
     push rdx
+    push rbp
     push rdi
     push rsi
-    push rbp
     push r8 
     push r9 
     push r10
@@ -49,9 +49,9 @@ extern decQuantum
     pop  r10
     pop  r9 
     pop  r8 
-    pop  rbp
     pop  rsi
     pop  rdi
+    pop  rbp
     pop  rdx
     pop  rcx
     pop  rbx

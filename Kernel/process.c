@@ -16,6 +16,7 @@ static process *nullProcess;
 static uint64_t nextPid = 1;
 
 void initProcesses(){
+	nullProcess = createProcess("null", 0);
 	current = nullProcess;
 	nullProcess->next = createProcess("shell",processShell); 	
 	forceScheduler();
@@ -24,6 +25,7 @@ void initProcesses(){
 }
 
 static void wrapper(EntryPoint func){
+	sPrintf("func: %x", func);
 	func();
 	forceScheduler();
 }
@@ -37,7 +39,7 @@ process * createProcess(char * name, void * funct){
 	sPrintf("\n%x\n", p->name);
 	p->stack = pageAlloc();
 	sPrintf("st: %x\n", p->stack);
-	p->quantum = 5;
+	p->quantum = 50;
 	p->instp = (void *)wrapper;
 	sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, (void*)processShell);
 	newProcessContext(p,funct);
@@ -63,6 +65,7 @@ process * getCurrent() {
 }
 
 void processNext() {
+	sPrintf("curr: %x\n", current);
 	if(current != 0 && current->next != 0){
 		current = current->next;
 	}	
