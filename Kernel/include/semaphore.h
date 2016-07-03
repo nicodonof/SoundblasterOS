@@ -1,19 +1,20 @@
 #ifndef SEMAPHORE_H
 #define SEMAPHORE_H
 
+typedef struct ProcessNode pNode;
 struct ProcessNode{
 	int pid;
-	struct ProcessNode* next;	
+	pNode* next;	
 };
-typedef struct ProcessNode pNode;
 
+typedef struct Semaphore Semaphore;
 struct Semaphore{
 	int		value;
 	int     dead;
 	pNode*	firstPID;
 	pNode*	lastPID;
 };
-typedef struct Semaphore Semaphore;
+
 
 Semaphore *startSemaphore(unsigned int value);
 void stopSemaphore(Semaphore *semaphore);
