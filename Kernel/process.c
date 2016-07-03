@@ -37,6 +37,8 @@ process * createProcess(char * name, void * funct){
 	sPrintf("st: %x", p->stack);
 	p->quantum = 100;
 	p->instp = (void *)wrapper;
+
+	newProcessContext(p,funct);
 	return p;
 }
 

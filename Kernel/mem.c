@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <mem.h>
-#include "process.h"
 
 #define GB 0x40000000
 
@@ -82,8 +81,7 @@ void pageFree(uint64_t * page){
 	*stackCurrent = page;
 }
 
-/* Everytime a process is created asign the result of this function to rsp */
-uint64_t alloc_new_process_stack(process * proc,void * func, const char* name, uint64_t wrapper) {
+void newProcessContext(process * proc,void * func) {
 
   //uint64_t saved_cr3 = readCR3();
   //writeCR3(originalCR3);
@@ -109,7 +107,7 @@ uint64_t alloc_new_process_stack(process * proc,void * func, const char* name, u
 	context->rcx =  0x0F;
 	context->rbx =  0x010;
 	context->rax =  0x011;
-	context->rip =  (uint64_t)wrapper;
+	context->rip =  proc->instp;
 	context->cs = 	0x008;
 	context->rflags=0x202;
 	context->rsp = (proc->stack);
