@@ -34,11 +34,12 @@ process * createProcess(char * name, void * funct){
 	p->pid = getNewPid();
 	sPrintf("\n%x\n", p->name);
 	p->stack = pageAlloc();
-	sPrintf("st: %x", p->stack);
+	sPrintf("st: %x\n", p->stack);
 	p->quantum = 5;
 	p->instp = (void *)wrapper;
-
+	sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, (void*)processShell);
 	newProcessContext(p,funct);
+	sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, (void*)processShell);
 	sPrintf("\nStack pointer: %x\n",p->stack);
 	return p;
 }

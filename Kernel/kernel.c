@@ -118,7 +118,7 @@ int main()
 
 	
 
-	//write_cr3((uint64_t) 0x800000);
+	write_cr3((uint64_t) 0x100000);
 	//write_cr3((uint64_t) 0x3500);
 	sPrintHex(get_cr3());
 

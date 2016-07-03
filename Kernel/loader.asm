@@ -5,7 +5,7 @@ extern initializeKernelBinary
 extern schedulerToKernel
 extern schedulerToUser
 extern processNext
-
+extern sPrintf
 %macro pusha 0
     push rax
     push rbx
@@ -54,6 +54,7 @@ loader:
 	
 	call main
 	cli
+
 hang:
 	hlt							; halt machine should kernel return
 	jmp hang
@@ -93,6 +94,7 @@ forceScheduler:
 	popa
 	iretq
 
+
 section .bss
 
 ret_addr:
@@ -101,3 +103,5 @@ cs_addr:
 		resq 1
 ss_addr:
 		resq 1
+
+
