@@ -29,12 +29,18 @@ void boop(){
 
 /*Activa el programa para escuchar canciones*/
 void itunes(){
+    ////sPrintf("dentro iutunes\n");
+    char * st1 = "Itunes Revolutionary musicPlayer!\nMusic available (press the number to play):\n";
+    char * st2 = "    1. Ode To Joy\n";
+    char * st3 = "    2. Tetris Theme\n";
+    char * st4 = "    3. Mario Theme\n";
+    char * st5 = "Or press enter to exit.\n";
     clear();
-    print("Itunes Revolutionary musicPlayer!\nMusic available (press the number to play):\n");
-    print("    1. Ode To Joy\n");
-    print("    2. Tetris Theme\n");
-    print("    3. Mario Theme\n");
-    print("Or press enter to exit.\n");
+    print(st1);
+    print(st2);
+    print(st3);
+    print(st4);
+    print(st5);
     syscaller(5,1,0,0,0);
     do{
         auxer = getChar();

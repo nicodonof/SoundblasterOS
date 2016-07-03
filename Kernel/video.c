@@ -40,8 +40,8 @@ void vInit(){
 	background = dodgerblue;
 	letter = blue;
 	putPixels(background);
-	sPrintf("xr: %d\n",xRes);
-	sPrintf("yr: %d\n",yRes);
+	//sPrintf("xr: %d\n",xRes);
+	//sPrintf("yr: %d\n",yRes);
 }
 
 void vPrint(const char * string)
@@ -119,8 +119,8 @@ void vPrintChar(char character)
 		vidMem[row][col] = character;
 		video[width * row + col] = charColor(character, cColor);
 		char c = vidMem[row][col];
-		//sPrintf("%d ", c);	
-		//sPrintf("%c %d %d\n", character, cColor, charColor(character,cColor));
+		////sPrintf("%d ", c);	
+		////sPrintf("%c %d %d\n", character, cColor, charColor(character,cColor));
 		getChhhar();
 		col++;
 		deleteCounter++;
@@ -220,7 +220,7 @@ void vScroller(){
 			p.y= yRes/height * (i-1) + 5; 
 			p.x= xRes/width * j - 5;
 			if(vidMem[i][j] != vidMem[i-1][j]){
-		//		sPrintf("i: %d, j:%d\n", i,j);
+		//		//sPrintf("i: %d, j:%d\n", i,j);
 				change = 1;
 			}
 			c = vidMem[i][j];
@@ -235,7 +235,7 @@ void vScroller(){
 
 		}
 	}
-	//sPrintf("i:%d, j:%d, k: %d\n", i,j,k);
+	////sPrintf("i:%d, j:%d, k: %d\n", i,j,k);
 	col = 0;
 	vNewline();
 	
@@ -244,13 +244,13 @@ void vScroller(){
 
 void debugP(char * s){
 	int i,j;
-	sPrintf("%s", s);
+	//sPrintf("%s", s);
 	for(i = 0; i<height;i++){
 		for ( j = 0; j < width; j++)
 		{
-			sPrintf("%c",vidMem[i][j]);
+			//sPrintf("%c",vidMem[i][j]);
 		}
-		sPrintf("\n");
+		//sPrintf("\n");
 	}
 }
 

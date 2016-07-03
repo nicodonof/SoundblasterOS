@@ -24,18 +24,10 @@ void initPageStack(){
 	totalPages = (GB/2) / pageSize; //512 mb
 	stackCurrent = stackEnd;
 	uint64_t startOfPages = (uint64_t) stackEnd;
-	sPrint("paginas ");
-	sPrintDec(totalPages);
-	sPrint(" ");
-	sPrintHex(stackCurrent);
-	sPrint("\n");
 	int i;
 	// Se paginiza un giga en un stack
 	for(i = 0; i < totalPages; i++){ 
 		*stackCurrent = startOfPages + i*(pageSize);
-		if(i%12000 == 0){
-			sPrintf("%d: Pos: %x - Pos Stack: %x \n", i, *stackCurrent, stackCurrent);
-		}
 		stackCurrent--;
 	}
 
@@ -43,21 +35,21 @@ void initPageStack(){
 	/*for(i=0; i<totalPages;i++){
 		asd = pageAlloc();
 		if(i%12000 == 0){
-			sPrintf("%d: %x\n",i,asd);
+			//sPrintf("%d: %x\n",i,asd);
 		}
 	}*/
 	pageAlloc(); //dummy no time to fix
 
 	// pageFree((uint64_t *) asd);
-	// sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
+	// //sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
 
 	// pageFree();
 	
-	// sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
+	// //sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
 	
 	// pageFree();
 	
-	// sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
+	// //sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
 	
 	
 	
@@ -115,8 +107,9 @@ void newProcessContext(process * proc,void * func) {
 	context->ss = 	0x000;
 	context->base = 0x000;
 
-	sPrintf("cont: %x\n", context);
-//	sPrintf("\nrip: %x\n", context->rip);
+	//sPrintf("cont: %x\n", context);
+//	//sPrintf("\nrip: %x\n", context->rip);
 //	writeCR3(saved_cr3);
-	disableOrEnableInterrupts(interr);
+	sPrintf("int: %d\n", interr);
+	disableOrEnableInterrupts(1);
 }

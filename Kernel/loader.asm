@@ -55,10 +55,10 @@ loader:
 	call main
 	cli
 
-	push rdi
-    mov rdi, halt
-    call sPrintf
-    pop rdi
+	;push rdi
+    ;mov rdi, halt
+    ;call sPrintf
+    ;pop rdi
 
 hang:
 	hlt							; halt machine should kernel return
@@ -66,7 +66,11 @@ hang:
 
 forceScheduler:
 	;Push de los registros que dps va a levantar el iretq
-
+	;push rdi
+    ;mov rdi, start
+    ;call sPrintf
+    ;pop rdi
+	
 	pop 		QWORD[ret_addr] 		;Direccion de retorno
 
 	mov 		QWORD[ss_addr],	ss 		;Stack Segment
@@ -74,13 +78,13 @@ forceScheduler:
 
 	push  		rsp
 
-	push rdi
-    push rsi
-    mov rdi, string
-    mov rsi, rsp
-    call sPrintf
-    pop rsi
-    pop rdi
+	;push rdi
+    ;push rsi
+    ;mov rdi, string
+    ;mov rsi, rsp
+    ;call sPrintf
+    ;pop rsi
+    ;pop rdi
 
 	pushf 								;Se pushean los flags
 	mov 		QWORD[cs_addr], cs 		;Code Segment
@@ -101,34 +105,39 @@ forceScheduler:
 	call 		schedulerToKernel
 	mov 		rsp, rax
 
-	push rdi
-    push rsi
-    mov rdi, string
-    mov rsi, rsp
-    call sPrintf
-    pop rsi
-    pop rdi
+	;push rdi
+    ;push rsi
+    ;mov rdi, string
+    ;mov rsi, rsp
+    ;call sPrintf
+    ;pop rsi
+    ;pop rdi
 
 	call 		processNext
 
-	push rdi
-    push rsi
-    mov rdi, string
-    mov rsi, rsp
-    call sPrintf
-    pop rsi
-    pop rdi
+	;push rdi
+    ;push rsi
+    ;mov rdi, string
+    ;mov rsi, rsp
+    ;call sPrintf
+    ;pop rsi
+    ;pop rdi
 
 	call  		schedulerToUser
 	mov			rsp, rax
 
-	push rdi
-    push rsi
-    mov rdi, string
-    mov rsi, rsp
-    call sPrintf
-    pop rsi
-    pop rdi	
+	;push rdi
+    ;push rsi
+    ;mov rdi, string
+    ;mov rsi, rsp
+    ;call sPrintf
+    ;pop rsi
+    ;pop rdi	
+
+    ;push rdi
+    ;mov rdi, end
+    ;call sPrintf
+    ;pop rdi
 
 	popa
 
@@ -148,3 +157,5 @@ section .data
 	string db "rsp: %x",10,0
 	ripppp db "rip: %x",10,0
 	halt db "halt"
+	start db "Start fs:",10,0
+	end db "End fs.",10,0

@@ -21,13 +21,12 @@ void initProcesses(){
 	nullProcess->next = createProcess("shell",processShell); 	
 	
 	forceScheduler();
-
-	sPrintf("sali del coso");
 }
 
 static void wrapper(EntryPoint func){
-	sPrintf("func: %x", func);
+	//sPrintf("func: %x\n", func);
 	func();
+	//sPrintf("asd\n");
 	forceScheduler();
 }
 
@@ -37,15 +36,15 @@ process * createProcess(char * name, void * funct){
 	memset(p->name, 0, 24);
 	memcpy(p->name, name, strlen(name)+1);
 	p->pid = getNewPid();
-	sPrintf("\n%x\n", p->name);
+	//sPrintf("\n%x\n", p->name);
 	p->stack = pageAlloc();
-	sPrintf("st: %x\n", p->stack);
+	//sPrintf("st: %x\n", p->stack);
 	p->quantum = 50;
 	p->instp = (void *)wrapper;
-	sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, (void*)processShell);
+	//sPrintf("%s: %x %x\n", p->name, p->instp, funct);
 	newProcessContext(p,funct);
-	sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, (void*)processShell);
-	sPrintf("\nStack pointer: %x\n",p->stack);	
+	//sPrintf("%s: %x %x\n", p->name, p->instp, funct);
+	//sPrintf("\nStack pointer: %x\n",p->stack);	
 	p->next = current->next;
 	current->next = p;
 	return p;
@@ -59,6 +58,7 @@ static uint64_t getNewPid(){
 }
 
 static uint64_t processShell() {
+	//sPrintf("%x\n", processShell);
 	((EntryPoint)sampleCodeModuleAddress)();
 	return 0;
 }
@@ -68,21 +68,27 @@ process * getCurrent() {
 }
 
 void processNext() {
-	sPrintf("curr: %x\n", current);
+	//sPrintf("curr: %s\n", current->name);
 	if(current != 0 && current->next != 0){
 		process * aux = current->next;
 		if(aux->pid == nullProcess->pid){
 			current = aux->next;  
-		}else
+			//sPrintf("curr: %s\n", current->name);
+		} else {
 			current = current->next;
+			//sPrintf("curr: %s\n", current->name);
+		}
 	}
 }
 
 uint64_t getQuantum(){
+	////sPrintf("q: %d", current->quantum);
 	return current->quantum;
 }
 
 void decQuantum(){
-	if(current->quantum > 0)
+	if(current->quantum > 0){
+	//	//sPrintf("dq: %d", current->quantum);
 		current->quantum--;
+	}
 }

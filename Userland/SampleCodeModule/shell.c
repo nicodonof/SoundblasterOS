@@ -24,7 +24,7 @@ void shell(){
                     else
                         syscaller(4,'g',0,0,0);
                 } else
-                    buffer[i++] = auxer;
+                buffer[i++] = auxer;
             }         
         } while (auxer != '\n');
         buffer[i-1] = 0;
@@ -39,6 +39,18 @@ typedef struct{
     char name[24];
     void * instp;
 }packash;
+
+int wrapProcess(char * name, void * instp){
+    packash * auxPack;
+    strcpy(auxPack->name,name,strlen(name));
+    print(name);
+    print("aasdasd");
+    print(auxPack->name[2]);
+    auxPack->instp = instp;
+    int pid;
+    syscaller(12,0,auxPack,-1,&pid);
+    return pid;
+}
 void parser(char * s, int size){
     if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p' && *s != 's' && *s != 'g'){
     	print("No se reconoce el comando. Intente nuevamente.\n");
@@ -46,63 +58,69 @@ void parser(char * s, int size){
     }
     
     str0(s);
-	
+
     switch(*s){
         case 'c':
-            if(strcmp(s,"clear")){
-                clear();
-                return;
-            }
+        if(strcmp(s,"clear")){
+            clear();
+            return;
+        }
         break;
         case 'q':
-            if(strcmp(s,"quit")){
-                quit();
-                return;
-            }
+        if(strcmp(s,"quit")){
+            quit();
+            return; 
+        }
         break;
         case 's':
-            if(strcmp(s,"shutdown")){
-                quit();
-                return;
-            }
+        if(strcmp(s,"shutdown")){
+            quit();
+            return;
+        }
         break;
         case 'i':
-            if(strcmp(s,"itunes")){
-                packash * auxPack;
-                strcpy(auxPack->name,"itunes",strlen("itunes"));
-                auxPack->instp = itunes;
-                int pid;
-                syscaller(12,0,auxPack,-1,&pid);
-                write(1,&pid,0);
-                return;
-            }
+        if(strcmp(s,"itunes")){
+            //int pid = wrapProcess("itunes", itunes);
+            packash * auxPack;
+            strcpy(auxPack->name,"itunes",strlen("itunes"));
+            print(auxPack->name);
+            auxPack->instp = itunes;
+            int pid;
+            syscaller(12,0,auxPack,-1,&pid);
+
+            return;
+        }
         break;
         case 'h':
-            if(strcmp(s,"help")){
-                help();
-                return;
-            }
+        if(strcmp(s,"help")){
+            int pid = wrapProcess("help", help);
+                //help();
+            return;
+        }
         break;
         case 'b':
-            if(strcmp(s,"beep")){
-                beep();
-                return;
-            }else if(strcmp(s,"boop")){
-                boop();
-                return;
-            }
+        if(strcmp(s,"beep")){
+            int pid = wrapProcess("beep", beep);
+            beep();
+            return;
+        }else if(strcmp(s,"boop")){
+            int pid = wrapProcess("boop", boop);
+            boop();
+            return;
+        }
         break;
         case 'p':
-            if(strcmp(s,"piano")){
-                piano();
-                return;
-            }
+        if(strcmp(s,"piano")){
+            int pid = wrapProcess("piano", piano);
+            piano();
+            return;
+        }
         break;
         case 'g':
-            if(strcmp(s,"game")){
-                game();
-                return;
-            }
+        if(strcmp(s,"game")){
+            game();
+            return;
+        }
         break;
     }
     print("No se reconoce el comando. Intente nuevamente.\n");
@@ -120,7 +138,7 @@ void clearAll(){
 
 int isValidNote(char key){
     return (key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l' 
-            || key == 'r' || key == 't' || key == 'u' ||key == 'i' ||key == 'o');
+        || key == 'r' || key == 't' || key == 'u' ||key == 'i' ||key == 'o');
 }
 
 
