@@ -215,8 +215,8 @@ void game(){
     long timeStart;
     long GAME_DURATION = 177777; // ??? que esto tenga sentido
     syscaller(17,0,&timeStart,0,0); // syscall que agarra epoch o alguna manera de gettear el start time para chequear cuanto time paso
-    long timerNow = timerStart
-    while(timerNow < timerStart + GAME_DURATION){
+    long timerNow = timeStart;
+    while(timerNow < timeStart + GAME_DURATION){
         //wait for input del usuario ?
         //poray aca tenes que inventarte orto "mode" aparte de pianoModer y shellModer
         //para leer el keypress
