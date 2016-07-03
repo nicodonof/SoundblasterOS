@@ -6,6 +6,7 @@ GLOBAL get_cr4
 GLOBAL get_cr0
 GLOBAL set_paging
 GLOBAL forceScheduler
+GLOBAL getEflags
 extern sPrintf
 
 
@@ -82,6 +83,19 @@ set_paging:
 	mov rsp, rbp
 	pop rbp
 	ret
+
+
+getEflags:
+    push rbp
+    mov rbp, rsp
+
+    pushfq
+    pop rax
+
+    mov rsp, rbp
+    pop rbp
+    ret
+
 
 section .data
 	string db "i: %x",10,0

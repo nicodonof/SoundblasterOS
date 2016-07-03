@@ -4,6 +4,7 @@ GLOBAL syscallHandlerA
 GLOBAL picMasterMask
 GLOBAL picSlaveMask
 GLOBAL _sti
+GLOBAL _cli
 GLOBAL _EOI
 GLOBAL _iretq
 
@@ -59,7 +60,6 @@ extern decQuantum
 
 timerHandler:
     pusha
-    
     call    keyboarddddd
     
     call    getQuantum
@@ -124,6 +124,9 @@ picSlaveMask:
 _sti:
 	sti
 	ret
+_cli:
+    cli
+    ret
 
 _EOI:
     

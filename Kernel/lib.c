@@ -55,3 +55,15 @@ int strlen(const char * s){
         n++;
     return n;
 }
+
+
+int disableOrEnableInterrupts(int flagger){
+	uint64_t flags = getEflags();
+
+	if ( flagger )
+		_sti();
+	else
+		_cli();
+
+	return (flags & 0x200) != 0;
+}

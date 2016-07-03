@@ -106,7 +106,8 @@ void newProcessContext(process * proc,void * func) {
 	context->rcx =  0x0F;
 	context->rbx =  0x010;
 	context->rax =  0x011;
-	context->rip =  proc->instp;
+
+	context->rip =  proc->instp;//direccion de retorno que levanta con el iretq
 	context->cs = 	0x008;
 	context->rflags=0x202;
 	context->rsp = (proc->stack);

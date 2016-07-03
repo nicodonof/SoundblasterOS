@@ -35,10 +35,11 @@ process * createProcess(char * name, void * funct){
 	sPrintf("\n%x\n", p->name);
 	p->stack = pageAlloc();
 	sPrintf("st: %x", p->stack);
-	p->quantum = 100;
+	p->quantum = 5;
 	p->instp = (void *)wrapper;
 
 	newProcessContext(p,funct);
+	sPrintf("\nStack pointer: %x\n",p->stack);
 	return p;
 }
 
