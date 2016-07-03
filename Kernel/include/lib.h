@@ -8,10 +8,7 @@ void * memcpy(void * destination, const void * source, uint64_t length);
 
 char *cpuVendor(char *result);
 int strlen(const char * s);
-<<<<<<< HEAD
 int disableOrEnableInterrupts(int flagger);
-=======
 int strcmp(const char * str1, const char * str2);
->>>>>>> 586acea7056f2e03d1814fc1571979b6a3f0496d
 
 #endif

@@ -1,5 +1,5 @@
 #include <lib.h>
-#include <msgQueue.h>
+#include "msgQueue.h"
 #include <semaphore.h>
 #include <mem.h>
 
