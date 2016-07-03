@@ -56,7 +56,6 @@ int strlen(const char * s){
     return n;
 }
 
-
 int disableOrEnableInterrupts(int flagger){
 	uint64_t flags = getEflags();
 
@@ -66,4 +65,16 @@ int disableOrEnableInterrupts(int flagger){
 		_cli();
 
 	return (flags & 0x200) != 0;
+}
+
+int strcmp(const char * str1, const char * str2){
+    int i;
+    for(i=0;str1[i] != 0;i++){
+        if(str1[i] != str2[i])
+            return 0;
+    }
+    if(str2[i] != 0)
+        return 0;
+
+    return 1;
 }
