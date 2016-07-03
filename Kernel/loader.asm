@@ -59,8 +59,7 @@ hang:
 	jmp hang
 
 forceScheduler:
-	;Mejorar y explicar	
-	;Simulamos una interrpucion
+	;Push de los registros que dps va a levantar el iretq
 	pop 		QWORD[ret_addr] 		;Direccion de retorno
 
 	mov 		QWORD[ss_addr],	ss 		;Stack Segment
@@ -74,7 +73,7 @@ forceScheduler:
 
 	;En este momento el stack contiene:
 	;
-	; > red_addr
+	; > ret_addr
 	;	cs
 	;	rflags
 	;	rsp
@@ -82,14 +81,14 @@ forceScheduler:
 
 	pusha
 
-	mov 		rdi,	 rsp
+	mov 		rdi, rsp
 	call 		schedulerToKernel
-	mov 		rsp, 	rax
+	mov 		rsp, rax
 
 	call 		processNext
 
 	call  		schedulerToUser
-	mov			rsp,	 rax
+	mov			rsp, rax
 
 	popa
 	iretq
