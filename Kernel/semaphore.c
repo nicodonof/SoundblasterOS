@@ -1,6 +1,8 @@
 #include <semaphore.h>
 #include <mem.h>												//TODO: ADD INCLUDE FOR TASK OR SCHEDULER?
 
+void destroySemaphore(Semaphore *semaphore);
+
 //Creates a semaphore
 Semaphore *startSemaphore(unsigned int value){
 	Semaphore *semaphore = malloc(sizeof(Semaphore)); 			//TODO: MALLOC SEMAPHORE

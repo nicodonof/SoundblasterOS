@@ -20,4 +20,10 @@ struct MsgNode{
 
 typedef struct msgNode Msg;
 
+MsgQueue openMsgQ(char *name);
+MsgQueue getMsgQ(char *name);
+int closeMsgQ(MsgQueue q);
+void sendMsg(MsgQueue q,char* msg);
+char* receiveMsg(MsgQueue q);
+
 #endif
