@@ -200,35 +200,39 @@ void game(){
     // FORK DE VIDEO
     
     int randoms[3];
-    syscaller(16,0,&random[0],0,0);//hacer syscall de get random
-    syscaller(16,0,&random[1],0,0);
-    syscaller(16,0,&random[2],0,0);
+    syscaller(16,0,&randoms[0],0,0);//hacer syscall de get random
+    syscaller(16,0,&randoms[1],0,0);
+    syscaller(16,0,&randoms[2],0,0);
     int posicionDelJugador = 0;
     // 0 1 (posicion del jugador)
     // 2 3
     // El fork del video (hablar con teo de comm) se encarga de:
         // poner la circulo arriba isq (personaje)
         // poner la flecha de random[0] arriba der
-        // poner la flecha de random[1] abajo isq
-        // poner la flecha de random[2] abajo der
+        // poner la flecha de random[1] abajo der
+        // poner la flecha de random[2] abajo isq
     int puntaje = 0;
     long timeStart;
     long GAME_DURATION = 177777; // ??? que esto tenga sentido
     syscaller(17,0,&timeStart,0,0); // syscall que agarra epoch o alguna manera de gettear el start time para chequear cuanto time paso
-    while(timeStart < GAME_DURATION){
+    long timerNow = timerStart
+    while(timerNow < timerStart + GAME_DURATION){
         //wait for input del usuario ?
         //poray aca tenes que inventarte orto "mode" aparte de pianoModer y shellModer
         //para leer el keypress
-        //if(toke el key correcto){
+        //if(keypressed != randoms[posicionDelJugador]){
         //  puntaje++;
         //  play good sound!
         //  posicionDelJugador = (posicionDelJugador + 1) % 4
-        //  reiniciarLasFlechas(posicionDelJugador);
+        //  reiniciarLasFlechas(randoms,posicionDelJugador);
+        //  dibujar las flechas :O
         //} else {
         //  puntaje--;
         //  play bad sound :(
-        //  reiniciarLasFlechas(posicionDelJugador);
+        //  reiniciarLasFlechas(randoms,posicionDelJugador);
+        //  dibujar las flechas :O
         //}
+        //syscaller(17,0,&timerNow, 0 ,0);
     }
     //clear screen syscall
     printf("Su puntaje es: %d\n", puntaje);
