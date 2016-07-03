@@ -1,4 +1,5 @@
 #ifndef MEM_H
+#define MEM_H
 #include <stdint.h>
 #include "process.h"
 

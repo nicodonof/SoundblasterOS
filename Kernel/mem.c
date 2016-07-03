@@ -87,7 +87,6 @@ void newProcessContext(process * proc,void * func) {
   //writeCR3(originalCR3);
 
   /* Write the registers in the stack */
-	uint64_t addr = pageAlloc() + pageSize - sizeof(context_t);
 	context_t* context = (context_t*)proc->stack;
 
 	context->gs = 	0x01;
