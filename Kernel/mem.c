@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <mem.h>
+#include "lib.h"
 
 #define GB 0x40000000
 
@@ -82,7 +83,7 @@ void pageFree(uint64_t * page){
 }
 
 void newProcessContext(process * proc,void * func) {
-
+	int interr = disableOrEnableInterrupts(0);
   //uint64_t saved_cr3 = readCR3();
   //writeCR3(originalCR3);
 
@@ -115,4 +116,5 @@ void newProcessContext(process * proc,void * func) {
 	context->base = 0x000;
 
 //	writeCR3(saved_cr3);
+	disableOrEnableInterrupts(interr);
 }
