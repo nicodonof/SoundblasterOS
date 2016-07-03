@@ -19,6 +19,7 @@ void initProcesses(){
 	nullProcess = createProcess("null", 0);
 	current = nullProcess;
 	nullProcess->next = createProcess("shell",processShell); 	
+	
 	forceScheduler();
 
 	sPrintf("sali del coso");
@@ -44,7 +45,9 @@ process * createProcess(char * name, void * funct){
 	sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, (void*)processShell);
 	newProcessContext(p,funct);
 	sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, (void*)processShell);
-	sPrintf("\nStack pointer: %x\n",p->stack);
+	sPrintf("\nStack pointer: %x\n",p->stack);	
+	p->next = current->next;
+	current->next = p;
 	return p;
 }
 
@@ -67,8 +70,12 @@ process * getCurrent() {
 void processNext() {
 	sPrintf("curr: %x\n", current);
 	if(current != 0 && current->next != 0){
-		current = current->next;
-	}	
+		process * aux = current->next;
+		if(aux->pid == nullProcess->pid){
+			current = aux->next;  
+		}else
+			current = current->next;
+	}
 }
 
 uint64_t getQuantum(){
