@@ -41,16 +41,16 @@ hang:
 forceScheduler:
 	;Mejorar y explicar	
 	;Simulamos una interrpucion
-	pop 		QWORD[ret_addr] 			;Direccion de retorno
+	pop 		QWORD[ret_addr] 		;Direccion de retorno
 
 	mov 		QWORD[ss_addr],	ss 		;Stack Segment
 	push 		QWORD[ss_addr]
 
 	push  		rsp
-	pushf 									;Se pushean los flags
+	pushf 								;Se pushean los flags
 	mov 		QWORD[cs_addr], cs 		;Code Segment
 	push 		QWORD[cs_addr]
-	push 		QWORD[ret_addr] 			;Direccion de retorno
+	push 		QWORD[ret_addr] 		;Direccion de retorno
 
 	;En este momento el stack contiene:
 	;
