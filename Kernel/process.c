@@ -36,7 +36,7 @@ process * createProcess(char * name, void * funct){
 	p->stack = pageAlloc();
 	sPrintf("st: %x", p->stack);
 	p->quantum = 100;
-	p->instp = funct;
+	p->instp = (void *)wrapper;
 	return p;
 }
 

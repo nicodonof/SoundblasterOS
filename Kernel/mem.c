@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <mem.h>
+#include "process.h"
 
 #define GB 0x40000000
 
@@ -79,4 +80,41 @@ void pageFree(uint64_t * page){
 		sPrint("No pages left to free.");
 	stackCurrent--;
 	*stackCurrent = page;
+}
+
+/* Everytime a process is created asign the result of this function to rsp */
+uint64_t alloc_new_process_stack(process * proc,void * func, const char* name, uint64_t wrapper) {
+
+  //uint64_t saved_cr3 = readCR3();
+  //writeCR3(originalCR3);
+
+  /* Write the registers in the stack */
+	uint64_t addr = pageAlloc() + pageSize - sizeof(context_t);
+	context_t* context = (context_t*)proc->stack;
+
+	context->gs = 	0x01;
+	context->fs = 	0x02;
+	context->r15 =  0x03;
+	context->r14 =  0x04;
+	context->r13 =  0x05;
+	context->r12 =  0x06;
+	context->r11 =  0x07;
+	context->r10 =  0x08;
+	context->r9 = 	0x09;
+	context->r8 = 	0x0A;
+	context->rsi =  0x0B;
+	context->rdi =  (uint64_t)func;
+	context->rbp =  0x0D;
+	context->rdx =  0x0E;
+	context->rcx =  0x0F;
+	context->rbx =  0x010;
+	context->rax =  0x011;
+	context->rip =  (uint64_t)wrapper;
+	context->cs = 	0x008;
+	context->rflags=0x202;
+	context->rsp = (proc->stack);
+	context->ss = 	0x000;
+	context->base = 0x000;
+
+//	writeCR3(saved_cr3);
 }

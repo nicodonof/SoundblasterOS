@@ -74,9 +74,7 @@ keyboardHandler:
     
     call _EOI
     call write_key
-    
-        
-    
+       
     popa
     iretq
 
