@@ -24,7 +24,7 @@ void shell(){
                     else
                         syscaller(4,'g',0,0,0);
                 } else
-                    buffer[i++] = auxer;
+                buffer[i++] = auxer;
             }         
         } while (auxer != '\n');
         buffer[i-1] = 0;
@@ -46,63 +46,63 @@ void parser(char * s, int size){
     }
     
     str0(s);
-	
+
     switch(*s){
         case 'c':
-            if(strcmp(s,"clear")){
-                clear();
-                return;
-            }
+        if(strcmp(s,"clear")){
+            clear();
+            return;
+        }
         break;
         case 'q':
-            if(strcmp(s,"quit")){
-                quit();
-                return;
-            }
+        if(strcmp(s,"quit")){
+            quit();
+            return;
+        }
         break;
         case 's':
-            if(strcmp(s,"shutdown")){
-                quit();
-                return;
-            }
+        if(strcmp(s,"shutdown")){
+            quit();
+            return;
+        }
         break;
         case 'i':
-            if(strcmp(s,"itunes")){
-                packash * auxPack;
-                strcpy(auxPack->name,"itunes",strlen("itunes"));
-                auxPack->instp = itunes;
-                int pid;
-                syscaller(12,0,auxPack,-1,&pid);
-                write(1,&pid,0);
-                return;
-            }
+        if(strcmp(s,"itunes")){
+            packash * auxPack;
+            strcpy(auxPack->name,"itunes",strlen("itunes"));
+            auxPack->instp = itunes;
+            int pid;
+            syscaller(12,0,auxPack,-1,&pid);
+            write(1,&pid,0);
+            return;
+        }
         break;
         case 'h':
-            if(strcmp(s,"help")){
-                help();
-                return;
-            }
+        if(strcmp(s,"help")){
+            help();
+            return;
+        }
         break;
         case 'b':
-            if(strcmp(s,"beep")){
-                beep();
-                return;
-            }else if(strcmp(s,"boop")){
-                boop();
-                return;
-            }
+        if(strcmp(s,"beep")){
+            beep();
+            return;
+        }else if(strcmp(s,"boop")){
+            boop();
+            return;
+        }
         break;
         case 'p':
-            if(strcmp(s,"piano")){
-                piano();
-                return;
-            }
+        if(strcmp(s,"piano")){
+            piano();
+            return;
+        }
         break;
         case 'g':
-            if(strcmp(s,"game")){
-                game();
-                return;
-            }
+        if(strcmp(s,"game")){
+        //    game();
+            return;
+        }
         break;
     }
     print("No se reconoce el comando. Intente nuevamente.\n");
@@ -120,7 +120,7 @@ void clearAll(){
 
 int isValidNote(char key){
     return (key == 'd' || key == 'f' ||key == 'g' ||key == 'h' ||key == 'j' ||key == 'k' || key == 'l' 
-            || key == 'r' || key == 't' || key == 'u' ||key == 'i' ||key == 'o');
+        || key == 'r' || key == 't' || key == 'u' ||key == 'i' ||key == 'o');
 }
 
 
@@ -191,52 +191,4 @@ void osInit(){
     syscaller(5,0,0,0,0);
     clear();
     syscaller(11,0,0,0,0);
-}
-
-void game(){
-    print("Game not implemented yet...");
-    return; //?
-    // FORK DE SOUND
-    // FORK DE VIDEO
-    
-    int randoms[3];
-    syscaller(16,0,&randoms[0],0,0);//hacer syscall de get random
-    syscaller(16,0,&randoms[1],0,0);
-    syscaller(16,0,&randoms[2],0,0);
-    int posicionDelJugador = 0;
-    // 0 1 (posicion del jugador)
-    // 2 3
-    // El fork del video (hablar con teo de comm) se encarga de:
-        // poner la circulo arriba isq (personaje)
-        // poner la flecha de random[0] arriba der
-        // poner la flecha de random[1] abajo der
-        // poner la flecha de random[2] abajo isq
-    int puntaje = 0;
-    long timeStart;
-    long GAME_DURATION = 177777; // ??? que esto tenga sentido
-    syscaller(17,0,&timeStart,0,0); // syscall que agarra epoch o alguna manera de gettear el start time para chequear cuanto time paso
-    long timerNow = timeStart;
-    while(timerNow < timeStart + GAME_DURATION){
-        //wait for input del usuario ?
-        //poray aca tenes que inventarte orto "mode" aparte de pianoModer y shellModer
-        //para leer el keypress
-        //if(keypressed != randoms[posicionDelJugador]){
-        //  puntaje++;
-        //  play good sound!
-        //  posicionDelJugador = (posicionDelJugador + 1) % 4
-        //  reiniciarLasFlechas(randoms,posicionDelJugador);
-        //  dibujar las flechas :O
-        //} else {
-        //  puntaje--;
-        //  play bad sound :(
-        //  reiniciarLasFlechas(randoms,posicionDelJugador);
-        //  dibujar las flechas :O
-        //}
-        //syscaller(17,0,&timerNow, 0 ,0);
-    }
-    //clear screen syscall
-    printf("Su puntaje es: %d\n", puntaje);
-    printf("Precione enter para salir\n");
-    printf("Precione R para reintenter\n");
-    //?????
 }
