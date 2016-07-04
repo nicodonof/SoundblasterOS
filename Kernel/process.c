@@ -12,17 +12,21 @@ typedef int (*EntryPoint)();
 
 static process *last;
 static process *current;
+static process *shellProc;
 static process *nullProcess;
 
 static uint64_t nextPid = 1;
 
 void initProcesses(){
-	nullProcess = createProcess("null", 0,1);
+	nullProcess = createProcess("null", 0,0);
+	nullProcess->state = INACTIVE;
+
 	current = nullProcess;
 	current->next = nullProcess;
 	last = nullProcess;
-	nullProcess->next = createProcess("shell",processShell,1); 	
 	
+	shellProc = createProcess("shell",processShell,0); 	
+	nullProcess->next = shellProc;
 	forceScheduler();
 }
 
@@ -31,10 +35,10 @@ static void wrapper(EntryPoint func){
 	func();
 	//sPrintf("asd\n");
 	process * aux = current->next;
-	sPrintf("\nTERMINE :%s\n",aux->name);
+	sPrintf("\nTERMINE :%s\n",current->name);
 	last->next = current->next;
 	current = current->next;
-	current->state = ACTIVE;
+	shellProc->state = ACTIVE;
 	forceScheduler();
 	
 	sPrintf("\nTERMINE DE VUELTA: ahora viene:%s\n",current->name);
@@ -58,8 +62,7 @@ process * createProcess(char * name, void * funct,int newProcess){
 	p->next = current->next;
 	p->state = ACTIVE;
 	if(newProcess){
-		sPrintf("Seteo %s en inactive \n", current->name);
-		current->state = INACTIVE;
+		shellProc->state = INACTIVE;
 	}
 
 	current->next = p;
@@ -91,15 +94,10 @@ void processNext() {
 	//sPrintf("curr: %s\n", current->name);
 	if(current != 0 && current->next != 0){
 		process * aux = current->next;
-		if(aux->pid == nullProcess->pid || aux->state == INACTIVE){
+		while(aux->state == INACTIVE){
 			//Salteo uno
 			last = current;
-			current = aux->next;
-			sPrintf("curr: %s\n", current->name);
-		} else {
-			last = current;
 			current = current->next;
-			sPrintf("curr: %s\n", current->name);
 		}
 	}
 }
