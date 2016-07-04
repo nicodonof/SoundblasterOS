@@ -52,7 +52,7 @@ void itunes(){
     syscaller(5,1,0,2,0);
         playSong(auxer - '1');
     syscaller(5,0,0,0,0);
-    clear(); 
+    clear();
 }
 
 void clear(){
