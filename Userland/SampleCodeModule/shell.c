@@ -39,7 +39,7 @@ typedef struct{
     char name[24];
     void * instp;
 }packash;
-       packash * auxPack;
+packash * auxPack;
 
 int wrapProcess(char * name, void * instp){
 //  packash * auxPack;
