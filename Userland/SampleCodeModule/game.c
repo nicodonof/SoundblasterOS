@@ -5,21 +5,16 @@
 
 // void game(){
 //     print("Game not implemented yet...");
-//     return;
-//     //------------------------------
-//     //messageQueue input y sound
-//     if(!fork()){
-//         game_render();
-//         }
-//     else if(!fork()){
-//         game_sound();
-//     }
-//     else{
-//         game_input();
-//     }
+//     // create process with this function: game_sound();
+//     // create process with this function: game_input();
+//     game_render();
 // }   
 
 // void game_input(){
+// 	void * msgInputQ;
+// 	while(msgQ == 0){
+// 		//syscall getQueue gameinputq
+// 	}
 
 //     while(1){
 //         auxer = getChar();
@@ -29,7 +24,7 @@
 //                 case 'd':
 //                 case '\n':
 //                 case '\b':  
-//                 //send auxer mqueue render                               
+//                 //syscall send auxer to gameinputq                               
 //             } 
 //             if(auxer='\b'){
 //                 break;
@@ -40,10 +35,40 @@
 // }
 
 // void game_sound(){
+// 	void* soundQ;
+// 	char* msg;
+// 	//syscall start queue named gameaudioq
+// 	while(1){
+// 		while(msg == 0){
+// 			//syscall get message from soundQ
+// 		}
+// 		switch(auxer){
+//             case 'b':
+//             	//syscall beep
+//             	break;
+//             case 'n':
+//             	//syscall boop
+//             	break;
+//             case 'm':
+//             	//syscall play song
+//             	break;
+//             case 'p':  
+//             	//syscall send auxer to gameinputq
+//             	break;                            
+//         } 
+// 		msg = 0;
+// 	}
+	
 //     return;
 // }
 
 // void game_render(){
+// 	void * inputQ;
+// 	//syscall start queue named gameinputq
+// 	void * soundQ;
+// 	while(soundQ == 0){
+// 		//syscall getQueue gamesoundq
+// 	}
 //     printf("Presione ENTER para empezar el juego\n");
 //     printf("Presione Q para salir\n");
    

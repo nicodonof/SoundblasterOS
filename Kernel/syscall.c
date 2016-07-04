@@ -112,3 +112,26 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	//Ceder el procesador al proceso siguiente (fuertemente recomendada por roro)
 	}
 
+	void randomSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+
+	}
+
+	void openMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+		dest = openMsgQ(buff);
+	}
+
+	void getMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+		dest = getMsgQ(buff);
+	}
+
+	void closeMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+		closeMsgQ(fd);
+	}
+
+	void sendMsgToQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+		sendMsgToQ(fd, buff);
+	}
+	
+	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+		dest = receiveMsgFromQ(fd);
+	}

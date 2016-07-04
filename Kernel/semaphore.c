@@ -1,11 +1,12 @@
 #include <semaphore.h>
-#include <mem.h>												//TODO: ADD INCLUDE FOR TASK OR SCHEDULER?
+#include <mem.h>	
+#include <process.h>
 
 void destroySemaphore(Semaphore *semaphore);
 
 //Creates a semaphore
 Semaphore *startSemaphore(unsigned int value){
-	Semaphore *semaphore = malloc(sizeof(Semaphore)); 			//TODO: MALLOC SEMAPHORE
+	Semaphore *semaphore = malloc(sizeof(Semaphore));
 	semaphore->value = value;
 	semaphore->firstPID = 0;
 	semaphore->lastPID = 0;
@@ -38,7 +39,7 @@ int waitSemaphore(Semaphore *semaphore){
 
 		pNode * node = malloc(sizeof(pNode));
 
-		// node->pid = getpid();   									//TODO: GETPID
+		node->pid = getcurrent()->pid;
 		node->next = 0;
 
 		if(semaphore->firstPID == 0){

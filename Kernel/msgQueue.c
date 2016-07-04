@@ -1,6 +1,7 @@
 #include <lib.h>
 #include <msgQueue.h>
 #include <mem.h>
+#include <process.h>
 
 void destroyMsgQ(MessageQueue* q);
 
@@ -17,9 +18,9 @@ MessageQueue* openMsgQ(char *name){
 	}
 	for (int i = 0; i < MAX_QUEUES; ++i){
 		if(qNames[i] == 0){
-			MessageQueue *auxQueue = malloc(sizeof(MessageQueue));                   //TODO: MALLOC?
+			MessageQueue *auxQueue = malloc(sizeof(MessageQueue));
 			auxQueue->sem = startSemaphore(1);
-			// auxQueue->receiver = getPID();								//TODO:getPID?
+			auxQueue->receiver = getCurrent()->pid;
 			auxQueue->ID = i;
 			auxQueue->name = name;
 			auxQueue->dead = 0;
@@ -69,7 +70,7 @@ void sendMsg(MessageQueue* q,char* msg){
 //Gets back a message from the messageQueue and erases it.
 char* receiveMsg(MessageQueue* q){
 	waitSemaphore(q->sem);
-	if(/*getPID()*/0 == q->receiver){						//TODO: FIX THIS.... NEED GETPID!!!
+	if(getCurrent()->pid == q->receiver){
 		if(q->first != 0){
 			Msg* node = q->first;
 			q->first = q->first->next;
