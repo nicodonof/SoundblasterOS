@@ -103,7 +103,6 @@ void parser(char * s, int size){
             auxPack->instp = beep;
             int pid;
             syscaller(12,0,auxPack,-1,&pid);
-            print("asdasdsaaaaaaaaaaaaaaaaaaaaaaaaa");
             return;
         }else if(strcmp(s,"boop")){
             int pid = wrapProcess("boop", boop);

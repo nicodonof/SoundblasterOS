@@ -32,10 +32,11 @@ static void wrapper(EntryPoint func){
 	//sPrintf("asd\n");
 	process * aux = current->next;
 	sPrintf("\nTERMINE :%s\n",aux->name);
-	forceScheduler();
-	sPrintf("\nTERMINE DE VUELTA\n");
 	last->next = current->next;
 	current = current->next;
+	forceScheduler();
+	
+	sPrintf("\nTERMINE DE VUELTA: ahora viene:%s\n",current->name);
 }
 
 process * createProcess(char * name, void * funct){
@@ -84,9 +85,11 @@ void processNext() {
 	if(current != 0 && current->next != 0){
 		process * aux = current->next;
 		if(aux->pid == nullProcess->pid){
-			current = aux->next;  
+			last = current;
+			current = aux->next;
 			sPrintf("curr: %s\n", current->name);
 		} else {
+			last = current;
 			current = current->next;
 			sPrintf("curr: %s\n", current->name);
 		}

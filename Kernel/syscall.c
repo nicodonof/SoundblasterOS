@@ -93,7 +93,6 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 		packash* auxPack = (packash*) buff;
 		sPrintf("s:%s\n",auxPack->name);
 		process * aux = createProcess(auxPack->name,auxPack->instp);
-		return;
 		*dest = aux->pid;
 		//kernelToUser();
 		
