@@ -80,7 +80,7 @@ void parser(char * s, int size){
         break;
         case 'i':
         if(strcmp(s,"itunes")){
-            strcpy(auxPack->name,"itunes",strlen(itunes));;
+            strcpy(auxPack->name,"itunes",strlen("itunes"));;
             auxPack->instp = itunes;
             int pid;
             syscaller(12,0,auxPack,1,&pid);
@@ -111,7 +111,7 @@ void parser(char * s, int size){
         case 'p':
         if(strcmp(s,"piano")){
             strcpy(auxPack->name,"piano",strlen("piano"));;
-            auxPack->instp = "instp";
+            auxPack->instp = piano;
             int pid;
             syscaller(12,0,auxPack,1,&pid);
             return;
