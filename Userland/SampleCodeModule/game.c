@@ -41,7 +41,7 @@ void game_input(){
 void game_sound(){
     print("Start GameAudio Process\n");
 	void* soundQ;
-	char* msg;
+	char msg;
 	syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
 
     while(1){
@@ -88,7 +88,7 @@ void game_render(){
 
     int pos_player = 0;
     int puntaje = 0;
-    char * input;
+    char input;
     int x_x = 0;
 
     char board[5][20]; 
@@ -127,13 +127,13 @@ void game_render(){
     //----------------------INPUT---------------------------------
 
         syscaller(21,0,&inputQ,0, &input); //getinput(): syscall get message from inputQ
-        if(*input == 'a'){           
+        if(input == 'a'){           
             pos_player = (pos_player + 404) % 5;     //obfuscatedCode9.31
         }
-        else if(*input == 'd'){
+        else if(input == 'd'){
             pos_player = (pos_player + 931) % 5;
         }
-        else if(*input == '\b'){
+        else if(input == '\b'){
             syscaller(20, 'p' , &soundQ, 0, 0);		//syscall send "stop music (p)" to gameaudioq 
             x_x=1;                                     //no morimo'
         }
