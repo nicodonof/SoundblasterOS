@@ -8,6 +8,11 @@ typedef struct{
 }packash;
 packash * auxPack; 
 
+typedef struct{
+    int row;
+    int col;    
+}pointAux;
+
 void game_input(){
 	void * msgInputQ;
 	//while(msgQ == 0){
@@ -173,15 +178,49 @@ void game(){
     } point;
 */
     #include "game.h"
-    void printBoard(){//char board[][]){
-    	point * p1 ,* p2, * p3;
-		p1->x = 700; p1->y = 0; 
-        p2->x = 700; p2->y = 600;
-		p3->x = 700; p3->y = 0; 
-        syscaller(22, 0, p3, "yellow", p2);
-        p2->x = 100; p2->y = 600; // Imprime las lineas de los costados aunq sean mas feas que teofilo.
-        p3->x = 100; p3->y = 0; 
-        syscaller(22, 0, p3, "yellow", p2);
+    #include "lib.h"
+    #include "shell.h"
+    #include "int80.h"
 
+
+typedef struct{
+    int row;
+    int col;    
+}pointAux;
+
+    void printBoard(){//char board[][]){
+    	syscaller(3,0,0,0,0);
+        pointAux * auxPoint, * auxPoint2;
+
+        auxPoint->col = 20; 
+        auxPoint->row = 20;
+
+        
+
+        for (int i = 0; i < 16; i++)
+        {
+             auxPoint2->col = 30 + i;
+            
+            
+            for (int j = 2; j < 22; j++)
+            { 
+                auxPoint2->row = j;
+                syscaller(23, '|', auxPoint2, 0, 0);
+            
+            }
+
+        }
+           
+
+        return;
+
+  //       point * p1 ,* p2, * p3;
+  //       p1->x = 700; p1->y = 0; 
+  //       p2->x = 700; p2->y = 600;
+  //       p3->x = 700; p3->y = 0; 
+  //       syscaller(22, 0, p3, "yellow", p2);
+  //       p2->x = 100; p2->y = 600; // Imprime las lineas de los costados aunq sean mas feas que teofilo.
+  //       p3->x = 100; p3->y = 0; 
+  //       syscaller(22, 0, p3, "yellow", p2);
 
     }
