@@ -143,6 +143,8 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 		uint64_t** dest2 = (uint64_t**)buff;
 		uint64_t* dest3 = (uint64_t*)dest;
 		dest3 = receiveMsg((MessageQueue *) *dest2);
+		sPrintf("asdasdasdsda LE TENGO FE\n");
+		sPrintf("%c\n",*dest3);
 	}
 
 	void drawLineSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){

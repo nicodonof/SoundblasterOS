@@ -49,12 +49,11 @@ void game_input(){
 void game_sound(){
     print("Start GameAudio Process\n");
 	void* soundQ;
-	char msg = 0;
+	char msg = 'a';
 	syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
-    playSongNoStop(2);
-    while(1){
-		
-        while(msg == 0){
+    //playSongNoStop(1);
+    while(1){		
+        while(msg == 'g'){
 			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
 		}
         playSongNoStop(2);
@@ -66,14 +65,14 @@ void game_sound(){
             case 'n':
             	//syscall boop
             break;
-            case 'm':
+            case 'g':
                 playSongNoStop(2);
             break;
             case 'p':  
             	//syscall pause song
             break;                            
         } 
-        msg = 0;
+        msg = 'a';
     }
 
     return;
