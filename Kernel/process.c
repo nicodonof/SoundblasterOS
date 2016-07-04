@@ -68,7 +68,7 @@ process * createProcess(char * name, void * funct,int newProcess){
     p->next = current->next;
     p->state = ACTIVE;
     if(newProcess == 1){
-        sPrintf("shell state: ianctive\n");
+        sPrintf("shell state: inactive\n");
         shellProc->state = INACTIVE;
     } else if(newProcess == 2){
     	shellProc->state = ACTIVE;

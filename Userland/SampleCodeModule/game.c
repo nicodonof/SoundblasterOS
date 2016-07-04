@@ -1,24 +1,20 @@
-/*#include "lib.h"
+#include "lib.h"
 #include "shell.h"
 #include "int80.h"
-<<<<<<< HEAD
+#include "game.h"
 
 typedef struct{
     char name[24];
     void * instp;
 }packash;
-packash * auxPack; 
 
 typedef struct{
     int row;
     int col;    
 }pointAux;
 
-=======
- 
-/*
->>>>>>> 66f3bd8b69b124256e31188bd083dad55b325a8c
 void game_input(){
+    print("Start GameInput Process\n");
 	void * inputQ;
 	while(inputQ == 0){
 		syscaller(18, 0, "gameinputq", 0, inputQ); //syscall get gameinputq
@@ -43,6 +39,7 @@ void game_input(){
 }
 
 void game_sound(){
+    print("Start GameAudio Process\n");
 	void* soundQ;
 	char msg;
 	syscaller(17,0, "gameaudioq",0, soundQ);//syscall start queue named gameaudioq
@@ -71,6 +68,7 @@ void game_sound(){
 }
 
 void game_render(){
+    print("Start GameRender Process\n");
 	void * inputQ;
 	syscaller(17,0, "gameinputq",0, inputQ); //syscall start queue gameinputq
 	void * soundQ;
@@ -79,7 +77,6 @@ void game_render(){
 	}
     print("Presione ENTER para empezar el juego\n");
     print("Presione Q para salir\n");
-   
     long timeStart;
     syscaller(6,0,&timeStart,0,0);  // syscall que pide timeStart
     long timeNow;
@@ -158,27 +155,35 @@ void game_render(){
     return;
 }
 
+packash * auxPackInput;
+packash * auxPackSound; 
 void game(){
-    print("Game not implemented yet...");
-    // create process with this function: game_sound();
-    strcpy(auxPack->name,"gameSound",strlen("gameSound"));
-    auxPack->instp = game_sound;
-    int pid;
-    syscaller(12,0,auxPack,1,&pid);
+    
+    print("Game not implemented yet...\n");
 
-    strcpy(auxPack->name,"gameInput",strlen("gameInput"));
-    auxPack->instp = game_input;
-    int pid2;
-    syscaller(12,0,auxPack,1,&pid);
     // create process with this function: game_input();
+    print("Creating gameinput process\n");
+    strcpy(auxPackInput->name,"gameInput",strlen("gameInput"));
+    auxPackInput->instp = game_input;
+    print("name AuxPackInput: ");
+    print(auxPackInput->name);
+    print("\n");
+    int pid2;
+    print("before gameinput syscall\n");
+    syscaller(12,0,auxPackInput,1,&pid2);
+    print("after gameinput syscall\n");
+    
+    // create process with this function: game_sound();
+    print("Creating gamesound process\n");
+    strcpy(auxPackSound->name,"gameSound",strlen("gameSound"));
+    auxPackSound->instp = game_sound;
+    int pid;
+    syscaller(12,0,auxPackSound,1,&pid);
+    
     game_render();
 }  
 
-typedef struct {
-	int x, y;
-} point;
-*/
-    #include "game.h"
+/*    #include "game.h"
     #include "lib.h"
     #include "shell.h"
     #include "int80.h"
@@ -187,7 +192,7 @@ typedef struct {
 typedef struct{
     int row;
     int col;    
-}pointAux;
+}pointAux;*/
 
     void printBoard(){//char board[][]){
     	syscaller(3,0,0,0,0);

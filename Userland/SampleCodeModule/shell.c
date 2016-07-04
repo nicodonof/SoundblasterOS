@@ -138,7 +138,7 @@ void parser(char * s, int size){
         break;
         case 'g':
             if(strcmp(s,"game")){
-               // game();
+                game();
                 return;
             }
         break;
