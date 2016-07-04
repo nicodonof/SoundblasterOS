@@ -38,8 +38,8 @@ int waitSemaphore(Semaphore *semaphore){
 		}
 
 		pNode * node = malloc(sizeof(pNode));
-
-		node->pid = getcurrent()->pid;
+		process * p = getCurrent();
+		node->pid = p->pid;
 		node->next = 0;
 
 		if(semaphore->firstPID == 0){

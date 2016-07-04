@@ -6,6 +6,7 @@
 #include "syscall.h"
 #include "process.h"
 #include "debugger.h"
+#include "msgQueue.h"
 
 extern int keyboardActivated;
 extern int videoMode;
@@ -129,9 +130,9 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	}
 
 	void sendMsgToQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		sendMsgToQ(fd, buff);
+		sendMsg(fd, buff);
 	}
 	
 	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		dest = receiveMsgFromQ(fd);
+		dest = receiveMsg(fd);
 	}
