@@ -29,8 +29,6 @@ void boop(){
 
 /*Activa el programa para escuchar canciones*/
 void itunes(){
-    beep();
-    ////sPrintf("dentro iutunes\n");
     char * st1 = "Itunes Revolutionary musicPlayer!\nMusic available (press the number to play):\n";
     char * st2 = "    1. Ode To Joy\n";
     char * st3 = "    2. Tetris Theme\n";
@@ -54,7 +52,7 @@ void itunes(){
     syscaller(5,1,0,2,0);
         playSong(auxer - '1');
     syscaller(5,0,0,0,0);
-    clear(); 
+    clear();
 }
 
 void clear(){
