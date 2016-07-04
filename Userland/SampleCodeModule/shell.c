@@ -138,7 +138,10 @@ void parser(char * s, int size){
         break;
         case 'g':
             if(strcmp(s,"game")){
-                game();
+                strcpy(auxPack->name,"game",strlen("game"));
+                auxPack->instp = game;
+                int pid;
+                syscaller(12,0,auxPack,1,&pid);
                 return;
             }
         break;

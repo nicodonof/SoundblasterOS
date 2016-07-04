@@ -13,9 +13,10 @@ static char* qNames[MAX_QUEUES];
 //Creates a messageQ if it doesnt exist. Returns 0 if it cannot create it.
 MessageQueue* openMsgQ(char *name){
 	for (int i = 0; i < MAX_QUEUES; ++i){
-		if(!strcmp(qNames[i],name))
+		if(strcmp(qNames[i],name))
 			return queue[i];
 	}
+
 	for (int i = 0; i < MAX_QUEUES; ++i){
 		if(qNames[i] == 0){
 			MessageQueue *auxQueue = malloc(sizeof(MessageQueue));
@@ -29,7 +30,7 @@ MessageQueue* openMsgQ(char *name){
 			return auxQueue;
 		}
 	}
-	return 0;
+	return 44;
 }
 
 //Gives a message queue if it exists, returns 0 if not.
@@ -70,6 +71,7 @@ void sendMsg(MessageQueue* q,char* msg){
 //Gets back a message from the messageQueue and erases it.
 char* receiveMsg(MessageQueue* q){
 	waitSemaphore(q->sem);
+	
 	if(getCurrent()->pid == q->receiver){
 		if(q->first != 0){
 			Msg* node = q->first;

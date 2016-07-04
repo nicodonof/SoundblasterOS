@@ -41,13 +41,13 @@ void game_input(){
 void game_sound(){
     print("Start GameAudio Process\n");
 	void* soundQ;
-	char msg;
-	syscaller(17,0, "gameaudioq",0, soundQ);//syscall start queue named gameaudioq
+	char* msg;
+	syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
 	while(1){
 		while(msg == 0){
-			syscaller(21,soundQ, 0,0, &msg); //syscall get message from soundQ
+			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
 		}
-		switch(msg){
+		switch(*msg){
             case 'b':
             	//syscall beep
             	break;

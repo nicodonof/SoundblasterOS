@@ -9,7 +9,7 @@ void keyboarddddd(){
 	if(!(timer++%18)){
 		seconds++;
 	}
-	//sPrintf("t:%d\n",timer);
+	sPrintf("t:%d\n",timer);
 	pianoModer();
 	changeSelector();
 	return;

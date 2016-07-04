@@ -91,16 +91,17 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 
 	void createProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		
-		//userToKernel();
+		userToKernel();
 		
 		packash* auxPack = (packash*) buff;
 		sPrintf("s:%s\n",auxPack->name);
 		process * aux = createProcess(auxPack->name,auxPack->instp,buffSize);
 		*dest = aux->pid;
-		//kernelToUser();
-		
+		kernelToUser();
+
+		sPrintf("SALE DE ACA: %s\n ",aux->name);
 		forceScheduler();
-		sPrintf("SALE DE ACA\n");
+		sPrintf("SALE DE ACA: %s\n ",aux->name);
 	}
 
 	void endProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
@@ -120,7 +121,9 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	}
 
 	void openMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		dest = openMsgQ((char *) buff);
+		uint64_t** dest2 = (uint64_t**)dest;
+		*dest2 = openMsgQ((char *) buff);
+		sPrintf("\n AFUERA DE MSQ: %x\n", *dest2);
 	}
 
 	void getMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
@@ -136,7 +139,10 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	}
 	
 	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		dest = receiveMsg((MessageQueue *) fd);
+		uint64_t** dest2 = (uint64_t**)buff;
+		uint64_t** dest3 = (uint64_t**)dest;
+		sPrintf("\nASKAJDKSDJKJ SIIIIII : %x\n", *dest2);
+		*dest3 = receiveMsg((MessageQueue *) *dest2);
 	}
 
 	void drawLineSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){

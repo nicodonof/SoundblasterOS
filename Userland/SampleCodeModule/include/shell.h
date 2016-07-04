@@ -18,6 +18,7 @@ void str0(char * s);
 void piano();
 void itunes();
 void pItunes();
+void game();
 
 int keyToNotefreq(char key);
 int isValidNote(char key);

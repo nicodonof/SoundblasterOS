@@ -102,21 +102,18 @@ getEflags:
 userToKernel:
 	pop QWORD[retAddr]
 
-	call printrsp
 	mov QWORD[procStack], rsp
 	mov rsp, QWORD[kernelStack]
-
-	call printrsp
 
 	push QWORD[retAddr]
 	ret
 
 kernelToUser:
 	pop QWORD[retAddr]
-	call printrsp
+
 	mov QWORD[kernelStack], rsp
 	mov rsp, QWORD[procStack]
-	call printrsp
+
 	push QWORD[retAddr]
 	ret
 
