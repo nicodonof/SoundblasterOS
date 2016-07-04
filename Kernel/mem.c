@@ -76,9 +76,7 @@ void pageFree(uint64_t * page){
 
 void newProcessContext(process * proc,void * func) {
 	int interr = disableOrEnableInterrupts(0);
-  //uint64_t saved_cr3 = readCR3();
-  //writeCR3(originalCR3);
-
+  
   /* Write the registers in the stack */
 	context_t* context = (context_t*)proc->stack;// - sizeof(context_t);
 
@@ -109,7 +107,6 @@ void newProcessContext(process * proc,void * func) {
 
 	//sPrintf("cont: %x\n", context);
 //	//sPrintf("\nrip: %x\n", context->rip);
-//	writeCR3(saved_cr3);
 	sPrintf("int: %d\n", interr);
 	disableOrEnableInterrupts(1);
 }
