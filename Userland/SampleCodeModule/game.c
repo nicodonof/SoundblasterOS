@@ -91,7 +91,7 @@ void game_render(){
     syscaller(6,0,&timeStart,0,0);  // syscall que pide timeStart
     long timeNow;
 
-    syscaller(20, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
+    syscaller(20, 'g', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
 
     int random_seed;
 
