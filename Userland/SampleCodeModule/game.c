@@ -1,7 +1,6 @@
 /*#include "lib.h"
 #include "shell.h"
 #include "int80.h"
-<<<<<<< HEAD
 
 typedef struct{
     char name[24];
@@ -9,15 +8,6 @@ typedef struct{
 }packash;
 packash * auxPack; 
 
-typedef struct{
-    int row;
-    int col;    
-}pointAux;
-
-=======
- 
-/*
->>>>>>> 66f3bd8b69b124256e31188bd083dad55b325a8c
 void game_input(){
 	void * inputQ;
 	while(inputQ == 0){
@@ -200,7 +190,9 @@ typedef struct{
 
         for (int i = 0; i < 16; i++)
         {
+            if(i%3 == 0){
              auxPoint2->col = 30 + i;
+            }
             
             
             for (int j = 2; j < 22; j++)

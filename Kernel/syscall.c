@@ -11,7 +11,7 @@
 extern int keyboardActivated;
 extern int videoMode;
 
-void (* syscallFunctions[24])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = 
+void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = 
 {0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, 
 	playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, clearBufferSC,createProcessSC, endProcessSC, listProcessSC,
 	nextProcessSC, randomSC, openMsgQSC, getMsgQSC, closeMsgQSC, sendMsgToQSC, receiveMsgFromQSC, drawLineSC, 
@@ -148,20 +148,14 @@ void (* syscallFunctions[24])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 		makeSoundNoVideo(fd, buffSize);
 	}
 
-
 	typedef struct{
 		int x;
 		int y;	
 	}pointAux;
 
 	void printCharInPosSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		sPrintf("-------------------------------");
 		
 		pointAux* auxPoint = (pointAux*) buff;
-		sPrintf("p.row= %d\n", (auxPoint->x));
-		sPrintf("p.col= %d\n", (auxPoint->y));
-		sPrintf("p.char= %s\n", (char) fd);
-		sPrintf("-------------------------------");
 		
 		vPrintCharInPos((char) fd, auxPoint->x, auxPoint->y);
 		
