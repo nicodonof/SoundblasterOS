@@ -93,8 +93,7 @@ void parser(char * s, int size){
             break;
         case 'h':
             if(strcmp(s,"help")){
-                printBoard();
-               // help();
+                help();
                 return;
             }
         break;
