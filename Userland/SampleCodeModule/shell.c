@@ -55,7 +55,7 @@ int wrapProcess(char * name, void * instp){
 
 void parser(char * s, int size){
     if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p' && *s != 's' && *s != 'g'){
-    	print("No se reconoce el comando. Intente nuevamente.\n");
+        print("No se reconoce el comando. Intente nuevamente.\n");
         return;
     }
     
@@ -125,7 +125,7 @@ void parser(char * s, int size){
         break;
         case 'g':
         if(strcmp(s,"game")){
-            game();
+           // game();
             return;
         }
         break;
@@ -218,50 +218,3 @@ void osInit(){
     syscaller(11,0,0,0,0);
 }
 
-void game(){
-    print("Game not implemented yet...");
-    return; //?
-    // FORK DE SOUND
-    // FORK DE VIDEO
-    
-    int randoms[3];
-    syscaller(16,0,&randoms[0],0,0);//hacer syscall de get random
-    syscaller(16,0,&randoms[1],0,0);
-    syscaller(16,0,&randoms[2],0,0);
-    int posicionDelJugador = 0;
-    // 0 1 (posicion del jugador)
-    // 2 3
-    // El fork del video (hablar con teo de comm) se encarga de:
-        // poner la circulo arriba isq (personaje)
-        // poner la flecha de random[0] arriba der
-        // poner la flecha de random[1] abajo der
-        // poner la flecha de random[2] abajo isq
-    int puntaje = 0;
-    long timeStart;
-    long GAME_DURATION = 177777; // ??? que esto tenga sentido
-    syscaller(17,0,&timeStart,0,0); // syscall que agarra epoch o alguna manera de gettear el start time para chequear cuanto time paso
-    long timerNow = timeStart;
-    while(timerNow < timeStart + GAME_DURATION){
-        //wait for input del usuario ?
-        //poray aca tenes que inventarte orto "mode" aparte de pianoModer y shellModer
-        //para leer el keypress
-        //if(keypressed != randoms[posicionDelJugador]){
-        //  puntaje++;
-        //  play good sound!
-        //  posicionDelJugador = (posicionDelJugador + 1) % 4
-        //  reiniciarLasFlechas(randoms,posicionDelJugador);
-        //  dibujar las flechas :O
-        //} else {
-        //  puntaje--;
-        //  play bad sound :(
-        //  reiniciarLasFlechas(randoms,posicionDelJugador);
-        //  dibujar las flechas :O
-        //}
-        //syscaller(17,0,&timerNow, 0 ,0);
-    }
-    //clear screen syscall
-    printf("Su puntaje es: %d\n", puntaje);
-    printf("Precione enter para salir\n");
-    printf("Precione R para reintenter\n");
-    //?????
-}
