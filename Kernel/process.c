@@ -45,7 +45,8 @@ static void wrapper(EntryPoint func){
     last->next = current->next;
     current = current->next;
     shellProc->state = ACTIVE;
-    forceScheduler();
+    
+    while(1) forceScheduler();
     
     sPrintf("\nTERMINE DE VUELTA: ahora viene:%s\n",current->name);
 }
@@ -59,7 +60,7 @@ process * createProcess(char * name, void * funct,int newProcess){
     //sPrintf("\n%x\n", p->name);
     p->stack = pageAlloc();
     //sPrintf("st: %x\n", p->stack);
-    p->quantum = 1;
+    p->quantum = 2;
     p->instp = (void *)wrapper;
     //sPrintf("%s: %x %x\n", p->name, p->instp, funct);
     newProcessContext(p,funct);
@@ -80,6 +81,7 @@ process * createProcess(char * name, void * funct,int newProcess){
     last = current;
     process * auxi = (p->next);
     process * auxi2 = (current->next);
+    printPidList();
     sPrintf("CREO EL PROCESO %s %s, QUE VIENE DESPUES DE %s Y DPS VIENE %s\n",p->name,p->state?"activo":"inactivo",last->name,auxi->name);
     return p;
 }
@@ -111,6 +113,7 @@ void processNext() {
         }while(aux->state == INACTIVE);
 
     }
+    sPrintf("curr: %s\n", current->name);  
 }
 
 uint64_t getQuantum(){
