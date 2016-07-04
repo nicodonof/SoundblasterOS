@@ -19,10 +19,10 @@ void piano();
 void itunes();
 void pItunes();
 void game();
+void ps();
 
 int keyToNotefreq(char key);
 int isValidNote(char key);
-
 
 void shell();
 void osInit();

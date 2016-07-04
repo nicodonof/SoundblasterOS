@@ -18,6 +18,6 @@ void* schedulerToUser(){
 	process *proc = getCurrent();
 	proc->quantum = 5;
 	//writeCR3(proc->cr3);
-	sPrintf("Nuevo current: %s\n", proc->name);
+//	sPrintf("Nuevo current: %s\n", proc->name);
 	return proc->stack;
 }

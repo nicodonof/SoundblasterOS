@@ -2,7 +2,7 @@
 #include <msgQueue.h>
 #include <mem.h>
 #include <process.h>
-
+#include <debugger.h>
 void destroyMsgQ(MessageQueue* q);
 
 #define MAX_QUEUES 50
@@ -30,7 +30,7 @@ MessageQueue* openMsgQ(char *name){
 			return auxQueue;
 		}
 	}
-	return 44;
+	return 0;
 }
 
 //Gives a message queue if it exists, returns 0 if not.
@@ -52,11 +52,14 @@ void closeMsgQ(MessageQueue* q){
 }
 
 //Sends a message through the message queue.
-void sendMsg(MessageQueue* q,char* msg){
+void sendMsg(MessageQueue* q,char msg){
 	waitSemaphore(q->sem);
 	Msg* newMsg = malloc(sizeof(Msg));
+	
 	newMsg->msg = msg;
 	newMsg->next = 0;
+	sPrintf("msg: %c, el dir del node: %x \n", newMsg->msg,newMsg );
+
 	if(q->first == 0){
 		q->first = newMsg;
 		q->last = newMsg;
@@ -69,9 +72,8 @@ void sendMsg(MessageQueue* q,char* msg){
 }
 
 //Gets back a message from the messageQueue and erases it.
-char* receiveMsg(MessageQueue* q){
+char receiveMsg(MessageQueue* q){
 	waitSemaphore(q->sem);
-	
 	if(getCurrent()->pid == q->receiver){
 		if(q->first != 0){
 			Msg* node = q->first;
@@ -79,6 +81,7 @@ char* receiveMsg(MessageQueue* q){
 			if(q->dead == 1 && q->first == 0)
 				destroyMsgQ(q);
 			signalSemaphore(q->sem);
+			sPrintf("node: %c\n", node->msg);
 			return node->msg;
 		}
 	}

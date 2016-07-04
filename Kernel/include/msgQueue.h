@@ -5,7 +5,7 @@
 
 typedef struct MsgNode Msg;
 struct MsgNode{
-	char * msg;
+	char msg;
 	Msg* next;	
 };
 
@@ -24,7 +24,7 @@ struct MsgQ{
 MessageQueue* openMsgQ(char *name);
 MessageQueue* getMsgQ(char *name);
 void closeMsgQ(MessageQueue* q);
-void sendMsg(MessageQueue* q,char* msg);
-char* receiveMsg(MessageQueue* q);
+void sendMsg(MessageQueue* q,char msg);
+char receiveMsg(MessageQueue* q);
 
 #endif

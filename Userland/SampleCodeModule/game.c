@@ -49,10 +49,12 @@ void game_input(){
         void* soundQ;
         char* msg;
 	syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
-	while(1){
-		while(msg == 0){
+
+    while(1){
+		while(*msg == 0){
 			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
 		}
+        putChar(*msg);
 		switch(*msg){
             case 'b':
             	//syscall beep
@@ -67,7 +69,7 @@ void game_input(){
             	//syscall pause song
             break;                            
         } 
-        msg = 0;
+        *msg = 0;
     }
 
     return;
@@ -86,7 +88,7 @@ void game_render(){
     syscaller(6,0,&timeStart,0,0);  // syscall que pide timeStart
     long timeNow;
 
-    syscaller(20, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
+    //syscaller(20, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
 
     int random_seed;
 
@@ -160,11 +162,6 @@ void game_render(){
     //----------------------RENDER---------------------------------
 
         // syscaller(3,0,0,0,0);       //clearScreen   
-        // printGame();
-        
-        //printBoard(board);
-
-        //syscaller(3,0,0,0,0);
         pointAux * auxPoint, * auxPoint2;
 
         auxPoint->col = 20; 
