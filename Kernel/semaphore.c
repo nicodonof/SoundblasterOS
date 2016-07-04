@@ -27,35 +27,37 @@ void destroySemaphore(Semaphore *semaphore){
 
 //Sleep until semaphore lets me (Could be immediate). 
 //If semaphore is dead returns 0.
-int wait(Semaphore *semaphore){
-	if(semaphore->dead == 1)
-		return 0;
-	if(semaphore->value > 0){
-		semaphore->value--;
-		return 1;
+int waitSemaphore(Semaphore *semaphore){
+	while(1){
+		if(semaphore->dead == 1)
+			return 0;
+		if(semaphore->value > 0){
+			semaphore->value--;
+			return 1;
+		}
+
+		pNode * node = malloc(sizeof(pNode));
+
+		// node->pid = getpid();   									//TODO: GETPID
+		node->next = 0;
+
+		if(semaphore->firstPID == 0){
+			semaphore->firstPID = node;
+			semaphore->lastPID = node;
+		}
+		else{
+			semaphore->lastPID->next = node;
+			semaphore->lastPID = node;
+		}
+
+		// sleep(node->pid);											//TODO: SLEEP PROCESS
 	}
-
-	pNode * node = malloc(sizeof(pNode));
-
-	// node->pid = getpid();   									//TODO: GETPID
-	node->next = 0;
-
-	if(semaphore->firstPID == 0){
-		semaphore->firstPID = node;
-		semaphore->lastPID = node;
-	}
-	else{
-		semaphore->lastPID->next = node;
-		semaphore->lastPID = node;
-	}
-
-	// sleep(node->pid);											//TODO: SLEEP PROCESS
-	wait(semaphore);
+	return 0;
 }
 
 
 //Wakes up next task or semaphoreValue++;
-void signal(Semaphore *semaphore){
+void signalSemaphore(Semaphore *semaphore){
 	if ( semaphore->firstPID == 0 ){
 		if(semaphore->dead == 1)
 			destroySemaphore(semaphore);

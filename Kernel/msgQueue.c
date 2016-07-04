@@ -42,16 +42,16 @@ MessageQueue* getMsgQ(char *name){
 
 //Sends msgQueue to die :(
 void closeMsgQ(MessageQueue* q){
-	wait(q->sem);
+	waitSemaphore(q->sem);
 	q->dead = 1;
 	if(q->first == 0)
 		destroyMsgQ(q);
-	signal(q->sem);
+	signalSemaphore(q->sem);
 }
 
 //Sends a message through the message queue.
 void sendMsg(MessageQueue* q,char* msg){
-	wait(q->sem);
+	waitSemaphore(q->sem);
 	Msg* newMsg = malloc(sizeof(Msg));
 	newMsg->msg = msg;
 	newMsg->next = 0;
@@ -63,23 +63,23 @@ void sendMsg(MessageQueue* q,char* msg){
 		q->last->next = newMsg;
 		q->last = newMsg;
 	}
-	signal(q->sem);
+	signalSemaphore(q->sem);
 }
 
 //Gets back a message from the messageQueue and erases it.
 char* receiveMsg(MessageQueue* q){
-	wait(q->sem);
+	waitSemaphore(q->sem);
 	if(/*getPID()*/0 == q->receiver){						//TODO: FIX THIS.... NEED GETPID!!!
 		if(q->first != 0){
 			Msg* node = q->first;
 			q->first = q->first->next;
 			if(q->dead == 1 && q->first == 0)
 				destroyMsgQ(q);
-			signal(q->sem);
+			signalSemaphore(q->sem);
 			return node->msg;
 		}
 	}
-	signal(q->sem);
+	signalSemaphore(q->sem);
 	return 0;
 }
 
