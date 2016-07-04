@@ -103,25 +103,19 @@ int main()
 	picSlaveMask(0xFF);
 	_sti();
 
-	sPrintf("%x\n", kernelStack);
 	initPageStack();
-	
-	sPrintHex(get_cr3());
-	
 	//initPaging();
 
-	void * asdj;
 	//process * p = createProcess("caca", asdj);
 
-	//sPrintf("\npid: %d s:",p->pid);
-	//sPrintf("%s\n", p->name);
+	////sPrintf("\npid: %d s:",p->pid);
+	////sPrintf("%s\n", p->name);
 
 	
 
 //	write_cr3((uint64_t) 0x100000);
 	//write_cr3((uint64_t) 0x3500);
-	sPrintHex(get_cr3());
-
+	
 	//putPixels();
 
 	vInit();

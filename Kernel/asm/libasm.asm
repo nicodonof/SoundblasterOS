@@ -7,7 +7,10 @@ GLOBAL get_cr0
 GLOBAL set_paging
 GLOBAL forceScheduler
 GLOBAL getEflags
+GLOBAL userToKernel
+GLOBAL kernelToUser
 extern sPrintf
+extern kernelStack
 
 
 outb:					;outb(value, port)
@@ -96,6 +99,29 @@ getEflags:
     pop rbp
     ret
 
+userToKernel:
+	pop QWORD[retAddr]
+
+	mov QWORD[procStack], rsp
+	mov rsp, QWORD[kernelStack]
+
+	push QWORD[retAddr]
+	ret
+
+kernelToUser:
+	pop QWORD[retAddr]
+
+	mov QWORD[kernelStack], rsp
+	mov rsp, QWORD[procStack]
+
+	push QWORD[retAddr]
+	ret
+
+
+
+section .bss
+retAddr: resq 1
+procStack: resq 1
 
 section .data
 	string db "i: %x",10,0

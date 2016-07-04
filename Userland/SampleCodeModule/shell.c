@@ -39,9 +39,21 @@ typedef struct{
     char name[24];
     void * instp;
 }packash;
+
+int wrapProcess(char * name, void * instp){
+    packash * auxPack;
+    strcpy(auxPack->name,name,strlen(name));
+    print(name);
+    print("aasdasd");
+    print(auxPack->name[2]);
+    auxPack->instp = instp;
+    int pid;
+    syscaller(12,0,auxPack,-1,&pid);
+    return pid;
+}
 void parser(char * s, int size){
     if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p' && *s != 's' && *s != 'g'){
-    	print("No se reconoce el comando. Intente nuevamente.\n");
+        print("No se reconoce el comando. Intente nuevamente.\n");
         return;
     }
     
@@ -57,7 +69,7 @@ void parser(char * s, int size){
         case 'q':
         if(strcmp(s,"quit")){
             quit();
-            return;
+            return; 
         }
         break;
         case 's':
@@ -68,39 +80,45 @@ void parser(char * s, int size){
         break;
         case 'i':
         if(strcmp(s,"itunes")){
+            //int pid = wrapProcess("itunes", itunes);
             packash * auxPack;
             strcpy(auxPack->name,"itunes",strlen("itunes"));
+            print(auxPack->name);
             auxPack->instp = itunes;
             int pid;
             syscaller(12,0,auxPack,-1,&pid);
-            write(1,&pid,0);
+
             return;
         }
         break;
         case 'h':
         if(strcmp(s,"help")){
-            help();
+            int pid = wrapProcess("help", help);
+                //help();
             return;
         }
         break;
         case 'b':
         if(strcmp(s,"beep")){
+            int pid = wrapProcess("beep", beep);
             beep();
             return;
         }else if(strcmp(s,"boop")){
+            int pid = wrapProcess("boop", boop);
             boop();
             return;
         }
         break;
         case 'p':
         if(strcmp(s,"piano")){
+            int pid = wrapProcess("piano", piano);
             piano();
             return;
         }
         break;
         case 'g':
         if(strcmp(s,"game")){
-        //    game();
+           // game();
             return;
         }
         break;
@@ -192,3 +210,4 @@ void osInit(){
     clear();
     syscaller(11,0,0,0,0);
 }
+

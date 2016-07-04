@@ -24,9 +24,9 @@ void initPaging(){
 	//asm volatile ("movl %%eax, %%cr3" :: "a" (&page_dir_ptr_tab)); // load PDPT into CR3
 
 	//asm volatile ("movl %cr0, %eax; orl $0x80000000, %eax; movl %eax, %cr0;");
-	sPrintf("\ncr3: %x\n", &page_dir_ptr_tab);
-	sPrintf("cr4: %x\n", get_cr4());
-	sPrintf("cr0: %x\n", get_cr0());
+	//sPrintf("\ncr3: %x\n", &page_dir_ptr_tab);
+	//sPrintf("cr4: %x\n", get_cr4());
+	//sPrintf("cr0: %x\n", get_cr0());
 
 	write_cr3(&page_dir_ptr_tab);
 

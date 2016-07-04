@@ -33,7 +33,7 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 
 	void writeSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		if(buffSize == 0){
-			sPrintf("%d", *buff);
+			//sPrintf("%d", *buff);
 			vPrintDec((int)*buff);
 		}
 		if(buffSize == 1)
@@ -87,9 +87,15 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 
 
 	void createProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		packash* auxPack = (packash*) buff; 
+		
+		userToKernel();
+		
+		packash* auxPack = (packash*) buff;
+		sPrintf("s:%s\n",auxPack->name);
 		process * aux = createProcess(auxPack->name,auxPack->instp);
 		*dest = aux->pid;
+		kernelToUser();
+		//forceScheduler();
 	}
 
 	void endProcess(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){

@@ -1,5 +1,6 @@
 #include "timer.h"
 #include "keyboard.h"
+#include "debugger.h"
 int seconds = 0;
 int timer = 0;
 
@@ -8,6 +9,7 @@ void keyboarddddd(){
 	if(!(timer++%18)){
 		seconds++;
 	}
+	sPrintf("t:%d\n",timer);
 	pianoModer();
 	changeSelector();
 	return;
