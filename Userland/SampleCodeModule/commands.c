@@ -29,6 +29,7 @@ void boop(){
 
 /*Activa el programa para escuchar canciones*/
 void itunes(){
+    beep();
     ////sPrintf("dentro iutunes\n");
     char * st1 = "Itunes Revolutionary musicPlayer!\nMusic available (press the number to play):\n";
     char * st2 = "    1. Ode To Joy\n";

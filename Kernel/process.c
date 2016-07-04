@@ -43,7 +43,7 @@ process * createProcess(char * name, void * funct){
 	p->instp = (void *)wrapper;
 	//sPrintf("%s: %x %x\n", p->name, p->instp, funct);
 	newProcessContext(p,funct);
-	//sPrintf("%s: %x %x\n", p->name, p->instp, funct);
+	sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, p->stack);
 	//sPrintf("\nStack pointer: %x\n",p->stack);	
 	p->next = current->next;
 	current->next = p;
@@ -73,10 +73,10 @@ void processNext() {
 		process * aux = current->next;
 		if(aux->pid == nullProcess->pid){
 			current = aux->next;  
-			//sPrintf("curr: %s\n", current->name);
+			sPrintf("curr: %s\n", current->name);
 		} else {
 			current = current->next;
-			//sPrintf("curr: %s\n", current->name);
+			sPrintf("curr: %s\n", current->name);
 		}
 	}
 }

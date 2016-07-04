@@ -39,9 +39,10 @@ typedef struct{
     char name[24];
     void * instp;
 }packash;
+       packash * auxPack;
 
 int wrapProcess(char * name, void * instp){
-    packash * auxPack;
+//    packash * auxPack;
     strcpy(auxPack->name,name,strlen(name));
     print(name);
     print("aasdasd");
@@ -51,6 +52,7 @@ int wrapProcess(char * name, void * instp){
     syscaller(12,0,auxPack,-1,&pid);
     return pid;
 }
+
 void parser(char * s, int size){
     if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p' && *s != 's' && *s != 'g'){
     	print("No se reconoce el comando. Intente nuevamente.\n");
@@ -80,28 +82,33 @@ void parser(char * s, int size){
         break;
         case 'i':
         if(strcmp(s,"itunes")){
-            //int pid = wrapProcess("itunes", itunes);
-            packash * auxPack;
+            int pid = wrapProcess("itunes", itunes);
+            /*
             strcpy(auxPack->name,"itunes",strlen("itunes"));
             print(auxPack->name);
             auxPack->instp = itunes;
             int pid;
             syscaller(12,0,auxPack,-1,&pid);
-
+            */
             return;
         }
         break;
         case 'h':
         if(strcmp(s,"help")){
             int pid = wrapProcess("help", help);
-                //help();
+            help();
             return;
         }
         break;
         case 'b':
         if(strcmp(s,"beep")){
             int pid = wrapProcess("beep", beep);
-            beep();
+            /*strcpy(auxPack->name,"beep",strlen("beep"));
+            print(auxPack->name);
+            auxPack->instp = beep;
+            int pid;
+            syscaller(12,0,auxPack,-1,&pid);
+                //beep();*/
             return;
         }else if(strcmp(s,"boop")){
             int pid = wrapProcess("boop", boop);
