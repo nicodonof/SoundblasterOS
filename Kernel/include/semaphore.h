@@ -18,7 +18,7 @@ struct Semaphore{
 
 Semaphore *startSemaphore(unsigned int value);
 void stopSemaphore(Semaphore *semaphore);
-int wait(Semaphore *semaphore);
-void signal(Semaphore *semaphore);
+int waitSemaphore(Semaphore *semaphore);
+void signalSemaphore(Semaphore *semaphore);
 
 #endif
