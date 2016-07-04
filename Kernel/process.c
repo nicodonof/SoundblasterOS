@@ -147,13 +147,16 @@ process * findProcessByPid(int pid){
 }
 
 void printPidList(){
-    process * aux = current->next;
-    while(current != aux){
-        vPrint("Process name: ");        
-        vPrint(current->name);
-        vPrint(", pid: ");
-        vPrintDec(current->pid);
-        vPrint("\n");
-        aux = current->next;
-    }
+    process * aux = current;
+
+    do{
+        if(aux->pid!=1){
+            vPrint("Process name: ");        
+            vPrint(aux->name);
+            vPrint(", pid: ");
+            vPrintDec(aux->pid);
+            vPrint("\n");
+        }
+        aux = aux->next;
+    } while(current != aux);
 }

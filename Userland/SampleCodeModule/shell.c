@@ -131,7 +131,7 @@ void parser(char * s, int size){
                 int pid;
                 syscaller(12,0,auxPack,1,&pid);
                 return;
-            }else if (strcmp(s,"processList")){
+            }else if (strcmp(s,"ps")){
                 syscaller(14,0,0,1,0);
                 return;
             }
