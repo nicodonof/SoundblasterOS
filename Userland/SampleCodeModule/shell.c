@@ -42,14 +42,12 @@ typedef struct{
        packash * auxPack;
 
 int wrapProcess(char * name, void * instp){
-//    packash * auxPack;
-    strcpy(auxPack->name,name,strlen(name));
-    print(name);
-    print("aasdasd");
-    print(auxPack->name[2]);
+//  packash * auxPack;
+    strcpy(auxPack->name,name,strlen(name));;
     auxPack->instp = instp;
     int pid;
     syscaller(12,0,auxPack,-1,&pid);
+    print("asdasdsaaaaaaaaaaaaaaaaaaaaaaaaa");
     return pid;
 }
 
@@ -96,30 +94,25 @@ void parser(char * s, int size){
         case 'h':
         if(strcmp(s,"help")){
             int pid = wrapProcess("help", help);
-            help();
             return;
         }
         break;
         case 'b':
         if(strcmp(s,"beep")){
-            int pid = wrapProcess("beep", beep);
-            /*strcpy(auxPack->name,"beep",strlen("beep"));
-            print(auxPack->name);
+            strcpy(auxPack->name,"beep",strlen("beep"));;
             auxPack->instp = beep;
             int pid;
             syscaller(12,0,auxPack,-1,&pid);
-                //beep();*/
+            print("asdasdsaaaaaaaaaaaaaaaaaaaaaaaaa");
             return;
         }else if(strcmp(s,"boop")){
             int pid = wrapProcess("boop", boop);
-            boop();
             return;
         }
         break;
         case 'p':
         if(strcmp(s,"piano")){
             int pid = wrapProcess("piano", piano);
-            piano();
             return;
         }
         break;

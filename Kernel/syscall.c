@@ -88,15 +88,17 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 
 	void createProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		
-	//	userToKernel();
+		//userToKernel();
 		
 		packash* auxPack = (packash*) buff;
 		sPrintf("s:%s\n",auxPack->name);
 		process * aux = createProcess(auxPack->name,auxPack->instp);
+		return;
 		*dest = aux->pid;
-	//	kernelToUser();
+		//kernelToUser();
+		
 		forceScheduler();
-		sPrintf("asd");
+		sPrintf("SALE DE ACA\n");
 	}
 
 	void endProcess(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){

@@ -10,6 +10,7 @@ static void * const sampleCodeModuleAddress = (void*)0x400000;
 static void * const sampleDataModuleAddress = (void*)0x500000;
 typedef int (*EntryPoint)();
 
+static process *last;
 static process *current;
 static process *nullProcess;
 
@@ -18,6 +19,8 @@ static uint64_t nextPid = 1;
 void initProcesses(){
 	nullProcess = createProcess("null", 0);
 	current = nullProcess;
+	current->next = nullProcess;
+	last = nullProcess;
 	nullProcess->next = createProcess("shell",processShell); 	
 	
 	forceScheduler();
@@ -27,7 +30,12 @@ static void wrapper(EntryPoint func){
 	//sPrintf("func: %x\n", func);
 	func();
 	//sPrintf("asd\n");
+	process * aux = current->next;
+	sPrintf("\nTERMINE :%s\n",aux->name);
 	forceScheduler();
+	sPrintf("\nTERMINE DE VUELTA\n");
+	last->next = current->next;
+	current = current->next;
 }
 
 process * createProcess(char * name, void * funct){
@@ -47,6 +55,10 @@ process * createProcess(char * name, void * funct){
 	//sPrintf("\nStack pointer: %x\n",p->stack);	
 	p->next = current->next;
 	current->next = p;
+	last = current;
+	process * auxi = (p->next);
+	process * auxi2 = (current->next);
+	sPrintf("CREO EL PROCESO %s, QUE VIENE DESPUES DE %s Y DPS VIENE %s\n",p->name,last->name,auxi->name);
 	return p;
 }
 
