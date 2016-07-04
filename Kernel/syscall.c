@@ -40,7 +40,7 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 		if(buffSize == 1)
 			vPrintChar(*buff);
 		else
-			vPrintN(buff, buffSize);
+			vPrintN((char *)buff, buffSize);
 	}
 	void clearSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		vClear();
@@ -118,21 +118,21 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	}
 
 	void openMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		dest = openMsgQ(buff);
+		dest = openMsgQ((char *) buff);
 	}
 
 	void getMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		dest = getMsgQ(buff);
+		dest = getMsgQ((char *) buff);
 	}
 
 	void closeMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		closeMsgQ(fd);
+		closeMsgQ((MessageQueue *)fd);
 	}
 
 	void sendMsgToQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		sendMsg(fd, buff);
+		sendMsg((MessageQueue *) fd, (char *) buff);
 	}
 	
 	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		dest = receiveMsg(fd);
+		dest = receiveMsg((MessageQueue *) fd);
 	}
