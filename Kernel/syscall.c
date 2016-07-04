@@ -11,9 +11,9 @@
 extern int keyboardActivated;
 extern int videoMode;
 
-void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = 
+void (* syscallFunctions[14])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = 
 {0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, 
-	playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, clearBufferSC,createProcessSC};
+	playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, clearBufferSC,createProcessSC, playSoundNoVideoSC};
 
 	uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 
@@ -135,4 +135,8 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	
 	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		dest = receiveMsg(fd);
+	}
+
+	void playSoundNoVideoSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+		makeSoundNoVideo(fd, buffSize);
 	}

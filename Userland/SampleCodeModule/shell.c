@@ -108,6 +108,17 @@ void parser(char * s, int size){
                 int pid;
                 syscaller(12,0,auxPack,1,&pid);
                 return;
+            }else if(strcmp(s,"bg")){
+                if(strcmp(s+3,"itunes")){                
+                    strcpy(auxPack->name,"itunes",strlen("itunes"));
+                    auxPack->instp = pItunes;
+                    int pid;
+                    syscaller(12,0,auxPack,0,&pid);
+                    return;
+                }else if(strcmp(s+3,"stop")){
+                    syscaller(13,0,0,0,0);
+                    return;                    
+                }
             }
             break;
         case 'p':

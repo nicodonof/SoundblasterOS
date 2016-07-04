@@ -13,6 +13,7 @@ typedef struct{
 	uint64_t quantum;
 	void * instp;
 	int state;
+	int noVideo;
 } process;
 
 typedef struct {

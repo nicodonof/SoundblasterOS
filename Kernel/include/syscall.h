@@ -14,4 +14,5 @@ void playSoundOnlySC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t *
 void changeOctaveSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void clearBufferSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void createProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
+void playSoundNoVideoSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 #endif

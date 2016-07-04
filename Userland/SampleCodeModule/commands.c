@@ -55,6 +55,10 @@ void itunes(){
     clear();
 }
 
+void pItunes(){
+    playSongNoStop(2);
+}
+
 void clear(){
      syscaller(3,0,0,0,0);
      printOsName();
@@ -69,6 +73,7 @@ void help(){
     char *boop     = "boop      Makes a boop sound\n";
     char *itunes   = "itunes    Itunes\n";
     char *piano    = "piano     Magic at the tip of your fingers\n";
+    char *bg       = "bg [command] [parameters]     Runs the command with parameters in background\n";
     char *help     = "help      Shows this message.. duh.\n";
 
     print(clear);
@@ -78,6 +83,7 @@ void help(){
     print(boop);
     print(itunes);
     print(piano);
+    print(bg);
     print(help);
 }
 

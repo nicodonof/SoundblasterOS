@@ -32,7 +32,12 @@ void initProcesses(){
 
 static void wrapper(EntryPoint func){
     //sPrintf("func: %x\n", func);
-    func();
+    if(current->noVideo){
+    	func();
+    }else{
+    	func();
+    }
+    
     //sPrintf("asd\n");
     process * aux = current->next;
     sPrintf("\nTERMINE :%s\n",current->name);
@@ -53,7 +58,7 @@ process * createProcess(char * name, void * funct,int newProcess){
     //sPrintf("\n%x\n", p->name);
     p->stack = pageAlloc();
     //sPrintf("st: %x\n", p->stack);
-    p->quantum = 50;
+    p->quantum = 1;
     p->instp = (void *)wrapper;
     //sPrintf("%s: %x %x\n", p->name, p->instp, funct);
     newProcessContext(p,funct);
@@ -61,10 +66,14 @@ process * createProcess(char * name, void * funct,int newProcess){
     //sPrintf("\nStack pointer: %x\n",p->stack);    
     p->next = current->next;
     p->state = ACTIVE;
-    if(newProcess){
+    if(newProcess == 1){
         sPrintf("shell state: ianctive\n");
         shellProc->state = INACTIVE;
+    } else if(newProcess == 2){
+    	shellProc->state = ACTIVE;
+    	p->noVideo = 1;
     }
+
 
     current->next = p;
     last = current;

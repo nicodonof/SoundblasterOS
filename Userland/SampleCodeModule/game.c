@@ -1,12 +1,8 @@
 #include "lib.h"
 #include "shell.h"
 #include "int80.h"
-typedef struct{
-    char name[24];
-    void * instp;
-}packash;
-packash * auxPack; 
-
+ 
+/*
 void game_input(){
 	void * msgInputQ;
 	//while(msgQ == 0){
@@ -165,4 +161,4 @@ void game(){
     syscaller(12,0,auxPack,1,&pid);
     // create process with this function: game_input();
     game_render();
-}  
+}  */
