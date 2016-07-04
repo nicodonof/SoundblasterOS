@@ -14,6 +14,7 @@ void playSoundOnlySC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t *
 void changeOctaveSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void clearBufferSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void createProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
+void playSoundNoVideoSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void endProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void listProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void nextProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
@@ -24,6 +25,8 @@ void closeMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * des
 void sendMsgToQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void drawLineSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
+void playSoundNoVideoSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void printCharInPosSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
-
+	
 #endif
+

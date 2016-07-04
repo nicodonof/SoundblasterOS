@@ -1,5 +1,5 @@
 #include <semaphore.h>
-#include <mem.h>	
+#include <mem.h>
 #include <process.h>
 
 void destroySemaphore(Semaphore *semaphore);

@@ -57,6 +57,14 @@ void makeSound(int note, int octave){
 	lastFreq = freq;
 }
 
+/*Imprime las corcheas en pantalla para las canciones y llama a la funcion q activa el sonido*/
+void makeSoundNoVideo(int note, int octave){
+	int freq = freqParser(octave,note);
+	if(!sound || lastFreq != freq)
+		sounderC(freq);
+	lastFreq = freq;
+}
+
 /*Imprime las corcheas en pantalla para el piano y llama a la funcion q activa el sonido*/
 void playPianoKey(int freq){
 	freq = keyToNotefreq(freq);

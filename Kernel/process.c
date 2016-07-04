@@ -2,6 +2,7 @@
 #include <process.h>
 #include <debugger.h>
 #include <mem.h>
+#include "lib.h"
 
 int strlen(const char * str);
 void * malloc(int len);
@@ -32,7 +33,12 @@ void initProcesses(){
 
 static void wrapper(EntryPoint func){
     //sPrintf("func: %x\n", func);
-    func();
+    if(current->noVideo){
+    	func();
+    }else{
+    	func();
+    }
+    
     //sPrintf("asd\n");
     process * aux = current->next;
     sPrintf("\nTERMINE :%s\n",current->name);
@@ -53,7 +59,7 @@ process * createProcess(char * name, void * funct,int newProcess){
     //sPrintf("\n%x\n", p->name);
     p->stack = pageAlloc();
     //sPrintf("st: %x\n", p->stack);
-    p->quantum = 50;
+    p->quantum = 1;
     p->instp = (void *)wrapper;
     //sPrintf("%s: %x %x\n", p->name, p->instp, funct);
     newProcessContext(p,funct);
@@ -61,10 +67,14 @@ process * createProcess(char * name, void * funct,int newProcess){
     //sPrintf("\nStack pointer: %x\n",p->stack);    
     p->next = current->next;
     p->state = ACTIVE;
-    if(newProcess){
+    if(newProcess == 1){
         sPrintf("shell state: ianctive\n");
         shellProc->state = INACTIVE;
+    } else if(newProcess == 2){
+    	shellProc->state = ACTIVE;
+    	p->noVideo = 1;
     }
+
 
     current->next = p;
     last = current;
@@ -77,7 +87,6 @@ process * createProcess(char * name, void * funct,int newProcess){
 static uint64_t getNewPid(){
     uint64_t pid = nextPid;
     nextPid++;
-
     return pid;
 }
 
@@ -133,8 +142,21 @@ process * findProcessByPid(int pid){
 	process * aux = current;
 	while(aux->pid != pid){
         aux = current->next;
-        last = current;
-        current = current->next;
     }
     return aux;	
+}
+
+void printPidList(){
+    process * aux = current;
+
+    do{
+        if(aux->pid!=1){
+            vPrint("Process name: ");        
+            vPrint(aux->name);
+            vPrint(", pid: ");
+            vPrintDec(aux->pid);
+            vPrint("\n");
+        }
+        aux = aux->next;
+    } while(current != aux);
 }

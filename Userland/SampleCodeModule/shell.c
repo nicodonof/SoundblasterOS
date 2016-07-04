@@ -59,6 +59,8 @@ void parser(char * s, int size){
         return;
     }
     
+    strcpy(auxPack->name, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 24); 
+
     str0(s);
 
     switch(*s){
@@ -101,10 +103,6 @@ void parser(char * s, int size){
                 strcpy(auxPack->name,"beep",strlen("beep"));
                 auxPack->instp = beep;
                 int pid;
-
-
-
-
                 syscaller(12,0,auxPack,1,&pid);
                 return;
             }else if(strcmp(s,"boop")){
@@ -113,6 +111,17 @@ void parser(char * s, int size){
                 int pid;
                 syscaller(12,0,auxPack,1,&pid);
                 return;
+            }else if(strcmp(s,"bg")){
+                if(strcmp(s+3,"itunes")){                
+                    strcpy(auxPack->name,"itunes",strlen("itunes"));
+                    auxPack->instp = pItunes;
+                    int pid;
+                    syscaller(12,0,auxPack,0,&pid);
+                    return;
+                }else if(strcmp(s+3,"stop")){
+                    syscaller(13,0,0,0,0);
+                    return;                    
+                }
             }
             break;
         case 'p':
@@ -121,6 +130,9 @@ void parser(char * s, int size){
                 auxPack->instp = piano;
                 int pid;
                 syscaller(12,0,auxPack,1,&pid);
+                return;
+            }else if (strcmp(s,"ps")){
+                syscaller(14,0,0,1,0);
                 return;
             }
         break;

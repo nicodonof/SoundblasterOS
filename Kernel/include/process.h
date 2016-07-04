@@ -13,6 +13,7 @@ typedef struct{
 	uint64_t quantum;
 	void * instp;
 	int state;
+	int noVideo;
 } process;
 
 typedef struct {
@@ -53,4 +54,5 @@ void decQuantum();
 void sleepProcess(int pid);
 void wakePrecess(int pid);
 process * findProcessByPid(int pid);
+void printPidList();
 #endif

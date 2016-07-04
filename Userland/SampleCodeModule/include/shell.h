@@ -17,6 +17,7 @@ int strlen(const char * s);
 void str0(char * s);
 void piano();
 void itunes();
+void pItunes();
 
 int keyToNotefreq(char key);
 int isValidNote(char key);
