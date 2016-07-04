@@ -21,14 +21,22 @@ void playSongNoStop(int song){
     int i = 0;
     while(songsDirections[song][i]!=0){
         auxer = getChar();
-        playNote(songsDirections[song][i], songsDirections[song][i+1], getRealTime(songsDirections[song][i+2]), getRealTime(songsDirections[song][i+3]));
+        playNoteNoVid(songsDirections[song][i], songsDirections[song][i+1], getRealTime(songsDirections[song][i+2]), getRealTime(songsDirections[song][i+3]));
         i+=4;
     }
 }
 
 /*Playeae una nota en tal octava de tanta duracion y de tanto delay entre ella y la siguiente nota.*/
 void playNote(char note, char octave, int length, int delay){
-   syscaller(13,note,0, octave,0);
+   syscaller(7,note,0, octave,0);
+   sleep(length);
+   syscaller(8,0,0,0,0);
+   sleep(delay);
+}
+
+/*Playeae una nota en tal octava de tanta duracion y de tanto delay entre ella y la siguiente nota.*/
+void playNoteNoVid(char note, char octave, int length, int delay){
+   syscaller(23,note,0, octave,0);
    sleep(length);
    syscaller(8,0,0,0,0);
    sleep(delay);
