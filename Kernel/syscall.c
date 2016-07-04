@@ -109,7 +109,7 @@ void (* syscallFunctions[24])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	}
 
 	void listProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-
+		printPidList();
 	}
 
 	void nextProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){

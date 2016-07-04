@@ -54,4 +54,5 @@ void decQuantum();
 void sleepProcess(int pid);
 void wakePrecess(int pid);
 process * findProcessByPid(int pid);
+void printPidList();
 #endif

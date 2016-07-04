@@ -2,6 +2,7 @@
 #include <process.h>
 #include <debugger.h>
 #include <mem.h>
+#include "lib.h"
 
 int strlen(const char * str);
 void * malloc(int len);
@@ -86,7 +87,6 @@ process * createProcess(char * name, void * funct,int newProcess){
 static uint64_t getNewPid(){
     uint64_t pid = nextPid;
     nextPid++;
-
     return pid;
 }
 
@@ -142,8 +142,18 @@ process * findProcessByPid(int pid){
 	process * aux = current;
 	while(aux->pid != pid){
         aux = current->next;
-        last = current;
-        current = current->next;
     }
     return aux;	
+}
+
+void printPidList(){
+    process * aux = current->next;
+    while(current != aux){
+        vPrint("Process name: ");        
+        vPrint(current->name);
+        vPrint(", pid: ");
+        vPrintDec(current->pid);
+        vPrint("\n");
+        aux = current->next;
+    }
 }
