@@ -22,19 +22,20 @@ void game_input(){
 
     while(1){
         char auxer = getChar();
+        putChar(auxer);
         if(auxer != 0){ 
             switch(auxer){
                 case 'a':
-                    syscaller(20,inputQ, &auxer,0, 0);      //syscall send auxer to gameinputq                               
+                    syscaller(20, auxer, &inputQ,0, 0);      //syscall send auxer to gameinputq                               
                     break;
-                    case 'd':
-                    syscaller(20,inputQ, &auxer,0, 0);      //syscall send auxer to gameinputq                               
+                case 'd':
+                    syscaller(20, auxer, &inputQ,0, 0);      //syscall send auxer to gameinputq                               
                     break;
-                    case '\n':
-                    syscaller(20,inputQ, &auxer,0, 0);      //syscall send auxer to gameinputq                              
+                case '\n':
+                    syscaller(20,auxer, &inputQ,0, 0);      //syscall send auxer to gameinputq                              
                     break;
-                    case '\b':
-                	syscaller(20,inputQ, &auxer,0, 0);		//syscall send auxer to gameinputq                               
+                case '\b':
+                	syscaller(20,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq                               
                 }        
             } 
             if(auxer == '\b'){
@@ -115,7 +116,7 @@ void game_render(){
     //----------------------TIME----------------------------------
 
         //syscaller(6,0,&timeNow,0,0); //syscall para pedir timeNow
-    if(counters>50){
+    if(counters>25){
         int j= 19;
         for (; j >-1 ; j--)
         {
@@ -146,7 +147,10 @@ void game_render(){
 
     //----------------------INPUT---------------------------------
 
+        pos_player = (pos_player + 1) % 5;     //obfuscatedCode9.31
+        
         syscaller(21,0,&inputQ,0, &input); //getinput(): syscall get message from inputQ
+        putChar(input);
         if(input == 'a'){           
             pos_player = (pos_player + 404) % 5;     //obfuscatedCode9.31
         }
@@ -201,7 +205,8 @@ packash * auxPackSound;
 
 
 void game(){
-
+    syscaller(3,0,0,0,0);
+    syscaller(5,1,0,0,0);
     print("Game not implemented yet...\n");
 
     // create process with this function: game_input();
