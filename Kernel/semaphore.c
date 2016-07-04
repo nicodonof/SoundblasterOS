@@ -51,7 +51,7 @@ int waitSemaphore(Semaphore *semaphore){
 			semaphore->lastPID = node;
 		}
 
-		// sleep(node->pid);											//TODO: SLEEP PROCESS
+		sleepProcess(node->pid);
 	}
 	return 0;
 }
@@ -69,6 +69,6 @@ void signalSemaphore(Semaphore *semaphore){
 	//pNode *node = semaphore->firstPID;
 	// free(node);													//TODO: FREE NODE
 	semaphore->firstPID = semaphore->firstPID->next;
-	// if(semaphore->firstPID != 0)									//TODO: WAKE UP
-		// wakeUp(semaphore->firstPID);
+	if(semaphore->firstPID != 0)
+		wakePrecess(semaphore->firstPID);
 }
