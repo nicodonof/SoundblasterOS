@@ -11,9 +11,10 @@
 extern int keyboardActivated;
 extern int videoMode;
 
-void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = 
+void (* syscallFunctions[23])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = 
 {0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC, 
-	playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, clearBufferSC,createProcessSC};
+	playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, clearBufferSC,createProcessSC, endProcessSC, listProcessSC,
+	nextProcessSC, randomSC, openMsgQSC, getMsgQSC, closeMsgQSC, sendMsgToQSC, receiveMsgFromQSC, drawLineSC};
 
 	uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 
@@ -101,15 +102,15 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 		sPrintf("SALE DE ACA\n");
 	}
 
-	void endProcess(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+	void endProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 
 	}
 
-	void listProcess(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+	void listProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 
 	}
 
-	void nextProcess(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+	void nextProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 	//Ceder el procesador al proceso siguiente (fuertemente recomendada por roro)
 	}
 
@@ -135,4 +136,9 @@ void (* syscallFunctions[13])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	
 	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		dest = receiveMsg(fd);
+	}
+
+	void drawLineSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+		sPrintf("p.x= %d\n", ((point*)buff)->x);
+		draw_line((point *)buff, (point *)dest, yellow);
 	}

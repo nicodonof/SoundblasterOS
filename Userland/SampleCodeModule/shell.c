@@ -1,7 +1,7 @@
 #include "lib.h"
 #include "shell.h"
 #include "int80.h"
-
+#include "game.h"
 
 char auxer = 0;
 int time = 0;
@@ -91,6 +91,7 @@ void parser(char * s, int size){
             break;
         case 'h':
             if(strcmp(s,"help")){
+                printBoard();
                 help();
                 return;
             }
@@ -100,6 +101,10 @@ void parser(char * s, int size){
                 strcpy(auxPack->name,"beep",strlen("beep"));
                 auxPack->instp = beep;
                 int pid;
+
+
+
+
                 syscaller(12,0,auxPack,1,&pid);
                 return;
             }else if(strcmp(s,"boop")){
