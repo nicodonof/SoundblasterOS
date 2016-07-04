@@ -55,6 +55,10 @@ void itunes(){
     clear();
 }
 
+void ps(){
+    syscaller(14,0,0,1,0);
+}
+
 void pItunes(){
     playSongNoStop(2);
 }
