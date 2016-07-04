@@ -1,0 +1,28 @@
+cd Bootloader; make clean
+make[1]: Entering directory `/home/nico/Documents/soundBlaster/soundblasteros/Bootloader'
+cd BMFS; make clean
+make[2]: Entering directory `/home/nico/Documents/soundBlaster/soundblasteros/Bootloader/BMFS'
+rm -f bmfs.bin
+make[2]: Leaving directory `/home/nico/Documents/soundBlaster/soundblasteros/Bootloader/BMFS'
+cd Pure64; make clean
+make[2]: Entering directory `/home/nico/Documents/soundBlaster/soundblasteros/Bootloader/Pure64'
+rm -rf *.sys
+make[2]: Leaving directory `/home/nico/Documents/soundBlaster/soundblasteros/Bootloader/Pure64'
+make[1]: Leaving directory `/home/nico/Documents/soundBlaster/soundblasteros/Bootloader'
+cd Image; make clean
+make[1]: Entering directory `/home/nico/Documents/soundBlaster/soundblasteros/Image'
+rm -rf x64BareBonesImage.img x64BareBonesImage.vmdk x64BareBonesImage.qcow2 *.bin
+make[1]: Leaving directory `/home/nico/Documents/soundBlaster/soundblasteros/Image'
+cd Kernel; make clean
+make[1]: Entering directory `/home/nico/Documents/soundBlaster/soundblasteros/Kernel'
+rm -rf asm/*.o *.o *.bin
+make[1]: Leaving directory `/home/nico/Documents/soundBlaster/soundblasteros/Kernel'
+cd Userland; make clean
+make[1]: Entering directory `/home/nico/Documents/soundBlaster/soundblasteros/Userland'
+cd SampleCodeModule; make clean
+make[2]: Entering directory `/home/nico/Documents/soundBlaster/soundblasteros/Userland/SampleCodeModule'
+rm -rf *.o
+rm -rf entry/*.o
+make[2]: Leaving directory `/home/nico/Documents/soundBlaster/soundblasteros/Userland/SampleCodeModule'
+rm -rf *.bin
+make[1]: Leaving directory `/home/nico/Documents/soundBlaster/soundblasteros/Userland'
