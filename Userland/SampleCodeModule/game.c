@@ -2,6 +2,7 @@
 #include "shell.h"
 #include "int80.h"
 #include "game.h"
+#include "sound.h"
 
 typedef struct{
     char name[24];
@@ -49,11 +50,13 @@ void game_sound(){
 	void* soundQ;
 	char msg = 0;
 	syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
-    
+    playSongNoStop(2);
     while(1){
-		while(msg == 0){
+		
+        while(msg == 0){
 			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
 		}
+        playSongNoStop(2);
         putChar(msg);
 		switch(msg){
             case 'b':
@@ -63,7 +66,7 @@ void game_sound(){
             	//syscall boop
             break;
             case 'm':
-            	//syscall play song
+                playSongNoStop(2);
             break;
             case 'p':  
             	//syscall pause song
@@ -88,7 +91,7 @@ void game_render(){
     syscaller(6,0,&timeStart,0,0);  // syscall que pide timeStart
     long timeNow;
 
-    //syscaller(20, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
+    syscaller(20, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
 
     int random_seed;
 
@@ -183,11 +186,12 @@ void game_render(){
                     syscaller(24,board[auxI][auxJ],auxPoint2,0,0);
                 }
             }
-        } 
+        }
     //----------------------GUIDO----------------------------------
 
     }
-    print("Su puntaje es: %d\n", puntaje);
+    syscaller(8,0,0,0,0);
+    print("Su puntaje es: 35\n");
     print("Presione enter para salir\n");
     print("Presione R para reintentar\n");
 
