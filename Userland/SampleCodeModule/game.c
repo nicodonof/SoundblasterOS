@@ -183,15 +183,9 @@ typedef struct {
     #include "shell.h"
     #include "int80.h"
 
-
-typedef struct{
-    int row;
-    int col;    
-}pointAux;
-
     void printBoard(){//char board[][]){
     	syscaller(3,0,0,0,0);
-        pointAux * auxPoint, * auxPoint2;
+        point * auxPoint, * auxPoint2;
 
         auxPoint->col = 20; 
         auxPoint->row = 20;
