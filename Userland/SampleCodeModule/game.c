@@ -15,8 +15,8 @@ typedef struct{
 
 void game_input(){
     print("Start GameInput Process\n");
-	void * inputQ;
-	while(inputQ == 0){
+    void * inputQ;
+    while(inputQ == 0){
 		syscaller(18, 0, "gameinputq", 0, inputQ); //syscall get gameinputq
 	}
 
@@ -29,14 +29,14 @@ void game_input(){
                 case '\n':
                 case '\b':
                 	syscaller(20,inputQ, &auxer,0, 0);		//syscall send auxer to gameinputq                               
+                } 
+                if(auxer == '\b'){
+                    break;
+                }          
             } 
-            if(auxer == '\b'){
-                break;
-            }          
-        } 
-    }    
-    return;
-}
+        }    
+        return;
+    }
 
 void game_sound(){
     print("Start GameAudio Process\n");
@@ -50,26 +50,26 @@ void game_sound(){
 		switch(*msg){
             case 'b':
             	//syscall beep
-            	break;
+            break;
             case 'n':
             	//syscall boop
-            	break;
+            break;
             case 'm':
             	//syscall play song
-            	break;
+            break;
             case 'p':  
             	//syscall pause song
-            	break;                            
+            break;                            
         } 
-		msg = 0;
-	}
-	
+        msg = 0;
+    }
+
     return;
 }
 
 void game_render(){
     print("Start GameRender Process\n");
-	void * inputQ;
+    void * inputQ;
 	syscaller(17,0, "gameinputq",0, inputQ); //syscall start queue gameinputq
 	void * soundQ;
 	while(soundQ == 0){
@@ -84,8 +84,8 @@ void game_render(){
 
     syscaller(20, soundQ, "m", 0, 0);		//syscall send "start music (m)" to gameaudioq 
     
-    int random;
- 
+    int random_seed;
+
     int pos_player = 0;
     int puntaje = 0;
     char input;
@@ -95,7 +95,7 @@ void game_render(){
 
 
     while(!x_x){
-       
+
     //----------------------TIME----------------------------------
 
         syscaller(6,0,&timeNow,0,0); //syscall para pedir timeNow
@@ -118,8 +118,9 @@ void game_render(){
                 }
             }
 
-            syscaller(16,0,&random,0,0);    //poneeeeele que devuelve entre 0 y 4
-            board[random%5][0] = 'V';
+            random_seed= random_seed+random_seed * 1103515245 +1234;
+            random_seed= (unsigned int)(random_seed / 65536) % (5); 
+            board[random_seed][0] = 'V';
 
         }
 
@@ -138,12 +139,12 @@ void game_render(){
         }
 
     //----------------------RENDER---------------------------------
-       
+
         // syscaller(3,0,0,0,0);       //clearScreen   
         // printGame();
         
         printBoard(board);
-    
+
     //----------------------GUIDO----------------------------------
 
     }
@@ -158,7 +159,7 @@ void game_render(){
 packash * auxPackInput;
 packash * auxPackSound; 
 void game(){
-    
+
     print("Game not implemented yet...\n");
 
     // create process with this function: game_input();
@@ -202,23 +203,37 @@ typedef struct{
         auxPoint->row = 20;
 
         
+        char boardA[5][20]; 
 
-        for (int i = 0; i < 16; i++)
+        for (int a = 0; a < 20; a++)
         {
-             auxPoint2->col = 30 + i;
-            
-            
-            for (int j = 2; j < 22; j++)
-            { 
-                auxPoint2->row = j;
-                syscaller(24, '|', auxPoint2, 0, 0);
-            
+            for (int b = 0; b < 5; b++)
+            {
+               boardA[b][a] = 'V';
             }
+         }
 
-        }
+        for (int j = 2; j < 22; j++)
+        { 
+            auxPoint2->row = j;
+            for (int i = 30; i < 41; i++)
+            {
+                auxPoint2->col = i;
+                
+                if(i%2 == 0){   
+                    syscaller(24, '|', auxPoint2, 0, 0);
+                }
+                else{
+                    syscaller(24,boardA[(i/2)-15][j-2],auxPoint2,0,0);
+                }
+              
+
+           }
+
+        }   
            
 
-        return;
+           return;
 
   //       point * p1 ,* p2, * p3;
   //       p1->x = 700; p1->y = 0; 
@@ -229,4 +244,4 @@ typedef struct{
   //       p3->x = 100; p3->y = 0; 
   //       syscaller(22, 0, p3, "yellow", p2);
 
-    }
+       }
