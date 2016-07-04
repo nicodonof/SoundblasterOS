@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // #include "lib.h"
 // #include "shell.h"
 // #include "int80.h"
@@ -55,6 +56,70 @@
 //         } 
 // 		msg = 0;
 // 	}
+=======
+/*#include "lib.h"
+#include "shell.h"
+#include "int80.h"
+
+typedef struct{
+    char name[24];
+    void * instp;
+}packash;
+packash * auxPack; 
+
+void game_input(){
+	void * msgInputQ;
+	//while(msgQ == 0){
+		//syscall getQueue gameinputq
+	//}
+
+    while(1){
+        char auxer = getChar();
+        if(auxer != 0){ 
+            switch(auxer){
+                case 'a':
+                break;
+                case 'd':
+                break;
+                case '\n':
+                break;
+                case '\b':
+                break;
+                //syscall send auxer to gameinputq                               
+            } 
+            if(auxer == '\b'){
+                break;
+            }          
+        } 
+    }    
+    return;
+}
+
+void game_sound(){
+	void* soundQ;
+	char* msg;
+	//syscall start queue named gameaudioq
+	while(1){
+		while(msg == 0){
+			//syscall get message from soundQ
+		}
+		switch(auxer){
+            case 'b':
+            	//syscall beep
+            	break;
+            case 'n':
+            	//syscall boop
+            	break;
+            case 'm':
+            	//syscall play song
+            	break;
+            case 'p':  
+            	//syscall send auxer to gameinputq
+            	break;                            
+        } 
+		msg = 0;
+	}
+>>>>>>> effa3ffd595120ca9a38a6ed91c2a0ca8311fc1d
 	
 //     return;
 // }
@@ -136,6 +201,7 @@
         
 //         printBoard(board);
     
+<<<<<<< HEAD
 //     //----------------------GUIDO----------------------------------
 
 //     }
@@ -162,3 +228,49 @@
 //     // create process with this function: game_input();
 //     game_render();
 // }  
+=======
+    //----------------------GUIDO----------------------------------
+
+    }
+    print("Su puntaje es: %d\n", puntaje);
+    print("Presione enter para salir\n");
+    print("Presione R para reintentar\n");
+
+
+    return;
+}
+
+void game(){
+    print("Game not implemented yet...");
+    // create process with this function: game_sound();
+    strcpy(auxPack->name,"gameSound",strlen("gameSound"));
+    auxPack->instp = game_sound;
+    int pid;
+    syscaller(12,0,auxPack,1,&pid);
+
+    strcpy(auxPack->name,"gameInput",strlen("gameInput"));
+    auxPack->instp = game_input;
+    int pid2;
+    syscaller(12,0,auxPack,1,&pid);
+    // create process with this function: game_input();
+    game_render();
+}  */
+
+  /*  typedef struct {
+    	int x, y;
+    } point;
+*/
+    #include "game.h"
+    void printBoard(){//char board[][]){
+    	point * p1 ,* p2, * p3;
+		p1->x = 700; p1->y = 0; 
+        p2->x = 700; p2->y = 600;
+		p3->x = 700; p3->y = 0; 
+        syscaller(22, 0, p3, "yellow", p2);
+        p2->x = 100; p2->y = 600; // Imprime las lineas de los costados aunq sean mas feas que teofilo.
+        p3->x = 100; p3->y = 0; 
+        syscaller(22, 0, p3, "yellow", p2);
+
+
+    }
+>>>>>>> effa3ffd595120ca9a38a6ed91c2a0ca8311fc1d

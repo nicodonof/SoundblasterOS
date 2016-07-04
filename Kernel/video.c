@@ -471,3 +471,45 @@ void draw_char(char to, point where, int size, color c)
 
 
 point toPoint(unsigned int x, unsigned int y){point t={x,y};return t;}
+
+int abs(int a){
+	return a<0? -1*a:a;
+}
+
+//Bresenham algorithm for lines - could go with Xiaolin Wu's, but this is easier ^.^
+void draw_line(point * s, point * e, color c) {
+    sPrintf("drawLinePix %d %d %d %d\n", s->x, s->y, e->x, e->y);
+    int x = s->x;
+    int y = s->y;
+    int x2 = e->x;
+    int y2 = e->y;
+    int w = x2 - x;
+    int h = y2 - y;
+    c = yellow;
+    int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0, i = 0;
+    if (w<0) dx1 = -1; else if (w>0) dx1 = 1;
+    if (h<0) dy1 = -1; else if (h>0) dy1 = 1;
+    if (w<0) dx2 = -1; else if (w>0) dx2 = 1;
+    int longest = abs(w);
+    int shortest = abs(h);
+    if (!(longest>shortest)) {
+        longest = abs(h);
+        shortest = abs(w);
+        if (h<0) dy2 = -1; else if (h>0) dy2 = 1;
+        dx2 = 0 ;
+    }	
+    int numerator = longest >> 1;
+    for (i=0;i<=longest;i++) {
+    
+	put_pixel(x,y,c);
+        numerator += shortest;
+        if (!(numerator<longest)) {
+            numerator -= longest;
+            x += dx1;
+            y += dy1;
+        } else {
+            x += dx2;
+            y += dy2;
+        }
+    }
+}
