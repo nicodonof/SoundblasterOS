@@ -46,10 +46,8 @@ static void wrapper(EntryPoint func){
     current = current->next;
     shellProc->state = ACTIVE;
     
-    while(1) { 
-        forceScheduler();
-        current->state = INACTIVE;
-    }
+    current->state = INACTIVE;
+    forceScheduler();
     
     sPrintf("\nTERMINE DE VUELTA: ahora viene:%s\n",current->name);
 }
@@ -84,7 +82,7 @@ process * createProcess(char * name, void * funct,int newProcess){
     last = current;
     process * auxi = (p->next);
     process * auxi2 = (current->next);
-    printPidList();
+    //printPidList();
     sPrintf("CREO EL PROCESO %s %s, QUE VIENE DESPUES DE %s Y DPS VIENE %s\n",p->name,p->state?"activo":"inactivo",last->name,auxi->name);
     return p;
 }
@@ -113,7 +111,7 @@ void processNext() {
             aux = current->next;
             last = current;
             current = current->next;
-            sPrintf("%s %s\n", aux->name, aux->state?"active":"inactive");
+        //    sPrintf("%s %s\n", aux->name, aux->state?"active":"inactive");
         }while(aux->state == INACTIVE);
 
     }
