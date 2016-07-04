@@ -99,9 +99,8 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 		*dest = aux->pid;
 		kernelToUser();
 
-		sPrintf("SALE DE ACA: %s\n ",aux->name);
 		forceScheduler();
-		sPrintf("SALE DE ACA: %s\n ",aux->name);
+		sPrintf("Termina de correr: %s\n ",aux->name);
 	}
 
 	void endProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
@@ -123,11 +122,11 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	void openMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		uint64_t** dest2 = (uint64_t**)dest;
 		*dest2 = openMsgQ((char *) buff);
-		sPrintf("\n AFUERA DE MSQ: %x\n", *dest2);
 	}
 
 	void getMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		dest = getMsgQ((char *) buff);
+		uint64_t** dest2 = (uint64_t**)dest;
+		*dest2 = getMsgQ((char *) buff);
 	}
 
 	void closeMsgQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
@@ -141,7 +140,6 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		uint64_t** dest2 = (uint64_t**)buff;
 		uint64_t** dest3 = (uint64_t**)dest;
-		sPrintf("\nASKAJDKSDJKJ SIIIIII : %x\n", *dest2);
 		*dest3 = receiveMsg((MessageQueue *) *dest2);
 	}
 

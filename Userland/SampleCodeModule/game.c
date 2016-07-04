@@ -70,10 +70,10 @@ void game_sound(){
 void game_render(){
     print("Start GameRender Process\n");
     void * inputQ;
-	syscaller(17,0, "gameinputq",0, inputQ); //syscall start queue gameinputq
-	void * soundQ;
+	syscaller(17,0, "gameinputq",0, &inputQ); //syscall start queue gameinputq
+	void * soundQ = 0;
 	while(soundQ == 0){
-		syscaller(18,0, "gameaudioq",0, soundQ);//syscall get queue named gameaudioq
+		syscaller(18,0, "gameaudioq",0, &soundQ);//syscall get queue named gameaudioq
 	}
     print("Presione ENTER para empezar el juego\n");
     print("Presione Q para salir\n");
