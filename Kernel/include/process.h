@@ -1,6 +1,9 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
+#define ACTIVE 1
+#define INACTIVE 0
+
 typedef struct{
 	int pid;
 	char name[24];
@@ -9,6 +12,7 @@ typedef struct{
 	//uint64_t cr3;
 	uint64_t quantum;
 	void * instp;
+	int state;
 } process;
 
 typedef struct {
@@ -38,7 +42,7 @@ typedef struct {
 	uint64_t base;
 } context_t;
 
-process * createProcess(char * name, void * funct);
+process * createProcess(char * name, void * funct,int state);
 static uint64_t processShell();
 static uint64_t getNewPid();
 void initProcesses();

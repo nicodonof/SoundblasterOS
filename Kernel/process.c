@@ -17,11 +17,11 @@ static process *nullProcess;
 static uint64_t nextPid = 1;
 
 void initProcesses(){
-	nullProcess = createProcess("null", 0);
+	nullProcess = createProcess("null", 0,1);
 	current = nullProcess;
 	current->next = nullProcess;
 	last = nullProcess;
-	nullProcess->next = createProcess("shell",processShell); 	
+	nullProcess->next = createProcess("shell",processShell,1); 	
 	
 	forceScheduler();
 }
@@ -34,12 +34,13 @@ static void wrapper(EntryPoint func){
 	sPrintf("\nTERMINE :%s\n",aux->name);
 	last->next = current->next;
 	current = current->next;
+	current->state = ACTIVE;
 	forceScheduler();
 	
 	sPrintf("\nTERMINE DE VUELTA: ahora viene:%s\n",current->name);
 }
 
-process * createProcess(char * name, void * funct){
+process * createProcess(char * name, void * funct,int newProcess){
 	process * p = malloc(sizeof(process)); 
 	//p->name = malloc(strlen(name)+1);
 	memset(p->name, 0, 24);
@@ -55,6 +56,12 @@ process * createProcess(char * name, void * funct){
 	sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, p->stack);
 	//sPrintf("\nStack pointer: %x\n",p->stack);	
 	p->next = current->next;
+	p->state = ACTIVE;
+	if(newProcess){
+		sPrintf("Seteo %s en inactive \n", current->name);
+		current->state = INACTIVE;
+	}
+
 	current->next = p;
 	last = current;
 	process * auxi = (p->next);
@@ -84,7 +91,8 @@ void processNext() {
 	//sPrintf("curr: %s\n", current->name);
 	if(current != 0 && current->next != 0){
 		process * aux = current->next;
-		if(aux->pid == nullProcess->pid){
+		if(aux->pid == nullProcess->pid || aux->state == INACTIVE){
+			//Salteo uno
 			last = current;
 			current = aux->next;
 			sPrintf("curr: %s\n", current->name);

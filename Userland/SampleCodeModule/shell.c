@@ -80,20 +80,16 @@ void parser(char * s, int size){
         break;
         case 'i':
         if(strcmp(s,"itunes")){
-            int pid = wrapProcess("itunes", itunes);
-            /*
-            strcpy(auxPack->name,"itunes",strlen("itunes"));
-            print(auxPack->name);
+            strcpy(auxPack->name,"itunes",strlen(itunes));;
             auxPack->instp = itunes;
             int pid;
-            syscaller(12,0,auxPack,-1,&pid);
-            */
+            syscaller(12,0,auxPack,1,&pid);
             return;
         }
         break;
         case 'h':
         if(strcmp(s,"help")){
-            int pid = wrapProcess("help", help);
+            help();
             return;
         }
         break;
@@ -102,16 +98,22 @@ void parser(char * s, int size){
             strcpy(auxPack->name,"beep",strlen("beep"));;
             auxPack->instp = beep;
             int pid;
-            syscaller(12,0,auxPack,-1,&pid);
+            syscaller(12,0,auxPack,1,&pid);
             return;
         }else if(strcmp(s,"boop")){
-            int pid = wrapProcess("boop", boop);
+            strcpy(auxPack->name,"boop",strlen("boop"));;
+            auxPack->instp = boop;
+            int pid;
+            syscaller(12,0,auxPack,1,&pid);
             return;
         }
         break;
         case 'p':
         if(strcmp(s,"piano")){
-            int pid = wrapProcess("piano", piano);
+            strcpy(auxPack->name,"piano",strlen("piano"));;
+            auxPack->instp = "instp";
+            int pid;
+            syscaller(12,0,auxPack,1,&pid);
             return;
         }
         break;
