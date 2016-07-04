@@ -50,5 +50,7 @@ process * getCurrent();
 void processNext();
 uint64_t getQuantum();
 void decQuantum();
-
+void sleepProcess(int pid);
+void wakePrecess(int pid);
+process * findProcessByPid(int pid);
 #endif

@@ -115,3 +115,26 @@ void decQuantum(){
         current->quantum--;
     }
 }
+
+void sleepProcess(int pid){
+	process * aux = findProcessByPid(pid);
+	aux->state = INACTIVE;
+	if(current == aux){ // SI ESTA CORRIENDO DORMILO YAAAAAAA
+		forceScheduler();
+	}
+}
+
+void wakePrecess(int pid){
+	process * aux = findProcessByPid(pid);
+	aux->state = ACTIVE;
+}
+
+process * findProcessByPid(int pid){
+	process * aux = current;
+	while(aux->pid != pid){
+        aux = current->next;
+        last = current;
+        current = current->next;
+    }
+    return aux;	
+}
