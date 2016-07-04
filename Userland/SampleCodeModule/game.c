@@ -75,20 +75,18 @@ void game_render(){
 	while(soundQ == 0){
 		syscaller(18,0, "gameaudioq",0, &soundQ);//syscall get queue named gameaudioq
 	}
-    print("Presione ENTER para empezar el juego\n");
-    print("Presione Q para salir\n");
+
     long timeStart;
     syscaller(6,0,&timeStart,0,0);  // syscall que pide timeStart
     long timeNow;
 
+    syscaller(20, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
 
-    syscaller(20, soundQ, "m", 0, 0);		//syscall send "start music (m)" to gameaudioq 
-    
     int random_seed;
 
     int pos_player = 0;
     int puntaje = 0;
-    char input;
+    char * input;
     int x_x = 0;
 
     char board[5][20]; 
@@ -126,15 +124,15 @@ void game_render(){
 
     //----------------------INPUT---------------------------------
 
-        syscaller(21,inputQ, 0,0, &input); //getinput(): syscall get message from inputQ
-        if(input == 'a'){           
+        syscaller(21,0,&inputQ,0, &input); //getinput(): syscall get message from inputQ
+        if(*input == 'a'){           
             pos_player = (pos_player + 404) % 5;     //obfuscatedCode9.31
         }
-        else if(input == 'd'){
+        else if(*input == 'd'){
             pos_player = (pos_player + 931) % 5;
         }
-        else if(input == '\b'){
-            syscaller(20, soundQ, "p", 0, 0);		//syscall send "stop music (p)" to gameaudioq 
+        else if(*input == '\b'){
+            syscaller(20, 'p' , &soundQ, 0, 0);		//syscall send "stop music (p)" to gameaudioq 
             x_x=1;                                     //no morimo'
         }
 

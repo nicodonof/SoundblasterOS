@@ -61,7 +61,8 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	}
 
 	void getTimerSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		*dest = getTimer();
+		uint64_t** dest2 = (uint64_t**)dest;
+		*dest2 = getTimer();
 	}
 
 	void playTimeSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
@@ -134,7 +135,8 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	}
 
 	void sendMsgToQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		sendMsg((MessageQueue *) fd, (char *) buff);
+		uint64_t** dest2 = (uint64_t**)buff;
+		sendMsg(*dest2, &fd);
 	}
 	
 	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
