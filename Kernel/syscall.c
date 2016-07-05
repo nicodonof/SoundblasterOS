@@ -135,16 +135,17 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 	}
 
 	void sendMsgToQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-		uint64_t** dest2 = (uint64_t**)buff;
-		sendMsg(*dest2, fd);
+		//uint64_t** dest2 = (uint64_t**)buff;
+		sendMsg(buff, fd);
 	}
 	
 	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		uint64_t** dest2 = (uint64_t**)buff;
-		uint64_t* dest3 = (uint64_t*)dest;
-		dest3 = receiveMsg((MessageQueue *) *dest2);
-		sPrintf("asdasdasdsda LE TENGO FE\n");
-		sPrintf("%c\n",*dest3);
+		uint64_t** dest3 = (uint64_t**)dest;
+		*dest3 = receiveMsg((MessageQueue *) *dest2);
+		//MessageQueue * auxi = (MessageQueue *) *dest2;
+		//sPrintf("Leo el char %c de la queue %x \n",'s',buff);
+		return;
 	}
 
 	void drawLineSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){

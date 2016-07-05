@@ -27,6 +27,7 @@ MessageQueue* openMsgQ(char *name){
 			auxQueue->dead = 0;
 			qNames[i] = name;
 			queue[i] = auxQueue;
+			//sPrintf("Abro la msgque %s en la dir %x\n" , auxQueue->name, auxQueue);
 			return auxQueue;
 		}
 	}
@@ -58,7 +59,7 @@ void sendMsg(MessageQueue* q,char msg){
 	
 	newMsg->msg = msg;
 	newMsg->next = 0;
-	sPrintf("msg: %c, el dir del node: %x \n", newMsg->msg,newMsg );
+	//sPrintf("msg: %c, el dir del queue: %x \n", newMsg->msg,q );
 
 	if(q->first == 0){
 		q->first = newMsg;
@@ -73,7 +74,9 @@ void sendMsg(MessageQueue* q,char msg){
 
 //Gets back a message from the messageQueue and erases it.
 char receiveMsg(MessageQueue* q){
+	//sPrintf("Entro al receiveMsg\n");
 	waitSemaphore(q->sem);
+	//sPrintf("salgo del waitSemaphore queue: %s pid: %d\n",q->name, q->receiver);
 	if(getCurrent()->pid == q->receiver){
 		if(q->first != 0){
 			Msg* node = q->first;
@@ -81,7 +84,7 @@ char receiveMsg(MessageQueue* q){
 			if(q->dead == 1 && q->first == 0)
 				destroyMsgQ(q);
 			signalSemaphore(q->sem);
-			sPrintf("node: %c\n", node->msg);
+			//sPrintf("node: %c\n", node->msg);
 			return node->msg;
 		}
 	}

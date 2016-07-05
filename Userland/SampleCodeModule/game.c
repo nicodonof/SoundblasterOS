@@ -49,15 +49,15 @@ void game_input(){
 void game_sound(){
     print("Start GameAudio Process\n");
 	void* soundQ;
-	char msg = 'a';
-	syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
-    //playSongNoStop(1);
+	char msg = 0;
+
+    syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
+
     while(1){		
-        while(msg == 'g'){
+        while(msg == 0){
 			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
 		}
-        playSongNoStop(2);
-        putChar(msg);
+        
 		switch(msg){
             case 'b':
             	//syscall beep
@@ -65,14 +65,14 @@ void game_sound(){
             case 'n':
             	//syscall boop
             break;
-            case 'g':
+            case 'm':
                 playSongNoStop(2);
             break;
-            case 'p':  
+            case 'p':
             	//syscall pause song
             break;                            
         } 
-        msg = 'a';
+        msg = 0;
     }
 
     return;
@@ -91,7 +91,7 @@ void game_render(){
     syscaller(6,0,&timeStart,0,0);  // syscall que pide timeStart
     long timeNow;
 
-    syscaller(20, 'g', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
+    syscaller(20, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
 
     int random_seed;
 
