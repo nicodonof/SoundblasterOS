@@ -15,7 +15,7 @@ struct MsgQ{
 	unsigned int 	ID;
 	char*		 	name;
 	Semaphore*	 	sem;
-	unsigned int    receiver;
+//	unsigned int    receiver;
 	int 			dead;
 	Msg*			first;
 	Msg*			last;
@@ -25,6 +25,6 @@ MessageQueue* openMsgQ(char *name);
 MessageQueue* getMsgQ(char *name);
 void closeMsgQ(MessageQueue* q);
 void sendMsg(MessageQueue* q,char msg);
-char receiveMsg(MessageQueue* q);
+void receiveMsg(MessageQueue* q, char *ret);
 
 #endif

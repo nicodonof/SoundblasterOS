@@ -136,15 +136,28 @@ void (* syscallFunctions[25])(uint64_t fd, uint64_t * buff,uint64_t buffSize , u
 
 	void sendMsgToQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 		//uint64_t** dest2 = (uint64_t**)buff;
-		sendMsg(buff, fd);
+		sPrintf("&buff: %x\n",&buff);
+		sPrintf("buff: %x\n",buff);
+		sPrintf("*buff: %x\n",*buff);
+		sendMsg(*buff, fd);
 	}
 	
 	void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+		// uint64_t * referenceSaver = buff;
 		uint64_t** dest2 = (uint64_t**)buff;
 		uint64_t** dest3 = (uint64_t**)dest;
-		*dest3 = receiveMsg((MessageQueue *) *dest2);
+
+		sPrintf("dest: %x\n",dest);
+		sPrintf("*dest: %c\n",*dest);
+
+
+		sPrintf("*buff before: %x\n",*buff);
+		/**dest3 = */receiveMsg(*buff, dest);
 		//MessageQueue * auxi = (MessageQueue *) *dest2;
 		//sPrintf("Leo el char %c de la queue %x \n",'s',buff);
+		// sPrintf("referenceSaver after: %x\n",referenceSaver);
+		// buff = referenceSaver;
+		sPrintf("*buff End: %x\n",*buff);
 		return;
 	}
 

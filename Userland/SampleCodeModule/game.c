@@ -230,7 +230,6 @@ void game(){
     auxPackSound->instp = game_sound;
     int pid;
     syscaller(12,0,auxPackSound,1,&pid);
-
     game_render();
 }  
 
