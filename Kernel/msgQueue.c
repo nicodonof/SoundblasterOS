@@ -95,12 +95,12 @@ void receiveMsg(MessageQueue* q, char * ret){
 				destroyMsgQ(q);
 			}
 			signalSemaphore(q->sem);
-			sPrintf("node: %c\n", node->msg);
-			sPrintf("Qdir4 %x\n", q);
+			// sPrintf("node: %c\n", node->msg);
+			// sPrintf("Qdir4 %x\n", q);
 			*ret = node->msg;
 			return/* node->msg*/;
 		}
-		sPrintf("NO HAY UN MESSAGE\n");
+		// sPrintf("NO HAY UN MESSAGE\n");
 	//}
 	//sPrintf("AFUERA: Mi PID: %d El receiver: %d\n" , getCurrent()->pid, q->receiver);
 	signalSemaphore(q->sem);

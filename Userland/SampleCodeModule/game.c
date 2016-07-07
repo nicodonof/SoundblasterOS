@@ -16,28 +16,21 @@ typedef struct{
 
 void game_input(){
     print("Start GameInput Process\n");
-    void * inputQ;
+    void * inputQ = 0;
     while(inputQ == 0){
-		syscaller(18, 0, "gameinputq", 0, inputQ); //syscall get gameinputq
+		syscaller(18, 0, "gameinputq", 0, &inputQ); //syscall get gameinputq
 	}
-
+    print("GET: gameInput Q\n");
     while(1){
         char auxer = getChar();
         putChar(auxer);
         if(auxer != 0){ 
             switch(auxer){
                 case 'a':
-                    syscaller(20, auxer, &inputQ,0, 0);      //syscall send auxer to gameinputq                               
-                    break;
                 case 'd':
-                    syscaller(20, auxer, &inputQ,0, 0);      //syscall send auxer to gameinputq                               
-                    break;
                 case '\n':
-                    syscaller(20,auxer, &inputQ,0, 0);      //syscall send auxer to gameinputq                              
-                    break;
                 case '\b':
-                	syscaller(20,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq                               
-                }        
+                	syscaller(20,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq        
             } 
             if(auxer == '\b'){
                 break;
@@ -45,14 +38,14 @@ void game_input(){
         }    
         return;
     }
-
+}
 void game_sound(){
     print("Start GameAudio Process\n");
 	void* soundQ;
 	char msg = 0;
 
     syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
-
+    print("CREATE: gameInput Q\n");
     while(1){		
         while(msg == 0){
 			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
@@ -69,7 +62,7 @@ void game_sound(){
                 playSongNoStop(2);
             break;
             case 'p':
-            	//syscall pause song
+            	syscaller(8,0,0,0,0);
             break;                            
         } 
         msg = 0;
@@ -149,20 +142,27 @@ void game_render(){
 
     //----------------------INPUT---------------------------------
 
-        pos_player = (pos_player + 1) % 5;     //obfuscatedCode9.31
+        //pos_player = (pos_player + 1) % 5;     //obfuscatedCode9.31
         
         syscaller(21,0,&inputQ,0, &input); //getinput(): syscall get message from inputQ
-        putChar(input);
-        if(input == 'a'){           
-            pos_player = (pos_player + 404) % 5;     //obfuscatedCode9.31
+        if(input != 0){
+            print("Received a: ");
+            putChar(input);
+            print("\n");
+            if(input == 'a'){           
+                pos_player = (pos_player + 404) % 5;     //obfuscatedCode9.31
+            }
+            else if(input == 'd'){
+                pos_player = (pos_player + 931) % 5;
+            }
+            else if(input == '\b'){
+                syscaller(20, 'p' , &soundQ, 0, 0);     //syscall send "stop music (p)" to gameaudioq 
+                x_x=1;                                     //no morimo'
+            }
+            input = 0;
         }
-        else if(input == 'd'){
-            pos_player = (pos_player + 931) % 5;
-        }
-        else if(input == '\b'){
-            syscaller(20, 'p' , &soundQ, 0, 0);		//syscall send "stop music (p)" to gameaudioq 
-            x_x=1;                                     //no morimo'
-        }
+
+        
 
     //----------------------RENDER---------------------------------
 
@@ -193,7 +193,7 @@ void game_render(){
     //----------------------GUIDO----------------------------------
 
     }
-    syscaller(8,0,0,0,0);
+    syscaller(20, 'p', &soundQ, 0, 0);      //syscall send "stop music (p)" to gameaudioq 
     print("Su puntaje es: 35\n");
     print("Presione enter para salir\n");
     print("Presione R para reintentar\n");
