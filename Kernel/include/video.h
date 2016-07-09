@@ -5,7 +5,7 @@
 #include <types.h>
 
 typedef struct {
-	unsigned int x, y;
+	int x, y;
 } point;
 
 typedef struct {

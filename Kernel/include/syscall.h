@@ -27,6 +27,7 @@ void receiveMsgFromQSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t
 void drawLineSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void playSoundNoVideoSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void printCharInPosSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
-	
+void drawRecSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
+void drawTriangSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 #endif
 

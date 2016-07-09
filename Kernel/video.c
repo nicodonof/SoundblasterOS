@@ -182,7 +182,7 @@ void vDeleteLastChar(){
 		col = width-1;
 		row--;
 	} else
-		col--;
+	col--;
 	vPrintCharInPos(15,row,col);
 	deleteCounter--;
 }
@@ -202,7 +202,7 @@ void vNewline()
 		col++;
 	}
 	while(col != width);
-		row++;
+	row++;
 	col = 0;
 	cColor = cColor2;
 }
@@ -312,19 +312,20 @@ void vPrintBin(uint64_t value)
 
 void vPrintBase(uint64_t value, uint32_t base)
 {
-    uintToBase(value, buffer, base);
-    vPrint(buffer);
+	uintToBase(value, buffer, base);
+	vPrint(buffer);
 }
 
 void vClear()
 {
 	int i,j;
-	for (i = 0; i < height * width; i++){
+	/*for (i = 0; i < height * width; i++){
 		vPrintCharInPos(15,i/width,i%width);
 		vidMem[i/width][i%width];
-	
+
 		video[i] = ' ' | (cColor << 8); 
-	}
+	}*/
+	putPixels(background);
 	row = 0;
 	col = 0;
 }
@@ -390,9 +391,9 @@ int maxrand(int seed,int max){
 	
 }*/
 
-void put_pixel(unsigned int x, unsigned int y, color c)
-{
-	int offset = 0;
+	void put_pixel(unsigned int x, unsigned int y, color c)
+	{
+		int offset = 0;
 	if (x >= 0 && x < xRes && y >= 0 && y < yRes) // Sanity check
 	{
 		offset = y * xRes + x;
@@ -419,7 +420,7 @@ void putPixels(color c){
 	int y = 0;
 	for(x = 0; x < xRes; x++){
 		for(y = 0; y < yRes; y++){
-				put_pixel(x,y,c);
+			put_pixel(x,y,c);
 			
 		}
 	}
@@ -431,14 +432,14 @@ void draw_text(char* text, int length, point start, int size, color c)
 	int i=0;
 	int len=length;
 	if(size==1) {
-	  	for(;i<len;i++) {
-	  		draw_schar(*(text+i), toPoint(start.x+i*7+2, start.y), c);
+		for(;i<len;i++) {
+			draw_schar(*(text+i), toPoint(start.x+i*7+2, start.y), c);
 		}
 		return;
 	}
 	draw_char(*text, toPoint(start.x+i*7*size, start.y), size, c);
 	for(i=1;i<len;i++) {
-	  draw_char(*(text+i), toPoint(start.x+i*7*size*libDraw_text_character_spacing, start.y), size, c);
+		draw_char(*(text+i), toPoint(start.x+i*7*size*libDraw_text_character_spacing, start.y), size, c);
 	}
 }
 
@@ -461,10 +462,13 @@ void draw_char(char to, point where, int size, color c)
 	for (y=12; y >= 0; y--) {
 		for (x=7; x >= 0; x--) {
 			set = bitmap[y] & 1 << x;
-			if(set)
-			  	for(xe=0;xe<size;xe++)
-				  	for(ye=0;ye<size;ye++)
+			if(set){
+				for(xe=0;xe<size;xe++){
+					for(ye=0;ye<size;ye++){
 						put_pixel(where.x+size*(12-x)+xe, where.y+size*(7-y)+ye, c);
+					}
+				}
+			}
 		}
 	}
 }
@@ -478,38 +482,64 @@ int abs(int a){
 
 //Bresenham algorithm for lines - could go with Xiaolin Wu's, but this is easier ^.^
 void draw_line(point * s, point * e, color c) {
-    sPrintf("drawLinePix %d %d %d %d\n", s->x, s->y, e->x, e->y);
-    int x = s->x;
-    int y = s->y;
-    int x2 = e->x;
-    int y2 = e->y;
-    int w = x2 - x;
-    int h = y2 - y;
-    c = yellow;
-    int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0, i = 0;
-    if (w<0) dx1 = -1; else if (w>0) dx1 = 1;
-    if (h<0) dy1 = -1; else if (h>0) dy1 = 1;
-    if (w<0) dx2 = -1; else if (w>0) dx2 = 1;
-    int longest = abs(w);
-    int shortest = abs(h);
-    if (!(longest>shortest)) {
-        longest = abs(h);
-        shortest = abs(w);
-        if (h<0) dy2 = -1; else if (h>0) dy2 = 1;
-        dx2 = 0 ;
-    }	
-    int numerator = longest >> 1;
-    for (i=0;i<=longest;i++) {
-    
-	put_pixel(x,y,c);
-        numerator += shortest;
-        if (!(numerator<longest)) {
-            numerator -= longest;
-            x += dx1;
-            y += dy1;
-        } else {
-            x += dx2;
-            y += dy2;
-        }
-    }
+	int x = s->x;
+	int y = s->y;
+	int w = e->x - x;
+	int h = e->y - y;
+	c = yellow;
+	int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0, i = 0;
+	if (w<0) dx1 = -1; else if (w>0) dx1 = 1;
+	if (h<0) dy1 = -1; else if (h>0) dy1 = 1;
+	if (w<0) dx2 = -1; else if (w>0) dx2 = 1;
+	int longest = abs(w);
+	int shortest = abs(h);
+	if (!(longest>shortest)) {
+		longest = abs(h);
+		shortest = abs(w);
+		if (h<0) dy2 = -1; else if (h>0) dy2 = 1;
+		dx2 = 0 ;
+	}	
+	int numerator = longest >> 1;
+	for (i=0;i<=longest;i++) {
+
+		put_pixel(x,y,c);
+		numerator += shortest;
+		if (!(numerator<longest)) {
+			numerator -= longest;
+			x += dx1;
+			y += dy1;
+		} else {
+			x += dx2;
+			y += dy2;
+		}
+	}
+}
+
+void draw_frect(point * p, unsigned int l, unsigned int w, color c) {
+	int i, j;
+	for(i=0; i<l; i++) {
+		for(j=0; j<w; j++) {
+			put_pixel(p->x+i, p->y+j-10, background);
+		}
+	}
+	for(i=0; i<l; i++) {
+		for(j=0; j<w; j++) {
+			put_pixel(p->x+i, p->y+j, c);
+		}
+	}
+}
+
+void draw_triang(point * p, unsigned int l, color c) {
+	int i, j;
+	for(i=0; i<l/2; i++) {
+		for(j=0; j<l; j++) {
+			if(2*i+j>l){
+				put_pixel(p->x+i, p->y+j, c);
+				put_pixel(p->x+l-i, p->y+j, c);
+			}
+		}
+	}
+	for(j=1;j<l;j++) {
+		put_pixel(p->x+l/2, p->y+j, c);
+	}
 }
