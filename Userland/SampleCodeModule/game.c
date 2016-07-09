@@ -23,11 +23,17 @@ void game_input(){
     print("GET: gameInput Q\n");
     while(1){
         char auxer = getChar();
-        putChar(auxer);
+        //putChar(auxer);
         if(auxer != 0){ 
             switch(auxer){
                 case 'a':
+                    syscaller(20, 'a', &inputQ, 0, 0);
+                    print("a\n");
+                    break;
                 case 'd':
+                    syscaller(20, 'd', &inputQ, 0, 0);
+                    print("d\n");
+                    break;
                 case '\n':
                 case '\b':
                 	syscaller(20,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq        
@@ -36,13 +42,13 @@ void game_input(){
                 break;
             }   
         }    
-        return;
     }
+    return;
 }
 void game_sound(){
     print("Start GameAudio Process\n");
-	void* soundQ;
-	char msg = 0;
+    void* soundQ;
+    char msg = 0;
 
     syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
     print("CREATE: gameInput Q\n");
@@ -50,7 +56,7 @@ void game_sound(){
         while(msg == 0){
 			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
 		}
-        
+
 		switch(msg){
             case 'b':
             	//syscall beep
@@ -59,10 +65,10 @@ void game_sound(){
             	//syscall boop
             break;
             case 'm':
-                playSongNoStop(2);
+            playSongNoStop(2);
             break;
             case 'p':
-            	syscaller(8,0,0,0,0);
+            syscaller(8,0,0,0,0);
             break;                            
         } 
         msg = 0;
@@ -78,7 +84,7 @@ void game_render(){
 	void * soundQ = 0;
 	while(soundQ == 0){
 		syscaller(18,0, "gameaudioq",0, &soundQ);//syscall get queue named gameaudioq
-	}
+    }
 
     long timeStart;
     syscaller(6,0,&timeStart,0,0);  // syscall que pide timeStart
@@ -101,8 +107,8 @@ void game_render(){
     for (int a = 0; a < 20; a++){
         for (int b = 0; b < 5; b++){
          board[b][a] = 15;
-         }
-    }
+     }
+ }
 
  int counters=0;
 
@@ -143,7 +149,7 @@ void game_render(){
     //----------------------INPUT---------------------------------
 
         //pos_player = (pos_player + 1) % 5;     //obfuscatedCode9.31
-        
+
         syscaller(21,0,&inputQ,0, &input); //getinput(): syscall get message from inputQ
         if(input != 0){
             print("Received a: ");
