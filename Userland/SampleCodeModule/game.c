@@ -14,6 +14,8 @@ typedef struct{
     int col;    
 }pointAux;
 
+int random_seed=1;
+
 void game_input(){
     print("Start GameInput Process\n");
     void * inputQ = 0;
@@ -51,30 +53,36 @@ void game_sound(){
     char msg = 0;
 
     syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
-    print("CREATE: gameInput Q\n");
+    print("CREATE: gameaudio Q\n");
     while(1){		
         while(msg == 0){
 			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
 		}
+        putChar(msg);
 
 		switch(msg){
             case 'b':
             	//syscall beep
-            break;
+                break;
             case 'n':
             	//syscall boop
-            break;
+                break;
             case 'm':
-            playSongNoStop(2);
-            break;
+                playSongNoStop(2);
+                break;
             case 'p':
-            syscaller(8,0,0,0,0);
-            break;                            
+                syscaller(8,0,0,0,0);
+                break;                       
         } 
         msg = 0;
     }
 
     return;
+}
+
+int maxrand(int seed,int max){
+    random_seed = random_seed+seed * 1103515245 +12345;
+    return (unsigned int)(random_seed / 65536) % (max+1); 
 }
 
 void game_render(){
@@ -92,7 +100,7 @@ void game_render(){
 
     syscaller(20, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
 
-    int random_seed;
+    int random;
 
     int pos_player = 2;
     int puntaje = 0;
@@ -137,9 +145,9 @@ void game_render(){
         }
         board[pos_player][19] = 'O';
 
-        random_seed= random_seed+random_seed * 1103515245 +1234;
-        random_seed= (unsigned int)(random_seed / 65536) % (5); 
-        board[random_seed][0] = 'V';
+        random = maxrand(pos_player+1, 9);
+        if(random < 5) 
+            board[random][0] = 'V';
         counters = 0;
 
     }else{
@@ -152,14 +160,12 @@ void game_render(){
 
         syscaller(21,0,&inputQ,0, &input); //getinput(): syscall get message from inputQ
         if(input != 0){
-            print("Received a: ");
-            putChar(input);
-            print("\n");
             if(input == 'a'){           
                 pos_player = (pos_player + 404) % 5;     //obfuscatedCode9.31
             }
             else if(input == 'd'){
                 pos_player = (pos_player + 931) % 5;
+                syscaller(20, 'd' , &soundQ, 0, 0);
             }
             else if(input == '\b'){
                 syscaller(20, 'p' , &soundQ, 0, 0);     //syscall send "stop music (p)" to gameaudioq 
@@ -199,6 +205,7 @@ void game_render(){
     //----------------------GUIDO----------------------------------
 
     }
+    syscaller(8,0,0,0,0);
     syscaller(20, 'p', &soundQ, 0, 0);      //syscall send "stop music (p)" to gameaudioq 
     print("Su puntaje es: 35\n");
     print("Presione enter para salir\n");
