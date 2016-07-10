@@ -29,5 +29,6 @@ void playSoundNoVideoSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_
 void printCharInPosSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void drawRecSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 void drawTriangSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
+void getOpenedQueueNamesSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest);
 #endif
 

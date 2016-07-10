@@ -12,11 +12,13 @@ extern int keyboardActivated;
 extern int videoMode;
 extern color background;
 
-void (* syscallFunctions[26])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = 
-{0, readSC, writeSC, clearSC, pianoSC, boolkeySC, getTimerSC /*6*/, 
-	playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, clearBufferSC,createProcessSC, endProcessSC, listProcessSC/*14*/,
-	nextProcessSC, drawRecSC, openMsgQSC, getMsgQSC, closeMsgQSC, sendMsgToQSC, receiveMsgFromQSC, drawLineSC/*22*/, 
-playSoundNoVideoSC, printCharInPosSC, drawTriangSC};
+void (* syscallFunctions[27])(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest) = 
+{0, readSC, writeSC, clearSC, pianoSC, boolkeySC,
+	getTimerSC, playTimeSC, stopsoundSC, playSoundOnlySC, changeOctaveSC, 
+	clearBufferSC,createProcessSC, endProcessSC, listProcessSC, nextProcessSC, 
+	drawRecSC, openMsgQSC, getMsgQSC, closeMsgQSC, sendMsgToQSC, 
+	receiveMsgFromQSC, drawLineSC, playSoundNoVideoSC, printCharInPosSC, drawTriangSC, 
+	getOpenedQueueNamesSC};
 
 uint64_t syscallHandler(uint64_t index,uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 
@@ -175,3 +177,6 @@ void drawTriangSC(uint64_t fd, uint64_t * buff, uint64_t buffSize, uint64_t * de
 	draw_triang((point*)buff, fd, c);
 }
 
+void getOpenedQueueNamesSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
+	dest = getOpenedQueues();
+}

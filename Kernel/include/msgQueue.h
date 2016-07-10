@@ -26,5 +26,6 @@ MessageQueue* getMsgQ(char *name);
 void closeMsgQ(MessageQueue* q);
 void sendMsg(MessageQueue* q,char msg);
 void receiveMsg(MessageQueue* q, char *ret);
+char** getOpenedQueues();
 
 #endif
