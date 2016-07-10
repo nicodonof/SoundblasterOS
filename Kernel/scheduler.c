@@ -17,7 +17,5 @@ void* schedulerToKernel(uint64_t * stackPointer){
 void* schedulerToUser(){
 	process *proc = getCurrent();
 	proc->quantum = 0;
-	//writeCR3(proc->cr3);
-	//sPrintf("Nuevo current: %s\n", proc->name);
 	return proc->stack;
 }

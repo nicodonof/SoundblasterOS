@@ -94,13 +94,12 @@ typedef struct{
 
 
 void createProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-
+	uint64_t** dest2 = (uint64_t**)dest;
 	userToKernel();
 
 	packash* auxPack = (packash*) buff;
-	sPrintf("s:%s\n",auxPack->name);
 	process * aux = createProcess(auxPack->name,auxPack->instp,buffSize);
-	*dest = aux->pid;
+	*dest2 = aux->pid;
 	kernelToUser();
 
 	forceScheduler();
@@ -108,7 +107,7 @@ void createProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t *
 }
 
 void endProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-
+	killProcess(buffSize);
 }
 
 void listProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){

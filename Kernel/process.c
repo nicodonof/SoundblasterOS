@@ -165,3 +165,17 @@ void printPidList(){
         aux = aux->next;
     } while(current != aux);
 }
+
+void killProcess(int pid){
+    process * auxCurr = current->next;
+    process * auxPrev = current;
+    sPrintf("KILLIN PROCESS: %d\n", pid);
+    while(auxCurr->pid != pid){
+        auxPrev = current;
+        auxCurr = current->next;
+    }
+    sPrintf("KILLIN PROCESS: %s\n", auxCurr->name );
+    auxPrev->next = auxCurr->next;
+    pageFree(auxCurr->stack);
+    return;
+}
