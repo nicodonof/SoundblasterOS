@@ -319,12 +319,12 @@ void vPrintBase(uint64_t value, uint32_t base)
 void vClear()
 {
 	int i,j;
-	/*for (i = 0; i < height * width; i++){
+	for (i = 0; i < height * width; i++){
 		vPrintCharInPos(15,i/width,i%width);
 		vidMem[i/width][i%width];
 
 		video[i] = ' ' | (cColor << 8); 
-	}*/
+	}
 	putPixels(background);
 	row = 0;
 	col = 0;

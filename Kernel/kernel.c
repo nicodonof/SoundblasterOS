@@ -31,6 +31,7 @@ DESCR_INT *idt = (DESCR_INT*) 0;
 void set_paging();
 void write_cr3(uint64_t cr3);
 uint64_t get_cr3();
+void pit_setup(uint32_t msecs);
 
 void vInit();
 void _EOI();
@@ -117,7 +118,7 @@ int main()
 	//write_cr3((uint64_t) 0x3500);
 	
 	//putPixels();
-
+	pit_setup(100);
 	vInit();
 	vClear();
 	initProcesses();
