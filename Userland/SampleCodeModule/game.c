@@ -34,17 +34,20 @@ void game_input(){
 				case 'd':
 				syscaller(20, 'd', &inputQ, 0, 0);
 				break;
+				case 'r':
+				syscaller(20, 'r', &inputQ, 0, 0);
+				break;
 				case '\n':
+				syscaller(20, '\n', &inputQ, 0, 0);
+				break;
 				case '\b':
-					syscaller(20,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq		
-				} 
-				if(auxer == '\b'){
-					break;
-				}   
-			}	
+					syscaller(20,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq
+				break;
+			}
 		}
-		return;
 	}
+	return;
+}
 	void game_sound(){
 		print("Start GameAudio Process\n");
 		void* soundQ;
@@ -273,13 +276,15 @@ int game_render(){
 	print("Su puntaje es:");
 	write(1, &puntaje, 0);
 	print("\nPresione enter para salir\n");
-	print("Presione R para reintentar\n");
-	char inputChar = 's';
-	while((inputChar = getChar()) == 0);
-	if(inputChar == 'r')
-		return 1;
-	else
+	print("Presione cualquier otra tecla para reintentar\n");
+	char inputChar = 0;
+	do{
+		syscaller(21,0,&inputQ,0, &inputChar); 
+	}while(inputChar == 0);
+	if(inputChar == '\n')
 		return 0;
+	else
+		return 1;
 
 }
 
