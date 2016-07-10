@@ -55,21 +55,12 @@ loader:
 	call main
 	cli
 
-	;push rdi
-    ;mov rdi, halt
-    ;call sPrintf
-    ;pop rdi
-
 hang:
 	hlt							; halt machine should kernel return
 	jmp hang
 
 forceScheduler:
 	;Push de los registros que dps va a levantar el iretq
-	;push rdi
-    ;mov rdi, start
-    ;call sPrintf
-    ;pop rdi
 	
 	pop 		QWORD[ret_addr] 		;Direccion de retorno
 
@@ -77,14 +68,6 @@ forceScheduler:
 	push 		QWORD[ss_addr]
 
 	push  		rsp
-
-	;push rdi
-    ;push rsi
-    ;mov rdi, string
-    ;mov rsi, rsp
-    ;call sPrintf
-    ;pop rsi
-    ;pop rdi
 
 	pushf 								;Se pushean los flags
 	mov 		QWORD[cs_addr], cs 		;Code Segment
@@ -105,39 +88,10 @@ forceScheduler:
 	call 		schedulerToKernel
 	mov 		rsp, rax
 
-	;push rdi
-    ;push rsi
-    ;mov rdi, string
-    ;mov rsi, rsp
-    ;call sPrintf
-    ;pop rsi
-    ;pop rdi
-
 	call 		processNext
-
-	;push rdi
-    ;push rsi
-    ;mov rdi, string
-    ;mov rsi, rsp
-    ;call sPrintf
-    ;pop rsi
-    ;pop rdi
 
 	call  		schedulerToUser
 	mov			rsp, rax
-
-	;push rdi
-    ;push rsi
-    ;mov rdi, string
-    ;mov rsi, rsp
-    ;call sPrintf
-    ;pop rsi
-    ;pop rdi	
-
-    ;push rdi
-    ;mov rdi, end
-    ;call sPrintf
-    ;pop rdi
 
 	popa
 

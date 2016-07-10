@@ -1,7 +1,8 @@
 #include <stdint.h>
 #include <debugger.h>
 
-
+/*intento fallido de hacer esto, pero no puedo cambiar al cr3*/ 
+/* sacado de alguno de los 5 tutoriales q encontre en internet*/
 uint64_t page_dir_ptr_tab[4] __attribute__((aligned(0x20))); // must be aligned to (at least)0x20, ...
     // ... turning out that you can put more of them into one page, saving memory
 
