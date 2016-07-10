@@ -32,4 +32,5 @@ void help();
 void sleep(int time);
 void quit();
 int getSeconds();
+void printAllOpenedQueues();
 #endif

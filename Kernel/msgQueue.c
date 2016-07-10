@@ -104,7 +104,7 @@ void receiveMsg(MessageQueue* q, char * ret){
 	//}
 	//sPrintf("AFUERA: Mi PID: %d El receiver: %d\n" , getCurrent()->pid, q->receiver);
 	signalSemaphore(q->sem);
-	return/* 0*/;
+	return;
 }
 
 //MessageQueue is kill.
@@ -112,4 +112,18 @@ void destroyMsgQ(MessageQueue* q){
 	sPrintf("Q with name: %s is kill." , q->name);
 	queue[q->ID] = 0;
 	qNames[q->ID] = 0;
+}
+
+//Returns a vector of opened queues names 
+char** getOpenedQueues(){
+	char* openedQs[MAX_QUEUES];
+	int j = 0;
+	for (int i = 0; i < MAX_QUEUES; ++i)
+	{
+		if(qNames[i] != 0){
+			openedQs[j] = qNames[i];
+			j++;
+		}
+	}
+	return openedQs;
 }

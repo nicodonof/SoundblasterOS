@@ -141,3 +141,19 @@ void quit(){
     //Enter the void
     quitF = 1;
 }
+
+void printAllOpenedQueues(){
+    char** queues;
+    int i = 0;
+    print("\n");
+    print("All opened queues:\n");
+    syscaller(26,0,0,0,queues);
+    print("HERE THEY COME:\n");
+    // while(queues[i] != 0){
+    //     print(queues[i]);
+    //     print("\n");
+    //     i++;
+    //     print(i);
+    //     print("\n");
+    // }
+}

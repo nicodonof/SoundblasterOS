@@ -54,7 +54,7 @@ int wrapProcess(char * name, void * instp){
 void parser(char * s, int size){
     int p;
     size = &p;
-    if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p' && *s != 's' && *s != 'g'){
+    if(*s != 'c' && *s != 'q' && *s != 'i' && *s != 'h' && *s != 'b' && *s != 'p' && *s != 's' && *s != 'g' && *s != 'o'){
         print("No se reconoce el comando. Intente nuevamente.\n");
         return;
     }
@@ -91,12 +91,21 @@ void parser(char * s, int size){
                 return;
             }
             break;
+        case 'o':
+            if(strcmp(s,"openq")){
+                strcpy(auxPack->name,"printAllOpenedQueues",strlen("printAllOpenedQueues"));
+                auxPack->instp = printAllOpenedQueues;
+                int pid;
+                syscaller(12,0,auxPack,1,&pid);
+                return;
+            }
+            break;
         case 'h':
             if(strcmp(s,"help")){
                 help();
                 return;
             }
-        break;
+            break;
         case 'b':
             if(strcmp(s,"beep")){
                 strcpy(auxPack->name,"beep",strlen("beep"));
@@ -139,7 +148,7 @@ void parser(char * s, int size){
 
                 return;
             }
-        break;
+            break;
         case 'g':
             if(strcmp(s,"game")){
                 strcpy(auxPack->name,"game",strlen("game"));
@@ -148,7 +157,7 @@ void parser(char * s, int size){
                 syscaller(12,0,auxPack,1,&pid);
                 return;
             }
-        break;
+            break;
     }
     print("No se reconoce el comando. Intente nuevamente.\n");
     return ;
