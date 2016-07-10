@@ -90,7 +90,7 @@ int game_render(){
 	while(soundQ == 0){
 		syscaller(GET_MSGQ,0, "gameaudioq",0, &soundQ);//syscall get queue named gameaudioq
 	}
-	clear();
+	syscaller(CLEAR,0,0,0,0);
 	long timeStart;
 	syscaller(GET_TIMER,0,&timeStart,0,0);  // syscall que pide timeStart
 	long timeNow;
@@ -222,7 +222,7 @@ int game_render(){
 	char inputChar = 0;
 	do{
 		syscaller(RECEIVE_MSG_FROM_Q,0,&inputQ,0, &inputChar); 
-	}while(inputChar == 0);
+	} while(inputChar == 0);
 	if(inputChar == '\n')
 		return 0;
 	else
@@ -250,7 +250,7 @@ void game(){
 	int * pidSound;
 	syscaller(CREATE_PROCESS,0,auxPackSound,1,&pidSound);
 	while(game_render());
-	syscaller(CLEAR,0,0,0,0); 
+	clear();
 	syscaller(END_PROCESS,0,0,pidInput,0); 
 	syscaller(END_PROCESS,0,0,pidSound,0); 
 	syscaller(BOOL_KEY,0,0,0,0); 
