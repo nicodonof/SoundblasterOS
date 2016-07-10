@@ -1,6 +1,7 @@
 #include "sound.h"
 #include <stdint.h>
 #include "syscall.h"
+
 static uint8_t * const songsDirections[4] = {ODETOJOY, TETRIS, MARIO, SECRET};
 
 extern auxer;

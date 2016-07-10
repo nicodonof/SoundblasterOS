@@ -150,7 +150,7 @@ void printAllOpenedQueues(){
     int i = 0;
     print("\n");
     print("All opened queues:\n");
-    syscaller(26,0,0,0,queues);
+    syscaller(GET_OPENED_Q_NAMES,0,0,0,queues);
     while(queues[i] != 0){
         print(queues[i]);
         print("\n");

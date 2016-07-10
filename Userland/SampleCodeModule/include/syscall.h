@@ -26,5 +26,6 @@
 #define PLAY_SOUND_NO_VIDEO 23
 #define PRINT_CHAR_IN_POS 24
 #define DRAW_TRIANG 25
+#define GET_OPENED_Q_NAMES 26
 
 #endif

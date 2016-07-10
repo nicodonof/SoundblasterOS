@@ -23,7 +23,7 @@ void shell(){
                     if(i>0)
                         i--;
                     else
-                        syscaller(4,'g',0,0,0);
+                        syscaller(PIANO,'g',0,0,0);
                 } else
                 buffer[i++] = auxer;
             }         
@@ -96,7 +96,7 @@ void parser(char * s, int size){
                 strcpy(auxPack->name,"openedQs",strlen("openedQs"));
                 auxPack->instp = printAllOpenedQueues;
                 int pid;
-                syscaller(12,0,auxPack,1,&pid);
+                syscaller(CREATE_PROCESS,0,auxPack,1,&pid);
                 return;
             }
             break;

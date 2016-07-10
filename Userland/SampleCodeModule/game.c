@@ -27,22 +27,22 @@ void game_input(){
 		if(auxer != 0){ 
 			switch(auxer){
 				case 'a':
-				syscaller(20, 'a', &inputQ, 0, 0);
+				syscaller(SEND_MSG_TO_Q, 'a', &inputQ, 0, 0);
 				break;
 				case 'd':
-				syscaller(20, 'd', &inputQ, 0, 0);
+				syscaller(SEND_MSG_TO_Q, 'd', &inputQ, 0, 0);
 				break;
 				case 'r':
-				syscaller(20, 'r', &inputQ, 0, 0);
+				syscaller(SEND_MSG_TO_Q, 'r', &inputQ, 0, 0);
 				break;
 				case '\n':
-				syscaller(20, '\n', &inputQ, 0, 0);
+				syscaller(SEND_MSG_TO_Q, '\n', &inputQ, 0, 0);
 				break;
 				case '\b':
-				syscaller(20,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq
+				syscaller(SEND_MSG_TO_Q,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq
 				break;
 				default:
-				syscaller(20, 'o', &inputQ, 0, 0);
+				syscaller(SEND_MSG_TO_Q, 'o', &inputQ, 0, 0);
 				break;
 			}
 		}
@@ -221,7 +221,7 @@ int game_render(){
 	print("Presione cualquier otra tecla para reintentar\n");
 	char inputChar = 0;
 	do{
-		syscaller(21,0,&inputQ,0, &inputChar); 
+		syscaller(RECEIVE_MSG_FROM_Q,0,&inputQ,0, &inputChar); 
 	}while(inputChar == 0);
 	if(inputChar == '\n')
 		return 0;
