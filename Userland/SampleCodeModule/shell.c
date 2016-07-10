@@ -92,7 +92,7 @@ void parser(char * s, int size){
             }
             break;
         case 'o':
-            if(strcmp(s,"openedqueues")){
+            if(strcmp(s,"oq")){
                 strcpy(auxPack->name,"openedQs",strlen("openedQs"));
                 auxPack->instp = printAllOpenedQueues;
                 int pid;
