@@ -1,15 +1,16 @@
 #include "shell.h"
 #include "int80.h"
+#include "syscall.h"
 
 static char dest = 0;
 char c = 0;
 
 void read(int fd,char * destination){
-    syscaller(1,fd,0,0,(uint64_t*) destination);
+    syscaller(READ,fd,0,0,(uint64_t*) destination);
 }
 
 void write(int fd, char * buff, int size){
-    syscaller(2,fd, (uint64_t*) buff, size, 0);
+    syscaller(WRITE,fd, (uint64_t*) buff, size, 0);
 }
 
 char getChar(){

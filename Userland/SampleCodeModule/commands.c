@@ -1,6 +1,7 @@
 #include "shell.h"
 #include <stdint.h>
 #include "sound.h"
+#include "syscall.h"
 
 static uint8_t * const memory = (uint8_t*)0x5000F9;
 
@@ -13,18 +14,18 @@ extern int auxer;
 void beep(){
     char noteB = 'l';
         
-    syscaller(9,noteB,0,1,0);
+    syscaller(PLAY_SOUND_ONLY,noteB,0,1,0);
     sleep(2);
-    syscaller(8,0,0,0,0);
+    syscaller(STOP_SOUND,0,0,0,0);
 }
 
 /*Beep*/
 void boop(){
     char noteE = 'g';
         
-    syscaller(9,noteE,0,1,0);
+    syscaller(PLAY_SOUND_ONLY,noteE,0,1,0);
     sleep(2);
-    syscaller(8,0,0,0,0);
+    syscaller(STOP_SOUND,0,0,0,0);
 }
 
 /*Activa el programa para escuchar canciones*/
@@ -40,23 +41,23 @@ void itunes(){
     print(st3);
     print(st4);
     print(st5);
-    syscaller(5,1,0,0,0);
+    syscaller(BOOL_KEY,1,0,0,0);
     do{
         auxer = getChar();
     } while (auxer != '1' && auxer != '2' && auxer != '3' && auxer != '4' && auxer != '\n');
     clear();
     if(auxer == '\n'){
-        syscaller(5,0,0,0,0);
+        syscaller(BOOL_KEY,0,0,0,0);
         return;
     }
-    syscaller(5,1,0,2,0);
+    syscaller(BOOL_KEY,1,0,2,0);
         playSong(auxer - '1');
-    syscaller(5,0,0,0,0);
+    syscaller(BOOL_KEY,0,0,0,0);
     clear();
 }
 
 void ps(){
-    syscaller(14,0,0,1,0);
+    syscaller(LIST_PROCESS,0,0,1,0);
 }
 
 void pItunes(){
@@ -64,7 +65,7 @@ void pItunes(){
 }
 
 void clear(){
-     syscaller(3,0,0,0,0);
+     syscaller(CLEAR,0,0,0,0);
      printOsName();
 }
 
@@ -95,15 +96,15 @@ void help(){
 void piano(){
     clear();
     print("Welcome to the Piano ! To exit press the enter key.\n");
-    syscaller(5,1,0,1,0);
+    syscaller(BOOL_KEY,1,0,1,0);
     do{
         auxer = getChar();
         if(auxer != 0 && isValidNote(auxer))
-            syscaller(4,auxer,0,1,0);
+            syscaller(PIANO,auxer,0,1,0);
         if('1' <= auxer && auxer <= '7')
-            syscaller(10,auxer,0,0,0);
+            syscaller(CHANGE_OCTAVE,auxer,0,0,0);
     } while (auxer != '\n');
-    syscaller(5,0,0,0,0);
+    syscaller(BOOL_KEY,0,0,0,0);
     clear();    
 }
 
@@ -128,15 +129,15 @@ void quit(){
 
     //AUDIO
 
-    syscaller(9,'l',0,1,0);
+    syscaller(PLAY_SOUND_ONLY,'l',0,1,0);
     sleep(2);
-    syscaller(8,0,0,0,0);
-    syscaller(9,'j',0,1,0);
+    syscaller(STOP_SOUND,0,0,0,0);
+    syscaller(PLAY_SOUND_ONLY,'j',0,1,0);
     sleep(2);
-    syscaller(8,0,0,0,0);
-    syscaller(9,'g',0,1,0);
+    syscaller(STOP_SOUND,0,0,0,0);
+    syscaller(PLAY_SOUND_ONLY,'g',0,1,0);
     sleep(5);
-    syscaller(8,0,0,0,0);
+    syscaller(STOP_SOUND,0,0,0,0);
 
     //Enter the void
     quitF = 1;

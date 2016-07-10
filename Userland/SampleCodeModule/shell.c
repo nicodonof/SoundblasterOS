@@ -2,6 +2,7 @@
 #include "shell.h"
 #include "int80.h"
 #include "game.h"
+#include "syscall.h"
 
 char auxer = 0;
 int time = 0;
@@ -33,7 +34,7 @@ void shell(){
 }
 
 void printOsName(){
-    write(1,"<=============================== SoundblasterOS ===============================>",80);
+    print("<=============================== SoundblasterOS ===============================>");
 }
 typedef struct{
     char name[24];
@@ -46,8 +47,7 @@ int wrapProcess(char * name, void * instp){
     strcpy(auxPack->name,name,strlen(name));
     auxPack->instp = instp;
     int pid;
-    syscaller(12,0,auxPack,-1,&pid);
-    print("asdasdsaaaaaaaaaaaaaaaaaaaaaaaaa");
+    syscaller(CREATE_PROCESS,0,auxPack,-1,&pid);
     return pid;
 }
 
@@ -87,7 +87,7 @@ void parser(char * s, int size){
                 strcpy(auxPack->name,"itunes",strlen("itunes"));
                 auxPack->instp = itunes;
                 int pid;
-                syscaller(12,0,auxPack,1,&pid);
+                syscaller(CREATE_PROCESS,0,auxPack,1,&pid);
                 return;
             }
             break;
@@ -102,23 +102,23 @@ void parser(char * s, int size){
                 strcpy(auxPack->name,"beep",strlen("beep"));
                 auxPack->instp = beep;
                 int pid;
-                syscaller(12,0,auxPack,1,&pid);
+                syscaller(CREATE_PROCESS,0,auxPack,1,&pid);
                 return;
             }else if(strcmp(s,"boop")){
                 strcpy(auxPack->name,"boop",strlen("boop"));
                 auxPack->instp = boop;
                 int pid;
-                syscaller(12,0,auxPack,1,&pid);
+                syscaller(CREATE_PROCESS,0,auxPack,1,&pid);
                 return;
             }else if(strcmp(s,"bg")){
                 if(strcmp(s+3,"itunes")){                
                     strcpy(auxPack->name,"itunes",strlen("itunes"));
                     auxPack->instp = pItunes;
                     int pid;
-                    syscaller(12,0,auxPack,0,&pid);
+                    syscaller(CREATE_PROCESS,0,auxPack,0,&pid);
                     return;
                 }else if(strcmp(s+3,"stop")){
-                    syscaller(13,0,0,0,0);
+                    syscaller(END_PROCESS,0,0,0,0);
                     return;                    
                 }
             }
@@ -128,13 +128,13 @@ void parser(char * s, int size){
                 strcpy(auxPack->name,"piano",strlen("piano"));
                 auxPack->instp = piano;
                 int pid;
-                syscaller(12,0,auxPack,1,&pid);
+                syscaller(CREATE_PROCESS,0,auxPack,1,&pid);
                 return;
             }else if (strcmp(s,"ps")){
                 strcpy(auxPack->name,"ps",strlen("ps"));
                 auxPack->instp = ps;
                 int pid;
-                syscaller(12,0,auxPack,1,&pid);
+                syscaller(CREATE_PROCESS,0,auxPack,1,&pid);
                 
 
                 return;
@@ -145,7 +145,7 @@ void parser(char * s, int size){
                 strcpy(auxPack->name,"game",strlen("game"));
                 auxPack->instp = game;
                 int pid;
-                syscaller(12,0,auxPack,1,&pid);
+                syscaller(CREATE_PROCESS,0,auxPack,1,&pid);
                 return;
             }
         break;
@@ -157,7 +157,7 @@ void parser(char * s, int size){
 
 
 void clearAll(){
-    syscaller(3,0,0,0,0);
+    syscaller(CLEAR,0,0,0,0);
 }
 
 
@@ -172,7 +172,7 @@ int isValidNote(char key){
 
 int getSeconds(){
     time=0;
-    syscaller(6,0,0,0,&time);
+    syscaller(GET_TIMER,0,0,0,&time);
     return time;
 }
 
@@ -207,7 +207,7 @@ void printOsLogo(){
 }
 
 void osInit(){
-    syscaller(5,1,0,0,0);
+    syscaller(BOOL_KEY,1,0,0,0);
     //VIDEO
     for(int i = 0; i<2;i++)
         print("                                                                                ");
@@ -218,23 +218,23 @@ void osInit(){
         print("                                                                                ");
     
     //AUDIO
-    syscaller(9,'k',0,1,0);
+    syscaller(PLAY_SOUND_ONLY,'k',0,1,0);
     sleep(2);
-    syscaller(8,0,0,0,0);
+    syscaller(STOP_SOUND,0,0,0,0);
 
-    syscaller(9,'g',0,1,0);
+    syscaller(PLAY_SOUND_ONLY,'g',0,1,0);
     sleep(2);
-    syscaller(8,0,0,0,0);
+    syscaller(STOP_SOUND,0,0,0,0);
 
-    syscaller(9,'l',0,1,0);
+    syscaller(PLAY_SOUND_ONLY,'l',0,1,0);
     sleep(5);
-    syscaller(8,0,0,0,0);
+    syscaller(STOP_SOUND,0,0,0,0);
 
     //CLEAN
     sleep(5);
 
-    syscaller(5,0,0,0,0);
+    syscaller(BOOL_KEY,0,0,0,0);
     clear();
-    syscaller(11,0,0,0,0);
+    syscaller(CLEAR_BUFFER,0,0,0,0);
 }
 

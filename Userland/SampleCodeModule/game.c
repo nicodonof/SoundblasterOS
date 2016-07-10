@@ -3,6 +3,7 @@
 #include "int80.h"
 #include "game.h"
 #include "sound.h"
+#include "syscall.h"
 
 typedef struct{
 	char name[24];
@@ -19,7 +20,7 @@ int random_seed=1;
 void game_input(){
 	void * inputQ = 0;
 	while(inputQ == 0){
-		syscaller(18, 0, "gameinputq", 0, &inputQ); //syscall get gameinputq
+		syscaller(GET_MSGQ, 0, "gameinputq", 0, &inputQ); //syscall get gameinputq
 	}
 	while(1){
 		char auxer = getChar();
@@ -47,10 +48,10 @@ void game_input(){
 		void* soundQ;
 		char msg = 0;
 
-	syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
+	syscaller(OPEN_MSGQ,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
 	while(1){		
 		while(msg == 0){
-			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
+			syscaller(RECEIVE_MSG_FROM_Q ,0, &soundQ,0, &msg); //syscall get message from soundQ
 		}
 		switch(msg){
 			case 'b':
@@ -63,7 +64,7 @@ void game_input(){
 			playSongNoStop(2);
 			break;
 			case 'p':
-			syscaller(8,0,0,0,0);
+			syscaller(STOP_SOUND,0,0,0,0);
 			break;					   
 		} 
 		msg = 0;
@@ -79,17 +80,17 @@ int maxrand(int seed,int max){
 
 int game_render(){
 	void * inputQ;
-	syscaller(17,0, "gameinputq",0, &inputQ); //syscall start queue gameinputq
+	syscaller(OPEN_MSGQ,0, "gameinputq",0, &inputQ); //syscall start queue gameinputq
 	void * soundQ = 0;
 	while(soundQ == 0){
-		syscaller(18,0, "gameaudioq",0, &soundQ);//syscall get queue named gameaudioq
+		syscaller(GET_MSGQ,0, "gameaudioq",0, &soundQ);//syscall get queue named gameaudioq
 	}
 	clear();
 	long timeStart;
-	syscaller(6,0,&timeStart,0,0);  // syscall que pide timeStart
+	syscaller(GET_TIMER,0,&timeStart,0,0);  // syscall que pide timeStart
 	long timeNow;
 
-	syscaller(20, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
+	syscaller(SEND_MSG_TO_Q, 'm', &soundQ, 0, 0);		//syscall send "start music (m)" to gameaudioq 
 
 	int random;
 
@@ -122,14 +123,14 @@ int game_render(){
 		for(j=-1; j<2; j++){
 			p1.x = i+j; p1.y = 0;
 			p2.x = i+j; p2.y = 768;
-			syscaller(22, 0, &p1, 0, &p2);
+			syscaller(DRAW_LINE, 0, &p1, 0, &p2);
 		}
 	}
 
 	point ppp;
 	ppp.x = 128 * pos_player + 128 + 13;
 	ppp.y = 658;
-	syscaller(25, 100, &ppp, 0, 3);
+	syscaller(DRAW_TRIANG, 100, &ppp, 0, 3);
 
 	while(!x_x){
 
@@ -145,7 +146,7 @@ int game_render(){
 					pp.y = 10;
 					array[parr%10] = pp;
 					present[parr%10] = 1;
-					syscaller(16, 50, &array[parr%10], 50, 1); 
+					syscaller(DRAW_REC, 50, &array[parr%10], 50, 1); 
 					parr++;
 					tot++;
 				}
@@ -160,12 +161,12 @@ int game_render(){
 		for(k=0;k<10;k++){
 			if(present[k]){
 				if(array[k].y>672){
-					syscaller(16,50, &array[k], 60, 2); // borra
+					syscaller(DRAW_REC,50, &array[k], 60, 2); // borra
 					present[k] = 0;
 					tot--;
 				} else {
 					array[k].y+=3;
-					syscaller(16, 50, &array[k], 50, 1);
+					syscaller(DRAW_REC, 50, &array[k], 50, 1);
 					if(array[k].y > 658 && (array[k].x - 128 - 38) / 128 == pos_player)
 						x_x = 1;
 				}
@@ -175,7 +176,7 @@ int game_render(){
 	//----------------------INPUT---------------------------------
 
 
-		syscaller(21,0,&inputQ,0, &input); //getinput(): syscall get message from inputQ
+		syscaller(RECEIVE_MSG_FROM_Q,0,&inputQ,0, &input); //getinput(): syscall get message from inputQ
 		if(input != 0){
 			if(input == 'a'){	
 				prev_pos = pos_player;	   
@@ -184,20 +185,20 @@ int game_render(){
 			else if(input == 'd'){
 				prev_pos = pos_player;
 				pos_player = (pos_player + 931) % 6;
-				syscaller(20, 'd' , &soundQ, 0, 0);
+				syscaller(SEND_MSG_TO_Q, 'd' , &soundQ, 0, 0);
 			}
 			else if(input == '\b'){
-				syscaller(20, 'p' , &soundQ, 0, 0);	 //syscall send "stop music (p)" to gameaudioq 
+				syscaller(SEND_MSG_TO_Q, 'p' , &soundQ, 0, 0);	 //syscall send "stop music (p)" to gameaudioq 
 				x_x=1;									 //no morimo'
 			}
 
 			ppp.x = 128 * pos_player + 128 + 13;
 			ppp.y = 658;
-			syscaller(25, 100, &ppp, 0, 3);
+			syscaller(DRAW_TRIANG, 100, &ppp, 0, 3);
 
 			ppp.x = 128 * prev_pos + 128 + 13;
 			ppp.y = 658;
-			syscaller(25, 100, &ppp, 0, 2);
+			syscaller(DRAW_TRIANG, 100, &ppp, 0, 2);
 			input = 0;
 		}
 
@@ -206,9 +207,9 @@ int game_render(){
 	//----------------------GUIDO----------------------------------
 
 	}
-	syscaller(8,0,0,0,0);
+	syscaller(STOP_SOUND,0,0,0,0);
 	clear();
-	syscaller(20, 'p', &soundQ, 0, 0);	  //syscall send "stop music (p)" to gameaudioq 
+	syscaller(SEND_MSG_TO_Q, 'p', &soundQ, 0, 0);	  //syscall send "stop music (p)" to gameaudioq 
 	print("Su puntaje es:");
 	write(1, &puntaje, 0);
 	print("\nPresione enter para salir\n");
@@ -228,23 +229,23 @@ packash * auxPackSound;
 
 
 void game(){
-	syscaller(3,0,0,0,0);
-	syscaller(5,1,0,0,0);
+	syscaller(CLEAR,0,0,0,0);
+	syscaller(BOOL_KEY,1,0,0,0);
 	// create process with this function: game_input();
 	strcpy(auxPackInput->name,"gameInput",strlen("gameInput"));
 	auxPackInput->instp = game_input;
 	int * pidInput;
-	syscaller(12,0,auxPackInput,1,&pidInput);
+	syscaller(CREATE_PROCESS,0,auxPackInput,1,&pidInput);
 
 	// create process with this function: game_sound();
 	strcpy(auxPackSound->name,"gameSound",strlen("gameSound"));
 	auxPackSound->instp = game_sound;
 	int * pidSound;
-	syscaller(12,0,auxPackSound,1,&pidSound);
+	syscaller(CREATE_PROCESS,0,auxPackSound,1,&pidSound);
 	while(game_render());
-	clear();
-	syscaller(13,0,0,pidInput,0);
-	syscaller(13,0,0,pidSound,0);
-	syscaller(5,0,0,0,0);
+	syscaller(CLEAR,0,0,0,0); 
+	syscaller(END_PROCESS,0,0,pidInput,0); 
+	syscaller(END_PROCESS,0,0,pidSound,0); 
+	syscaller(BOOL_KEY,0,0,0,0); 
 	return;
 }  

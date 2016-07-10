@@ -1,5 +1,6 @@
 #include "sound.h"
 #include <stdint.h>
+#include "syscall.h"
 static uint8_t * const songsDirections[4] = {ODETOJOY, TETRIS, MARIO, SECRET};
 
 extern auxer;
@@ -28,16 +29,16 @@ void playSongNoStop(int song){
 
 /*Playeae una nota en tal octava de tanta duracion y de tanto delay entre ella y la siguiente nota.*/
 void playNote(char note, char octave, int length, int delay){
-   syscaller(7,note,0, octave,0);
+   syscaller(PLAY_TIME,note,0, octave,0);
    sleep(length);
-   syscaller(8,0,0,0,0);
+   syscaller(STOP_SOUND,0,0,0,0);
    sleep(delay);
 }
 
 /*Playeae una nota en tal octava de tanta duracion y de tanto delay entre ella y la siguiente nota.*/
 void playNoteNoVid(char note, char octave, int length, int delay){
-   syscaller(23,note,0, octave,0);
+   syscaller(PLAY_SOUND_NO_VIDEO,note,0, octave,0);
    sleep(length);
-   syscaller(8,0,0,0,0);
+   syscaller(STOP_SOUND,0,0,0,0);
    sleep(delay);
 }
