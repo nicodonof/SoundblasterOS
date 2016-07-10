@@ -83,7 +83,7 @@ int maxrand(int seed,int max){
 	return (unsigned int)(random_seed / 65536) % (max+1); 
 }
 
-void game_render(){
+int game_render(){
 	print("Start GameRender Process\n");
 	void * inputQ;
 	syscaller(17,0, "gameinputq",0, &inputQ); //syscall start queue gameinputq
@@ -266,16 +266,20 @@ void game_render(){
 		}*/
 	//----------------------GUIDO----------------------------------
 
-		}
-		syscaller(8,0,0,0,0);
+	}
+	syscaller(8,0,0,0,0);
+	clear();
 	syscaller(20, 'p', &soundQ, 0, 0);	  //syscall send "stop music (p)" to gameaudioq 
 	print("Su puntaje es:");
 	write(1, &puntaje, 0);
 	print("\nPresione enter para salir\n");
 	print("Presione R para reintentar\n");
-
-
-	return;
+	char inputChar = getChar();
+	putChar(inputChar);
+	if(inputChar != 'r')
+		return 0;
+	else
+		return 1;
 }
 
 packash * auxPackInput;
@@ -306,9 +310,5 @@ void game(){
 	auxPackSound->instp = game_sound;
 	int pid;
 	syscaller(12,0,auxPackSound,1,&pid);
-	while(1){
-		game_render();
-	}
+	while(game_render());
 }  
-
-
