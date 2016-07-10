@@ -32,7 +32,6 @@ void initProcesses(){
 }
 
 static void wrapper(EntryPoint func){
-    //sPrintf("func: %x\n", func);
     if(current->noVideo){
     	func();
     }else{
@@ -41,7 +40,6 @@ static void wrapper(EntryPoint func){
     
     //sPrintf("asd\n");
     process * aux = current->next;
-    sPrintf("\nTERMINE :%s\n",current->name);
     last->next = current->next;
     current = current->next;
     shellProc->state = ACTIVE;
@@ -49,28 +47,20 @@ static void wrapper(EntryPoint func){
     current->state = INACTIVE;
     forceScheduler();
     
-    sPrintf("\nTERMINE DE VUELTA: ahora viene:%s\n",current->name);
 }
 
 process * createProcess(char * name, void * funct,int newProcess){
     process * p = malloc(sizeof(process)); 
-    //p->name = malloc(strlen(name)+1);
     memset(p->name, 0, 24);
     memcpy(p->name, name, strlen(name)+1);
     p->pid = getNewPid();
-    //sPrintf("\n%x\n", p->name);
     p->stack = pageAlloc();
-    //sPrintf("st: %x\n", p->stack);
     p->quantum = 2;
     p->instp = (void *)wrapper;
-    //sPrintf("%s: %x %x\n", p->name, p->instp, funct);
     newProcessContext(p,funct);
-    sPrintf("%s: %x %x %x\n", p->name, p->instp, funct, p->stack);
-    //sPrintf("\nStack pointer: %x\n",p->stack);    
     p->next = current->next;
     p->state = ACTIVE;
     if(newProcess == 1){
-        sPrintf("shell state: inactive\n");
         shellProc->state = INACTIVE;
     } else if(newProcess == 2){
     	shellProc->state = ACTIVE;
@@ -82,8 +72,6 @@ process * createProcess(char * name, void * funct,int newProcess){
     last = current;
     process * auxi = (p->next);
     process * auxi2 = (current->next);
-    //printPidList();
-    sPrintf("CREO EL PROCESO %s %s, QUE VIENE DESPUES DE %s Y DPS VIENE %s\n",p->name,p->state?"activo":"inactivo",last->name,auxi->name);
     return p;
 }
 
@@ -94,7 +82,6 @@ static uint64_t getNewPid(){
 }
 
 static uint64_t processShell() {
-    //sPrintf("%x\n", processShell);
     ((EntryPoint)sampleCodeModuleAddress)();
     return 0;
 }
@@ -104,28 +91,24 @@ process * getCurrent() {
 }
 
 void processNext() {
-    //sPrintf("curr: %s\n", current->name);
     if(current != 0 && current->next != 0){
         process * aux;
         do{
             aux = current->next;
             last = current;
             current = current->next;
-        //    sPrintf("%s %s\n", aux->name, aux->state?"active":"inactive");
         }while(aux->state == INACTIVE);
 
     }
-    //sPrintf("curr: %s\n", current->name);  
+
 }
 
 uint64_t getQuantum(){
-    ////sPrintf("q: %d", current->quantum);
     return current->quantum;
 }
 
 void decQuantum(){
     if(current->quantum > 0){
-    //  //sPrintf("dq: %d", current->quantum);
         current->quantum--;
     }
 }
@@ -169,13 +152,10 @@ void printPidList(){
 void killProcess(int pid){
     process * auxCurr = current->next;
     process * auxPrev = current;
-    sPrintf("KILLIN PROCESS: %d\n", auxCurr->pid);
     while(auxCurr->pid != pid){
         auxPrev = auxCurr;
         auxCurr = auxCurr->next;
-        sPrintf("KILLIN PROCESS: %d\n", auxCurr->pid);
     }
-    sPrintf("KILLIN PROCESS: %s\n", auxCurr->name );
     auxPrev->next = auxCurr->next;
     pageFree(auxCurr->stack);
     return;

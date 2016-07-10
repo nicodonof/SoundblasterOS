@@ -40,8 +40,6 @@ void vInit(){
 	background = dodgerblue;
 	letter = blue;
 	putPixels(background);
-	//sPrintf("xr: %d\n",xRes);
-	//sPrintf("yr: %d\n",yRes);
 }
 
 void vPrint(const char * string)
@@ -119,8 +117,6 @@ void vPrintChar(char character)
 		vidMem[row][col] = character;
 		video[width * row + col] = charColor(character, cColor);
 		char c = vidMem[row][col];
-		////sPrintf("%d ", c);	
-		////sPrintf("%c %d %d\n", character, cColor, charColor(character,cColor));
 		getChhhar();
 		col++;
 		deleteCounter++;
@@ -220,7 +216,6 @@ void vScroller(){
 			p.y= yRes/height * (i-1) + 5; 
 			p.x= xRes/width * j - 5;
 			if(vidMem[i][j] != vidMem[i-1][j]){
-		//		//sPrintf("i: %d, j:%d\n", i,j);
 				change = 1;
 			}
 			c = vidMem[i][j];
@@ -235,24 +230,13 @@ void vScroller(){
 
 		}
 	}
-	////sPrintf("i:%d, j:%d, k: %d\n", i,j,k);
 	col = 0;
 	vNewline();
 	
 	row--;
 }
 
-void debugP(char * s){
-	int i,j;
-	//sPrintf("%s", s);
-	for(i = 0; i<height;i++){
-		for ( j = 0; j < width; j++)
-		{
-			//sPrintf("%c",vidMem[i][j]);
-		}
-		//sPrintf("\n");
-	}
-}
+
 
 extern int timer;
 
@@ -319,13 +303,13 @@ void vPrintBase(uint64_t value, uint32_t base)
 void vClear()
 {
 	int i,j;
-	/*for (i = 0; i < height * width; i++){
+	putPixels(background);
+	for (i = 0; i < height * width; i++){
 		vPrintCharInPos(15,i/width,i%width);
 		vidMem[i/width][i%width];
 
 		video[i] = ' ' | (cColor << 8); 
-	}*/
-	putPixels(background);
+	}
 	row = 0;
 	col = 0;
 }
@@ -364,36 +348,9 @@ static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base)
 }
 
 
-int random_seed=1;
-int maxrand(int seed,int max){
-	random_seed = random_seed+seed * 1103515245 +12345;
-	return (unsigned int)(random_seed / 65536) % (max+1); 
-}
-
-/*void putPixel(int x, int y, color c){
-	
+void put_pixel(unsigned int x, unsigned int y, color c)
+{
 	int offset = 0;
-	if(x>=0 && x < xRes && y >=0 && y<yRes){
-		offset = x * yRes + y;
-			if (bpp == 24){
-				offset = offset * 3;
-				mem2[offset] = c.blue;
-				mem2[offset+1] = c.green;
-				mem2[offset+2] = c.red;
-			} else if (bpp == 32) {
-				offset = offset * 4;
-				mem2[offset] = 0x00;
-				mem2[offset+1] = c.red;
-				mem2[offset+2] = c.blue;
-				mem2[offset+3] = c.green;
-			}
-	}
-	
-}*/
-
-	void put_pixel(unsigned int x, unsigned int y, color c)
-	{
-		int offset = 0;
 	if (x >= 0 && x < xRes && y >= 0 && y < yRes) // Sanity check
 	{
 		offset = y * xRes + x;

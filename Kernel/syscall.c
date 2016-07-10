@@ -39,7 +39,6 @@ void readSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 
 void writeSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
 	if(buffSize == 0){
-			//sPrintf("%d", *buff);
 		vPrintDec((int)*buff);
 	}
 	if(buffSize == 1)
@@ -103,7 +102,6 @@ void createProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t *
 	kernelToUser();
 
 	forceScheduler();
-	sPrintf("Termina de correr: %s\n ",aux->name);
 }
 
 void endProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
@@ -115,7 +113,7 @@ void listProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * d
 }
 
 void nextProcessSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-	//Ceder el procesador al proceso siguiente (fuertemente recomendada por roro)
+
 }
 
 void drawRecSC(uint64_t fd, uint64_t * buff, uint64_t buffSize, uint64_t * dest){

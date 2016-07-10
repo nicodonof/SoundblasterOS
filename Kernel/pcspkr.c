@@ -104,3 +104,13 @@ void playKeyNote(int freq){
 		sounderC(freq);	
 	lastFreq = freq;
 }
+
+/*unicOS sebikul*/
+void pit_setup(uint32_t msecs) {
+	uint32_t count = 1193182 * msecs;
+	count /= 1000;
+
+	outb(0x36, 0x43);
+	outb(count, 0x40);
+	outb(count >> 8, 0x40);
+}
