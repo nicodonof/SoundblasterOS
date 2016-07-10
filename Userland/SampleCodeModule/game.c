@@ -17,46 +17,41 @@ typedef struct{
 int random_seed=1;
 
 void game_input(){
-	print("Start GameInput Process\n");
 	void * inputQ = 0;
 	while(inputQ == 0){
 		syscaller(18, 0, "gameinputq", 0, &inputQ); //syscall get gameinputq
 	}
-	print("GET: gameInput Q\n");
 	while(1){
 		char auxer = getChar();
 		if(auxer != 0){ 
 			switch(auxer){
 				case 'a':
-				syscaller(20, 'a', &inputQ, 0, 0);
-				break;
+					syscaller(20, 'a', &inputQ, 0, 0);
+					break;
 				case 'd':
-				syscaller(20, 'd', &inputQ, 0, 0);
-				break;
+					syscaller(20, 'd', &inputQ, 0, 0);
+					break;
 				case '\n':
 				case '\b':
-					syscaller(20,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq		
-				} 
-				if(auxer == '\b'){
-					break;
-				}   
-			}	
-		}
-		return;
+					syscaller(20,auxer, &inputQ,0, 0);		//syscall send auxer to gameinputq
+					break;		
+			} 
+			if(auxer == '\b'){
+				break;
+			}   
+		}	
 	}
+	return;
+}
 	void game_sound(){
-		print("Start GameAudio Process\n");
 		void* soundQ;
 		char msg = 0;
 
 	syscaller(17,0, "gameaudioq",0, &soundQ);//syscall start queue named gameaudioq
-	print("CREATE: gameaudio Q\n");
 	while(1){		
 		while(msg == 0){
 			syscaller(21,0, &soundQ,0, &msg); //syscall get message from soundQ
 		}
-		putChar(msg);
-
 		switch(msg){
 			case 'b':
 				//syscall beep
@@ -83,7 +78,6 @@ int maxrand(int seed,int max){
 }
 
 int game_render(){
-	print("Start GameRender Process\n");
 	void * inputQ;
 	syscaller(17,0, "gameinputq",0, &inputQ); //syscall start queue gameinputq
 	void * soundQ = 0;
@@ -175,8 +169,8 @@ int game_render(){
 					if(array[k].y > 658 && (array[k].x - 128 - 38) / 128 == pos_player)
 						x_x = 1;
 				}
+			}
 		}
-	}
 
 	//----------------------INPUT---------------------------------
 
@@ -196,7 +190,7 @@ int game_render(){
 				syscaller(20, 'p' , &soundQ, 0, 0);	 //syscall send "stop music (p)" to gameaudioq 
 				x_x=1;									 //no morimo'
 			}
-	
+
 			ppp.x = 128 * pos_player + 128 + 13;
 			ppp.y = 658;
 			syscaller(25, 100, &ppp, 0, 3);
