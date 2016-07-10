@@ -146,7 +146,7 @@ void wakePrecess(int pid){
 process * findProcessByPid(int pid){
 	process * aux = current;
 	while(aux->pid != pid){
-        aux = current->next;
+        aux = aux->next;
     }
     return aux;	
 }
@@ -164,4 +164,19 @@ void printPidList(){
         }
         aux = aux->next;
     } while(current != aux);
+}
+
+void killProcess(int pid){
+    process * auxCurr = current->next;
+    process * auxPrev = current;
+    sPrintf("KILLIN PROCESS: %d\n", auxCurr->pid);
+    while(auxCurr->pid != pid){
+        auxPrev = auxCurr;
+        auxCurr = auxCurr->next;
+        sPrintf("KILLIN PROCESS: %d\n", auxCurr->pid);
+    }
+    sPrintf("KILLIN PROCESS: %s\n", auxCurr->name );
+    auxPrev->next = auxCurr->next;
+    pageFree(auxCurr->stack);
+    return;
 }
