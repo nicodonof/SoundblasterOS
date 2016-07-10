@@ -274,12 +274,13 @@ int game_render(){
 	write(1, &puntaje, 0);
 	print("\nPresione enter para salir\n");
 	print("Presione R para reintentar\n");
-	char inputChar = getChar();
-	putChar(inputChar);
-	if(inputChar != 'r')
-		return 0;
-	else
+	char inputChar = 's';
+	while((inputChar = getChar()) == 0);
+	if(inputChar == 'r')
 		return 1;
+	else
+		return 0;
+
 }
 
 packash * auxPackInput;
@@ -290,25 +291,20 @@ packash * auxPackSound;
 void game(){
 	syscaller(3,0,0,0,0);
 	syscaller(5,1,0,0,0);
-	print("Game not implemented yet...\n");
-
 	// create process with this function: game_input();
-	print("Creating gameinput process\n");
 	strcpy(auxPackInput->name,"gameInput",strlen("gameInput"));
 	auxPackInput->instp = game_input;
-	print("name AuxPackInput: ");
-	print(auxPackInput->name);
-	print("\n");
-	int pid2;
-	print("before gameinput syscall\n");
-	syscaller(12,0,auxPackInput,1,&pid2);
-	print("after gameinput syscall\n");
+	int * pidInput;
+	syscaller(12,0,auxPackInput,1,&pidInput);
 
 	// create process with this function: game_sound();
-	print("Creating gamesound process\n");
 	strcpy(auxPackSound->name,"gameSound",strlen("gameSound"));
 	auxPackSound->instp = game_sound;
-	int pid;
-	syscaller(12,0,auxPackSound,1,&pid);
+	int * pidSound;
+	syscaller(12,0,auxPackSound,1,&pidSound);
 	while(game_render());
+	clear();
+	syscaller(13,0,0,pidInput,0);
+	syscaller(13,0,0,pidSound,0);
+	return;
 }  
