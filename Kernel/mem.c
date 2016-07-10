@@ -32,25 +32,8 @@ void initPageStack(){
 	}
 
 	uint64_t * asd = 0;
-	/*for(i=0; i<totalPages;i++){
-		asd = pageAlloc();
-		if(i%12000 == 0){
-			//sPrintf("%d: %x\n",i,asd);
-		}
-	}*/
+
 	pageAlloc(); //dummy no time to fix
-
-	// pageFree((uint64_t *) asd);
-	// //sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
-
-	// pageFree();
-	
-	// //sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
-	
-	// pageFree();
-	
-	// //sPrintf("currPost:\t%x %x\n", stackCurrent, *stackCurrent);
-	
 	
 	
 } 
@@ -74,10 +57,10 @@ void pageFree(uint64_t * page){
 	*stackCurrent = page;
 }
 
+/*basado en sebikul*/
 void newProcessContext(process * proc,void * func) {
 	int interr = disableOrEnableInterrupts(0);
   
-  /* Write the registers in the stack */
 	context_t* context = (context_t*)proc->stack;// - sizeof(context_t);
 
 	context->gs = 	0x01;
@@ -105,8 +88,5 @@ void newProcessContext(process * proc,void * func) {
 	context->ss = 	0x000;
 	context->base = 0x000;
 
-	//sPrintf("cont: %x\n", context);
-//	//sPrintf("\nrip: %x\n", context->rip);
-	sPrintf("int: %d\n", interr);
 	disableOrEnableInterrupts(1);
 }

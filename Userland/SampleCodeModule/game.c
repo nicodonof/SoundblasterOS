@@ -25,7 +25,6 @@ void game_input(){
 	print("GET: gameInput Q\n");
 	while(1){
 		char auxer = getChar();
-		//putChar(auxer);
 		if(auxer != 0){ 
 			switch(auxer){
 				case 'a':
@@ -122,7 +121,6 @@ int game_render(){
 	}
 
 	int counters=0;
-	//1024x768x24bit
 	//imprime las lineas 
 	int i,j;
 	point p1, p2;
@@ -143,31 +141,7 @@ int game_render(){
 
 	//----------------------TIME----------------------------------
 
-		//syscaller(6,0,&timeNow,0,0); //syscall para pedir timeNow
 		if(counters>25){
-			/*int j= 19;
-			for (; j >-1 ; j--)
-			{
-				int i= 0;
-				for (; i<5; i++)
-				{
-					if(j==0){
-						board[i][j] = 15;
-					}
-					else if(j==19 && board[i][j] == 'O' && board[i][j-1] == 'V'){
-						x_x = 1;
-					}
-					else{
-						board[i][j] = board[i][j-1];
-					}
-				}
-			}
-			
-			board[pos_player][19] = 'O';
-			*/
-			
-
-
 			random = maxrand(pos_player+1, 9);
 			if(random < 6){
 				
@@ -180,8 +154,6 @@ int game_render(){
 					syscaller(16, 50, &array[parr%10], 50, 1); 
 					parr++;
 					tot++;
-					//board[random][0] = 'V';
-
 				}
 			}
 			puntaje++;
@@ -208,7 +180,6 @@ int game_render(){
 
 	//----------------------INPUT---------------------------------
 
-		//pos_player = (pos_player + 1) % 5;	 //obfuscatedCode9.31
 
 		syscaller(21,0,&inputQ,0, &input); //getinput(): syscall get message from inputQ
 		if(input != 0){
@@ -238,32 +209,6 @@ int game_render(){
 
 		
 
-	//----------------------RENDER---------------------------------
-
-		// syscaller(3,0,0,0,0);	   //clearScreen   
-		/*pointAux * auxPoint, * auxPoint2;
-
-		auxPoint->col = 20; 
-		auxPoint->row = 20;
-
-
-		for (int j = 2; j < 22; j++)
-		{ 
-			auxPoint2->row = j;
-			for (int i = 30; i < 41; i++)
-			{
-				auxPoint2->col = i;
-
-				if(i%2 == 0){   
-					syscaller(24, '|', auxPoint2, 0, 0);
-				}
-				else{
-					auxI = (i - 30)/2;
-					auxJ = j - 2;
-					syscaller(24,board[auxI][auxJ],auxPoint2,0,0);
-				}
-			}
-		}*/
 	//----------------------GUIDO----------------------------------
 
 	}
