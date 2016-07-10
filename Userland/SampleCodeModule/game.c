@@ -252,6 +252,7 @@ void game(){
 	clear();
 	syscaller(13,0,0,pidInput,0);
 	syscaller(13,0,0,pidSound,0);
+	syscaller(8,0,0,0,0);
 	syscaller(5,0,0,0,0);
 	return;
 }  
