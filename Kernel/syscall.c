@@ -178,7 +178,5 @@ void drawTriangSC(uint64_t fd, uint64_t * buff, uint64_t buffSize, uint64_t * de
 }
 
 void getOpenedQueueNamesSC(uint64_t fd, uint64_t * buff,uint64_t buffSize , uint64_t * dest){
-	sPrintf("BEFORE NAMES.\n");
 	dest = getOpenedQueues();
-	sPrintf("AFTER NAMES.\n");
 }

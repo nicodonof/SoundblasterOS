@@ -77,6 +77,7 @@ void help(){
     char *boop     = "boop      Makes a boop sound\n";
     char *itunes   = "itunes    Itunes\n";
     char *piano    = "piano     Magic at the tip of your fingers\n";
+    char *openedQueues    = "openedqueues     Shows the opened message queues\n";
     char *bg       = "bg [command] [parameters]     Runs the command with parameters in background\n";
     char *help     = "help      Shows this message.. duh.\n";
 
@@ -87,6 +88,7 @@ void help(){
     print(boop);
     print(itunes);
     print(piano);
+    print(openedQueues);
     print(bg);
     print(help);
 }
@@ -143,17 +145,14 @@ void quit(){
 }
 
 void printAllOpenedQueues(){
-    char** queues;
+    char* queues[100];
     int i = 0;
     print("\n");
     print("All opened queues:\n");
     syscaller(26,0,0,0,queues);
-    print("HERE THEY COME:\n");
-    // while(queues[i] != 0){
-    //     print(queues[i]);
-    //     print("\n");
-    //     i++;
-    //     print(i);
-    //     print("\n");
-    // }
+    while(queues[i] != 0){
+        print(queues[i]);
+        print("\n");
+        i++;
+    }
 }
